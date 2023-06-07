@@ -1,62 +1,40 @@
 <script>
 export default {
-     data() {
-          return {
-               login:LoginRes
-          }
-     },
+
 }
-
-
-const body = {
-     // "REQ名稱"
-     "account":"12345678",
-     "password":"123456789",
-     
-}
-
-fetch("http://localhost:8080/userLogin", {
-
-     method: "POST",//預設是get
-     headers: {
-          'Content-Type': 
-          'application/json',
-     },
-     body: JSON.stringify(body)
-
-})
-     .then(function (response) {
-          return response.json()
-     })
-     .then(function (LoginRes) {
-          console.log(LoginRes)
-     })
 </script>
 <template>
-     <div class="wrap-login">
-          <div class="title-login">
-               <h4>登入會員</h4>
+     <div class="wrap-reg">
+          <div class="title-reg">
+               <h4>註冊會員</h4>
           </div>
-<p>{{ login }}</p>
-          <div class="login-area">
+
+          <div class="register-area">
                <div>
-                    
-                    <div class="account-login">
+                    <div class="name-reg">
+                         <h4>會員名字 :</h4>
+                         <input type="text">
+                    </div>
+                    <div class="account-reg">
                          <h4>會員帳號 :</h4>
                          <p>帳號長度 3~8 碼，不能有任何空白</p>
                          <input type="text">
                     </div>
-                    <div class="pwd-login">
+                    <div class="pwd-reg">
                          <h4>會員密碼 :</h4>
                          <p>密碼為8-12碼
                          </p>
                          <input type="text">
      
                     </div>
+                    <div class="birth-reg">
+                         <h4>會員生日 :</h4>
+                         <input type="text">
+     
+                    </div>
                     
-                    
-                    <div class="btn-login">
-                         <button>登入</button>
+                    <div class="btn-reg">
+                         <button>註冊</button>
                     </div>
                </div>
 
@@ -66,8 +44,8 @@ fetch("http://localhost:8080/userLogin", {
 </template>
 
 <style lang="scss" scoped>
-     .wrap-login {
-     .title-login {
+.wrap-reg {
+     .title-reg {
           background-color: #b30e0e;
 
           width: 100vw;
@@ -76,12 +54,12 @@ fetch("http://localhost:8080/userLogin", {
           font-size: 1.5rem;
      }
 
-     .login-area {
+     .register-area {
           display: flex;
           // flex-direction: column;
           justify-content: center;
           // align-items: center;
-          .btn-login{
+          .btn-reg{
                padding: 10% 25%;
 
                
