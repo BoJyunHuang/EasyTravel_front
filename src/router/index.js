@@ -4,9 +4,19 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      // component: HomeView
+      path: '/vehicle-add-car',
+      name: 'VehicleAddCar',
+      component: () => import ("../views/VehicleAddCar.vue")
+    },
+    {
+      path: '/vehicle-find-car-and-update',
+      name: 'VehicleFindCarAndUpdate',
+      component: () => import("../views/VehicleFindCarAndUpdate.vue")
+    },
+    {
+      path: '/vehicle-scrap-car',
+      name: 'VehicleScrapCar',
+      component: () => import("../views/VehicleScrapCar.vue")
     }
   ]
 })
