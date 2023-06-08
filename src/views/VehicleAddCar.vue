@@ -9,54 +9,82 @@ export default {
 </script>
 
 <template>
-  <div class="input-area">
-    <h2 class="mb-3">新增車輛</h2>
-    <div class="license-plate mb-3">
-      <span>車牌號碼</span>
-      <input type="text" id="licensePlateInput" class="license-plate-input ms-3">
-    </div>
+  <div class="input-area d-flex flex-column">
+    <h2>新規登錄</h2>
 
-    <div class="category mb-3">
-      <span class="me-4">車種</span>
-      <select name="車種" id="categoryInput" class="ms-4">
-        <option value="bike">bike</option>
-        <option value="scooter">scooter</option>
-        <option value="motorcycle">motorcycle</option>
-        <option value="heavy motorcycle">heavy motorcycle</option>
-        <option value="sedan">sedan</option>
-        <option value="ven">ven</option>
-        <option value="suv">suv</option>
-      </select>
-    </div>
+    <table>
+      <tr>
+        <th>車両番号</th>
+        <td><input type="text"></td>
+      </tr>
+      <tr>
+        <th>タイプ</th>
+        <td>
+          <select name="タイプ" id="categoryInput">
+            <option value="bike">bike</option>
+            <option value="scooter">scooter</option>
+            <option value="motorcycle">motorcycle</option>
+            <option value="heavy motorcycle">heavy motorcycle</option>
+            <option value="sedan">sedan</option>
+            <option value="ven">ven</option>
+            <option value="suv">suv</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>タンク容量</th>
+        <td><input type="text" id="tank"></td>
+      </tr>
+      <tr>
+        <th>値段</th>
+        <td><input type="text" id="price"></td>
+      </tr>
+    </table>
 
-    <div class="cc-input mb-3">
-      <span>油箱容量</span>
-      <input type="number" id="ccInput" class="mx-3" :title="ccRange">
-      <span>cc</span>
-    </div>
+    <button class="addBtn btn btn-success">追加</button>
 
-    <div class="price-input mb-3">
-      <span class="me-4">價格</span>
-      <input type="number" id="priceInput" class="ms-4">
-    </div>
-    
   </div>
 </template>
 
 <style lang="scss" scoped>
-  .input-area {
-    display: flex;
-    flex-direction: column;
-    padding: 5%;
+.input-area {
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
 
-    h2 {
-      color: #77d2b4;
-    }
-
-    input {
-      border-radius: 5px;
-      padding-left: 3px;
-    }
-
+  h2 {
+    color: #77d2b4;
   }
+
+  tr {
+    height: 2.5rem;
+
+    th {
+      width: 7rem;
+    }
+
+    td {
+
+      input {
+        border-radius: 5px;
+        padding-left: 3px;
+      }
+
+      .carType {
+        border-radius: 5px;
+      }
+
+    }
+  }
+
+
+
+  .addBtn {
+    width: 7rem;
+    height: 2.5rem;
+    margin-top: 0.5rem;
+    margin-left: 3rem;
+  }
+
+}
 </style>

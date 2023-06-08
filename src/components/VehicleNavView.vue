@@ -5,10 +5,10 @@ import { RouterLink } from "vue-router";
 <template>
   <div>
     <nav class="vehicle-nav">
-      <h3>交通工具管理</h3>
-      <RouterLink class="link btn btn-success text-white" to="/vehicle-add-car">新增</RouterLink>
-      <RouterLink class="link btn btn-success text-white" to="/vehicle-find-car-and-update">查看/修改</RouterLink>
-      <RouterLink class="link btn btn-success text-white" to="/vehicle-scrap-car">報廢</RouterLink>
+      <h3>車の管理</h3>
+      <RouterLink class="link btn btn-success text-white" to="/vehicle-add-car">新規登録</RouterLink>
+      <RouterLink class="link btn btn-success text-white" to="/vehicle-find-car-and-update">検索・情報の変更</RouterLink>
+      <RouterLink class="link btn btn-success text-white" to="/vehicle-scrap-car">廃棄</RouterLink>
     </nav>
 
   </div>
@@ -20,6 +20,7 @@ div {
   height: 100vh;
   padding: 2% 2%;
   background-color: #77d2b4;
+
 
   .vehicle-nav {
     width: 100%;

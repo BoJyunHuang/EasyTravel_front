@@ -9,7 +9,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="vehicle">
     <VehicleNavView />
     <div class="work-area">
       <RouterView />
@@ -18,10 +18,12 @@ export default {
   </div>
 </template>
 
-<style lang="scss">
-  div {
-    width: 100%;
-    height: 100%;
+<style lang="scss" scoped>
+.vehicle {
+    width: 100vw;
+    height: 100vh;
     display: flex;
-  }
+
+}
+  
 </style>
