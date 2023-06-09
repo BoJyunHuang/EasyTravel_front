@@ -1,47 +1,43 @@
 <script>
 import { RouterView } from "vue-router";
-import VehicleNavView from "./components/VehicleNavView.vue"
 import HeaderView from "./components/Header.vue";
-import LeftView from './components/Left.vue';
+import FooterView from './components/Footer.vue'
+
 export default {
   components: {
-    VehicleNavView,
     HeaderView,
-    LeftView,
+    FooterView
   },
   data() {
     return {
-      isShow:true
+      isShow: true
     }
   }
 }
 </script>
 
 <template>
+  <HeaderView v-if="isShow" />
   <div class="vehicle">
-    <VehicleNavView />
-    <HeaderView v-if="isShow"/>
     <div class="work-area">
       <RouterView />
     </div>
-    
   </div>
+  <FooterView />
 </template>
 
 <style lang="scss" scoped>
 .vehicle {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
 
 }
 
- 
 .wrap {
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 </style>

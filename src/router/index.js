@@ -1,16 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import AddCar from '../views/addCar.vue';
-import ResearchCar from '../views/researchCar.vue';
-import DeleteCar from '../views/deleteCar.vue';
-import FinishCar from '../views/finishCar.vue';
-
-import Register from '../views/Register.vue'
-import Active from '../views/Active.vue'
-import Login from '../views/Login.vue'
-import Search from '../views/Search.vue'
-import Update from '../views/Update.vue'
-import Upgrade from '../views/Upgrade.vue'
-import DeleteVIP from '../views/DeleteVIP.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,72 +6,110 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      // component: HomeView
-    },{
-      path:'/register',
+      component: () => import("../views/HomeView.vue")
+    }, {
+      path: '/register',
       name: 'register',
-      component: Register
-    },{
-      path:'/active',
-      name: 'active',
-      component: Active
-    },{
-      path:'/login',
+      component: () => import("../views/Register.vue")
+    }, {
+      path: '/login',
       name: 'login',
-      component: Login
-    },{
-      path:'/search',
-      name: 'search',
-      component: Search
-    },{
-      path:'/update',
-      name: 'update',
-      component: Update
-    },{
-      path:'/upgrade',
-      name: 'upgrade',
-      component: Upgrade
-    },{
-      path:'/deleteVIP',
-      name: 'deleteVIP',
-      component: DeleteVIP
-    },
-    {
-      path: '/vehicle-add-car',
-      name: 'VehicleAddCar',
-      component: () => import("../views/VehicleAddCar.vue")
-    },
-    {
-      path: '/vehicle-find-car-and-update',
-      name: 'VehicleFindCarAndUpdate',
-      component: () => import("../views/VehicleFindCarAndUpdate.vue")
-    },
-    {
-      path: '/vehicle-scrap-car',
-      name: 'VehicleScrapCar',
-      component: () => import("../views/VehicleScrapCar.vue")
-    },
-    {
-      path: '/AddCar',
-      name: 'AddCar',
-      component: AddCar
-    },
-    {
-      path: '/ResearchCar',
-      name: 'ResearchCar',
-      component: ResearchCar
-    },
-    {
-      path: '/DeleteCar',
-      name: 'DeleteCar',
-      component: DeleteCar
-    },
-    {
-      path: '/FinishCar',
-      name: 'FinishCar',
-      component: FinishCar
+      component: () => import("../views/Login.vue")
+    }, {
+      path: '/search-map',
+      name: 'search-map',
+      component: () => import("../views/SearchMap.vue")
+    }, {
+      path: '/fee-map',
+      name: 'fee-map',
+      component: () => import("../views/FeeMap.vue")
+    }, {
+      path: '/calculate',
+      name: 'calculate',
+      component: () => import("../views/calculate.vue")
+    }, {
+      path: '/member-info',
+      name: 'member-info',
+      component: () => import("../views/MemberInfo.vue"),
+      children: [
+        {
+          path: '/active',
+          name: 'active',
+          component: () => import("../views/Active.vue")
+        }, {
+          path: '/update',
+          name: 'update',
+          component: () => import("../views/Update.vue")
+        }, {
+          path: '/member-search',
+          name: 'member-search',
+          component: () => import("../views/MemberSearch.vue")
+        }, {
+          path: '/upgrade',
+          name: 'upgrade',
+          component: () => import("../views/Upgrade.vue")
+        }, {
+          path: '/deleteVIP',
+          name: 'deleteVIP',
+          component: () => import("../views/DeleteVIP.vue")
+        },
+      ]
+    }, {
+      path: '/administrator',
+      name: 'administrator',
+      component: () => import("../views/Administrator.vue"),
+      children: [
+        {
+          path: '/vehicle-add-car',
+          name: 'VehicleAddCar',
+          component: () => import("../views/VehicleAddCar.vue")
+        }, {
+          path: '/vehicle-find-car-and-update',
+          name: 'VehicleFindCarAndUpdate',
+          component: () => import("../views/VehicleFindCarAndUpdate.vue")
+        }, {
+          path: '/vehicle-scrap-car',
+          name: 'VehicleScrapCar',
+          component: () => import("../views/VehicleScrapCar.vue")
+        }, {
+          path: '/AddCar',
+          name: 'AddCar',
+          component: () => import("../views/AddCar.vue")
+        }, {
+          path: '/ResearchCar',
+          name: 'ResearchCar',
+          component: () => import("../views/researchCar.vue")
+        }, {
+          path: '/DeleteCar',
+          name: 'DeleteCar',
+          component: () => import("../views/deleteCar.vue")
+        }, {
+          path: '/FinishCar',
+          name: 'FinishCar',
+          component: () => import("../views/finishCar.vue")
+        }, {
+          path: '/feeManager',
+          name: 'feeManager',
+          component: () => import("../views/FeeManage.vue"),
+        }, {
+          path: '/fee-add',
+          name: 'fee-add',
+          component: () => import("../views/FeeAdd.vue")
+        }, {
+          path: '/fee-revise',
+          name: 'fee-revise',
+          component: () => import("../views/FeeRevise.vue")
+        }, {
+          path: '/fee-drop',
+          name: 'fee-drop',
+          component: () => import("../views/FeeDrop.vue")
+        }, {
+          path: '/finance',
+          name: 'finance',
+          component: () => import("../views/Finance.vue")
+        }
+      ]
     }
-
   ]
 })
 
