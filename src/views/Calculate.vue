@@ -6,8 +6,8 @@ export default {
 
 <template>
     <div>
-        <h2>Fee</h2>
+        <h2>試算</h2>
     </div>
 </template>
 
-<style></style>
+<style lang="scss" scoped></style>
