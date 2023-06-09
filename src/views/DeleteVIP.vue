@@ -6,21 +6,20 @@ export default {
 <template>
      <div class="wrap-delete">
           <div class="title-delete">
-               <h4>退出VIP</h4>
+               <h4>取り消すVIP</h4>
           </div>
 
           <div class="delete-area">
                <div>
                     
                     <div class="account-delete">
-                         <h4>會員帳號 :</h4>
-                         <p>帳號長度 3~8 碼，不能有任何空白</p>
+                         <h4>アカウント :</h4>
+                        
                          <input type="text">
                     </div>
                     <div class="pwd-delete">
-                         <h4>會員密碼 :</h4>
-                         <p>密碼為8-12碼
-                         </p>
+                         <h4>パスワード :</h4>
+                         
                          <input type="text">
      
                     </div>
@@ -28,7 +27,7 @@ export default {
                     
                     
                     <div class="btn-delete">
-                         <button>升級VIP</button>
+                         <button>申し込み</button>
                     </div>
                </div>
 

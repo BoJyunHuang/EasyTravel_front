@@ -35,28 +35,27 @@ fetch("http://localhost:8080/userLogin", {
 <template>
      <div class="wrap-login">
           <div class="title-login">
-               <h4>登入會員</h4>
+               <h4>ログイン</h4>
           </div>
 <p>{{ login }}</p>
           <div class="login-area">
                <div>
                     
                     <div class="account-login">
-                         <h4>會員帳號 :</h4>
-                         <p>帳號長度 3~8 碼，不能有任何空白</p>
+                         <h4>アカウント :</h4>
+                         
                          <input type="text">
                     </div>
                     <div class="pwd-login">
-                         <h4>會員密碼 :</h4>
-                         <p>密碼為8-12碼
-                         </p>
+                         <h4>パスワード :</h4>
+                        
                          <input type="text">
      
                     </div>
                     
                     
                     <div class="btn-login">
-                         <button>登入</button>
+                         <button>ログイン</button>
                     </div>
                </div>
 

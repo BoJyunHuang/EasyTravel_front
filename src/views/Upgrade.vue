@@ -6,31 +6,31 @@ export default {
 <template>
      <div class="wrap-upgrade">
           <div class="title-upgrade">
-               <h4>升級為VIP</h4>
+               <h4>有料会員</h4>
           </div>
 
           <div class="upgrade-area">
                <div>
-                    
+                    <div class="upgrade-fee">
+                         <p>VIP料金はNT200元</p>
+                    </div>
+
                     <div class="account-upgrade">
-                         <h4>會員帳號 :</h4>
-                         <p>帳號長度 3~8 碼，不能有任何空白</p>
+                         <h4>アカウント :</h4>
+                         
                          <input type="text">
                     </div>
                     <div class="pwd-upgrade">
-                         <h4>會員密碼 :</h4>
-                         <p>密碼為8-12碼
-                         </p>
+                         <h4>パスワード :</h4>
+                         
                          <input type="text">
      
                     </div>
                     
                     
-                    <div class="btn-upgrade-fee">
-                         <button>繳交$200</button>
-                    </div>
+                   
                     <div class="btn-upgrade">
-                         <button>升級VIP</button>
+                         <button>申し込み</button>
                     </div>
                </div>
 

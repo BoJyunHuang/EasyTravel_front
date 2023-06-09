@@ -6,28 +6,27 @@ export default {
 <template>
       <div class="wrap-active">
           <div class="title-active">
-               <h4>激活會員</h4>
+               <h4>アクティブ化</h4>
           </div>
 
           <div class="active-area">
                <div>
                     
                     <div class="account-active">
-                         <h4>會員帳號 :</h4>
-                         <p>帳號長度 3~8 碼，不能有任何空白</p>
+                         <h4>アカウント :</h4>
+                         
                          <input type="text">
                     </div>
                     <div class="pwd-active">
-                         <h4>會員密碼 :</h4>
-                         <p>密碼為8-12碼
-                         </p>
+                         <h4>パスワード :</h4>
+                      
                          <input type="text">
      
                     </div>
                     
                     
                     <div class="btn-active">
-                         <button>激活</button>
+                         <button>アクティブ化</button>
                     </div>
                </div>
 
