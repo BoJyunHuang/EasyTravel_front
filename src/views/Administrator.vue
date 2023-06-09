@@ -10,7 +10,7 @@ export default {
 </script>
 
 <template>
-    <h2>管理者頁面</h2>
+    <h2 class="text-center">管理者頁面</h2>
     <div class="wrap">
         <div class="link">
             <!-- 各大項連結 -->
@@ -24,7 +24,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrap {
-    width: 100%;
+    width: 100vw;
     display: flex;
     justify-content: space-between;
 

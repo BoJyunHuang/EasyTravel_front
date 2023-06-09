@@ -2,7 +2,7 @@
 export default {
      data() {
           return {
-               login:LoginRes
+               // login: LoginRes
           }
      },
 }
@@ -10,62 +10,62 @@ export default {
 
 const body = {
      // "REQ名稱"
-     "account":"12345678",
-     "password":"123456789",
-     
+     "account": "12345678",
+     "password": "123456789",
+
 }
 
-fetch("http://localhost:8080/userLogin", {
+// fetch("http://localhost:8080/userLogin", {
 
-     method: "POST",//預設是get
-     headers: {
-          'Content-Type': 
-          'application/json',
-     },
-     body: JSON.stringify(body)
+//      method: "POST",//預設是get
+//      headers: {
+//           'Content-Type':
+//           'application/json',
+//      },
+//      body: JSON.stringify(body)
 
-})
-     .then(function (response) {
-          return response.json()
-     })
-     .then(function (LoginRes) {
-          console.log(LoginRes)
-     })
+// })
+//      .then(function (response) {
+//           return response.json()
+//      })
+//      .then(function (LoginRes) {
+//           console.log(LoginRes)
+//      })
 </script>
 <template>
      <div class="wrap-login">
           <div class="title-login">
                <h4>ログイン</h4>
           </div>
-<p>{{ login }}</p>
+          <p>{{ login }}</p>
           <div class="login-area">
                <div>
-                    
+
                     <div class="account-login">
                          <h4>アカウント :</h4>
-                         
+
                          <input type="text">
                     </div>
                     <div class="pwd-login">
                          <h4>パスワード :</h4>
-                        
+
                          <input type="text">
-     
+
                     </div>
-                    
-                    
+
+
                     <div class="btn-login">
                          <button>ログイン</button>
                     </div>
                </div>
 
           </div>
-          
+
      </div>
 </template>
 
 <style lang="scss" scoped>
-     .wrap-login {
+.wrap-login {
      .title-login {
           background-color: #b30e0e;
 
@@ -79,11 +79,12 @@ fetch("http://localhost:8080/userLogin", {
           display: flex;
           // flex-direction: column;
           justify-content: center;
+
           // align-items: center;
-          .btn-login{
+          .btn-login {
                padding: 10% 25%;
 
-               
+
           }
      }
 }
