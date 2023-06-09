@@ -1,23 +1,26 @@
 <script>
-export default {
-     
-}
+import { RouterLink } from 'vue-router';
 </script>
+
 <template>
-     <header>
-          <h3>Lorem, ipsum dolor sit amet </h3>
-     </header>
-    
-          
-     
+    <header>
+        <RouterLink class="link" to="/AddCar">修理する車両を追加</RouterLink>
+        <RouterLink class="link" to="/ResearchCar">修理する車両を検索</RouterLink>
+        <RouterLink class="link" to="/DeleteCar">修理する車両を削除</RouterLink>
+
+    </header>
 </template>
 
 <style lang="scss" scoped>
-     header{
-          width: 100vw;
-          height: 200px;
-          padding-bottom: 0.5rem;
-          background-color: #C1395E;
-           font-size: 1.5rem;
-     }
+.link {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 0 1rem;
+
+    &:hover {
+        color: #79dfb1;
+    }
+}
 </style>
