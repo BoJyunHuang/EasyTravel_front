@@ -92,17 +92,9 @@ const router = createRouter({
           name: 'feeManager',
           component: () => import("../views/FeeManage.vue"),
         }, {
-          path: '/fee-add',
-          name: 'fee-add',
-          component: () => import("../views/FeeAdd.vue")
-        }, {
-          path: '/fee-revise',
-          name: 'fee-revise',
-          component: () => import("../views/FeeRevise.vue")
-        }, {
-          path: '/fee-drop',
-          name: 'fee-drop',
-          component: () => import("../views/FeeDrop.vue")
+          path: '/location-manage',
+          name: 'location-manage',
+          component: () => import("../views/LocationManage.vue")
         }, {
           path: '/finance',
           name: 'finance',

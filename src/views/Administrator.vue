@@ -24,7 +24,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrap {
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: space-between;
 
@@ -34,7 +34,6 @@ export default {
 
     .main-page {
         width: 80%;
-        border: 1px solid black;
     }
 }
 </style>

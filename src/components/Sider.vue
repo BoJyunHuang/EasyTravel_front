@@ -17,13 +17,10 @@ export default {
         <RouterLink class="link" to="/ResearchCar">検索</RouterLink>
         <RouterLink class="link" to="/DeleteCar">削除</RouterLink>
         <RouterLink class="link" to="/FinishCar">結單</RouterLink>
-        <h4>費率管理</h4>
-        <RouterLink class="link" to="/feeManager">費率管理</RouterLink>
-        <RouterLink class="link" to="/fee-add">新增</RouterLink>
-        <RouterLink class="link" to="/fee-revise">修改</RouterLink>
-        <RouterLink class="link" to="/fee-drop">撤銷</RouterLink>
-        <h4>財務管理</h4>
-        <RouterLink class="link" to="/finance">報表</RouterLink>
+        <br>
+        <RouterLink class="link" to="/feeManager">料金</RouterLink>
+        <RouterLink class="link" to="/location-manage">レンタカーステーション</RouterLink>
+        <RouterLink class="link" to="/finance">レポート</RouterLink>
 
     </div>
 </template>

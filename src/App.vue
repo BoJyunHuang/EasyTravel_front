@@ -18,26 +18,17 @@ export default {
 
 <template>
   <HeaderView v-if="isShow" />
-  <div class="vehicle">
-    <div class="work-area">
-      <RouterView />
-    </div>
+  <div class="main-area">
+    <RouterView />
   </div>
   <FooterView />
 </template>
 
 <style lang="scss" scoped>
-.vehicle {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
+.main-area {
+  width: auto;
+  height: 1200px;
+  padding: 2rem;
 
-}
-
-.wrap {
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 </style>
