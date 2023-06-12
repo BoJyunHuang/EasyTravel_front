@@ -96,6 +96,10 @@ const router = createRouter({
           name: 'location-manage',
           component: () => import("../views/LocationManage.vue")
         }, {
+          path: '/location-vehicle',
+          name: 'location-vehicle',
+          component: () => import("../views/LocationVehicle.vue")
+        }, {
           path: '/finance',
           name: 'finance',
           component: () => import("../views/Finance.vue")

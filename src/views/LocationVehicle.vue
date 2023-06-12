@@ -59,7 +59,7 @@ export default {
 
 <template>
     <div class="fee-manager">
-        <h2>サイト</h2>
+        <h2>サイト車両</h2>
         <div class="d-flex justify-content-between">
             <select class="form-select w-50 mb-2" aria-label="Default select example" v-model="searchText">
                 <option value="" disabled selected>都道府県を選ぶ</option>
