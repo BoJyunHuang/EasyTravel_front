@@ -1,13 +1,122 @@
 <script>
+import TableView from "../components/Table.vue"
+import Modal from "../components/Modal.vue"
 export default {
-
+    components: {
+        TableView, // 帶入表格元件
+        Modal // 帶入跳出式視窗元件
+    },
+    data() {
+        return {
+            tableColumns: ['project', 'cc', 'rate', 'threshold'], // 表格標題
+            feesData: [], // 表格內容
+            searchText: '', // 搜尋關鍵字
+            showEditButton: false,  // 是否顯示修改按鈕
+            showDeleteButton: true,  // 是否顯示刪除按鈕
+            isShow: false // 顯示跳出式視窗
+        };
+    },
+    mounted() { // 預設執行方法，後端-顯示所有費率資料
+        fetch("http://localhost:8080/show_all_fees")
+            .then(res => res.json())
+            .then(data => this.feesData = data.feeList)
+    },
+    methods: {
+        updateFilteredData() {
+            if (!this.searchText) {
+                return this.feesData;
+            }
+            const keyword = this.searchText.toLowerCase();
+            return this.feesData.filter(item =>
+                item.project.toLowerCase().includes(keyword)
+            )
+        }, switchModal() {
+            this.isShow = !this.isShow
+        }
+    },
+    watch: {
+        searchText: function (newText, oldText) {
+            // 在 searchText 變化時執行相應的操作
+            this.updateFilteredData();
+        }
+    },
+    computed: {
+        filteredData() {
+            if (!this.searchText) {
+                return this.feesData;
+            }
+            const keyword = this.searchText.toLowerCase();
+            return this.feesData.filter(item => {
+                // 根據需要調整下面的條件
+                return (
+                    item.project.toLowerCase().includes(keyword)
+                );
+            });
+        }
+    }
 }
 </script>
 
 <template>
-    <div>
-        <h2>費率管理</h2>
+    <div class="fee-manager">
+        <h2>料金管理</h2>
+        <div class="d-flex justify-content-between">
+            <select class="form-select w-50 mb-2" aria-label="Default select example" v-model="searchText">
+                <option value="" disabled selected>プラン選択</option>
+                <option value="">全てのプランから選ぶ</option>
+                <optgroup label="自転車の分類">
+                    <option value="bike">自転車(bike)</option>
+                </optgroup>
+                <optgroup label="オートバイの分類 ">
+                    <option value="scooter"> スクーター</option>
+                    <option value="motorcycle">モーターサイクル</option>
+                    <option value="heavy motorcycle"> 大型バイク</option>
+                </optgroup>
+                <optgroup label="自動車の分類">
+                    <option value="sedan">セダン </option>
+                    <option value="ven">バン</option>
+                    <option value="suv">SUV</option>
+                </optgroup>
+            </select>
+            <button type="button" class="btn btn-success mb-2 px-3" @click="switchModal">新規料金プランの追加</button>
+        </div>
+        <p>※project「プロジェクト」はプラン、cc「シーシー」は排気量、rate「レート」は該時間帯の料金、threshold「しきい値」は該時間帯となります。</p>
+        <TableView :columns="tableColumns" :data="filteredData" :showEditButton="showEditButton"
+            :showDeleteButton="showDeleteButton" />
+        <Modal v-if="isShow" @pushOutside="switchModal">
+            <H2 class="m-2">新規料金プランの追加</H2>
+            <table class="m-3 ">
+                <tr>
+                    <th><label for="project" class="my-2">プラン</label></th>
+                    <td><input type="text" placeholder="ex:bike" id="project"></td>
+                </tr>
+                <tr>
+                    <th><label for="cc" class="my-2">排気量</label></th>
+                    <td><input type="number" min="0" title="0cc以上" id="cc"></td>
+                </tr>
+                <tr>
+                    <th><label for="rate" class="my-2">時間帯の料金</label></th>
+                    <td><input type="number" min="0" title="0以上" id="rate"></td>
+                </tr>
+                <tr>
+                    <th><label for="threshold" class="my-2">時間帯</label></th>
+                    <td><input type="number" min="1" title="1分以上または1日以上" id="threshold"></td>
+                </tr>
+            </table>
+            <div class="w-25 d-flex justify-content-between">
+                <button type="button" class="btn btn-success btn-sm px-3">決定</button>
+                <button type=" button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
+            </div>
+        </Modal>
     </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.fee-manager {
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+
+}
+</style>
