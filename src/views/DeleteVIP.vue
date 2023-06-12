@@ -1,6 +1,41 @@
 <script>
 export default {
-     
+     data() {
+          return {
+               // 自己宣告 ，用於雙向綁定
+               // account: null,
+               // pwd: null,
+          }
+     },
+     methods: {
+          // 方法(參數)
+          quiet: () => {
+               const body = {
+                    // 後端req屬性名稱:參數
+                    // account: a,
+                   
+                    // password: p,
+                   
+               }
+               console.log(body)
+               fetch("http://localhost:8080/user_info_Quit_vip", {
+                    method: "POST",
+                    headers: {
+                         'Content-Type':
+                              'application/json',
+                    },
+                    body: JSON.stringify(body)
+
+               })
+                    .then(function (response) {
+                         return response.json()
+                    })
+                    .then(function (data) {
+                         console.log(data)
+
+                    })
+          }
+     }
 }
 </script>
 <template>
@@ -12,7 +47,7 @@ export default {
           <div class="delete-area">
                <div>
                     
-                    <div class="account-delete">
+                    <!-- <div class="account-delete">
                          <h4>アカウント :</h4>
                         
                          <input type="text">
@@ -22,12 +57,12 @@ export default {
                          
                          <input type="text">
      
-                    </div>
+                    </div> -->
                     
                     
                     
                     <div class="btn-delete">
-                         <button>申し込み</button>
+                         <button type="button" @click="quiet">申し込み</button>
                     </div>
                </div>
 

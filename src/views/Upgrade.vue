@@ -1,6 +1,48 @@
 <script>
 export default {
-     
+     data() {
+          return {
+
+               // 自己宣告 ，用於雙向綁定
+               account: null,
+               pwd: null,
+          }
+     },
+     mounted() {
+          // console.log(userInfo)
+     },
+     methods: {
+          upgrade: () => {
+               let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+               const body = {
+                    // "REQ名稱"
+                    account: userInfo.account,
+               }
+               console.log(body)
+               fetch("http://localhost:8080/user_info_upgrade_vip", {
+
+                    method: "POST",//預設是get
+                    headers: {
+                         'Content-Type':
+                              'application/json',
+                    },
+                    body: JSON.stringify(body),
+                  
+
+
+               })
+                    .then(function (response) {
+                         return response.json()
+                    })
+                    .then(function (data) {
+                         console.log(data)
+
+                    })
+
+
+          }
+     }
+
 }
 </script>
 <template>
@@ -15,32 +57,19 @@ export default {
                          <p>VIP料金はNT200元</p>
                     </div>
 
-                    <div class="account-upgrade">
-                         <h4>アカウント :</h4>
-                         
-                         <input type="text">
-                    </div>
-                    <div class="pwd-upgrade">
-                         <h4>パスワード :</h4>
-                         
-                         <input type="text">
-     
-                    </div>
-                    
-                    
-                   
+
                     <div class="btn-upgrade">
-                         <button>申し込み</button>
+                         <button @click="upgrade()">申し込み</button>
                     </div>
                </div>
 
           </div>
-          
+
      </div>
 </template>
 
 <style lang="scss" scoped>
-     .wrap-upgrade {
+.wrap-upgrade {
      .title-upgrade {
           background-color: #b30e0e;
 
@@ -54,14 +83,16 @@ export default {
           display: flex;
           // flex-direction: column;
           justify-content: center;
+
           // align-items: center;
-.btn-upgrade-fee{
-     padding: 10% 25%;
-}
-          .btn-upgrade{
+          .btn-upgrade-fee {
+               padding: 10% 25%;
+          }
+
+          .btn-upgrade {
                padding: 10% 25%;
 
-               
+
           }
      }
 }

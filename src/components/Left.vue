@@ -9,28 +9,23 @@ export default {
 </script>
 <template>
      <div class="out">
-          <div class="p-4 aa">
-               <RouterLink class="link" to="/register">登録</RouterLink>
+         
+          <div class="p-4">
+               <RouterLink class="link fs-6" to="/active">アクティブ化</RouterLink>
           </div>
           <div class="p-4">
-               <RouterLink class="link" to="/active">アクティブ化</RouterLink>
-          </div>
-          <div class="p-4">
-               <RouterLink class="link" to="/login">ログイン</RouterLink>
-          </div>
-          <div class="p-4">
-               <RouterLink class="link" to="/member-search">お問い合わせ</RouterLink>
+               <RouterLink class="link fs-6" to="/member-search">お問い合わせ</RouterLink>
           </div>
           <div class="p-4">
                <!-- 改訂会員情報 -->
-               <RouterLink class="link" to="/update">会員情報変更</RouterLink>
+               <RouterLink class="link fs-6" to="/update">会員情報変更</RouterLink>
           </div>
           <div class="p-4">
-               <RouterLink class="link" to="/upgrade">有料会員</RouterLink>
+               <RouterLink class="link fs-6" to="/upgrade">有料会員</RouterLink>
 
           </div>
           <div class="p-4">
-               <RouterLink class="link" to="/deleteVIP">取り消すVIP</RouterLink>
+               <RouterLink class="link fs-6" to="/deleteVIP">取り消すVIP</RouterLink>
           </div>
 
 
@@ -38,12 +33,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.aa {}
+
 
 .out {
      // display: flex;
 
-     width: 23vw;
+     width: 20vw;
 
      padding-bottom: 0.5rem;
      background-color: #C1395E;
@@ -55,9 +50,9 @@ export default {
           text-decoration: none;
           color: white;
           cursor: pointer;
-          transition: 0.3s;
-
-          margin: 5rem 1rem;
+          transition: 0.4s;
+          // scale: 01.5rem;
+          margin: 3rem 0rem;
 
           &:hover {
 
