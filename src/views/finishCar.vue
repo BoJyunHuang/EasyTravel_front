@@ -1,65 +1,68 @@
 <script>
+import Modal from "../components/Modal.vue";
 export default {
+  components: {
+    Modal
+  },
   data() {
     return {
       text: null,
-      showTable: false,
+      
       selectedOption: "",
+      isShow: false,
     };
   },
   methods: {
-    showTableOnClick() {
-      this.showTable = true;
+  switchModal() {
+      this.isShow = !this.isShow;
     },
-    navigateToTarget() {
-      if (this.selectedOption) {
-        this.$router.push('/AddCar');
-      }
-    }
   }
 };
 </script>
 
 <template>
-  <div class="select">
-    <select v-model="selectedOption" @change="navigateToTarget">
-      <option value="option" selected>フォームの追加</option>
-      <option value="option1">フォームの完成</option>
-    </select>
-  </div>
+  
   <div class="top">
-    <h2>修理完成車両情報の追加</h2>
-    <div v-if="!showTable" class="mider">
-      <p>未完成の車牌検索を入力してください</p>
-      <input type="text" v-model="text">
-      <button type="button" class="btn" @click="showTableOnClick">確認</button>
+    
+    <div class="text">
+      <h2>修理完成車両情報の追加</h2>
     </div>
-    <div v-if=showTable class="bot">
-    <table>
-      <thead>
-        <tr>
-          <th>番号</th>
-          <th>車牌</th>
-          <th>価格</th>
-          <th>修理車両の開始時間</th>
-          <th>修理車両の終了時間</th>
-          <th>車両の修理原因</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <!-- 添加更多的 <tr> 标签以添加更多的行 -->
-      </tbody>
-    </table>
-  </div>
-  </div>
+  
+    <div v-if="!showTable" class="mider">
+      
+      <p>未完成のナンバープレートフォームは、「完了」ボタンを押してください</p>
+      
+      <button type="button" class="btn" @click="switchModal">完了</button>
+      <Modal v-if="isShow" @pushOutside="switchModal">
+
+<h2>追加成功</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th class="serial-number">連番番号</th>
+      <th class="license-plate">ナンバープレート</th>
+      <th class="repair-time">車両修理開始時間</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="serial-number">1</td>
+      <td class="license-plate">ABC123</td>
+      <td class="repair-time">2023-06-11 09:00 AM</td>
+    </tr>
+    <tr>
+      <td class="serial-number">2</td>
+      <td class="license-plate">XYZ789</td>
+      <td class="repair-time">2023-06-11 10:30 AM</td>
+    </tr>
+    <!-- 添加更多的表格行 -->
+  </tbody>
+</table>
+
+</Modal>
+    </div>
+   
+</div>
 </template>
 
 <style lang="scss" scoped>
@@ -67,10 +70,13 @@ export default {
 .bot{
   margin-top: 4rem
 }
-.select {
-  position: fixed;
-  left: 40px;
-  top: 60px;
+.finish{
+  text-align: center;
+}
+
+.text{
+  text-align: center;
+  
 }
 
 .top {

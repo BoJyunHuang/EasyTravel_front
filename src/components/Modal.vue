@@ -12,6 +12,7 @@ export default {
     <div class="frame">
         <div class="modal">
             <i class="fa-solid fa-x" @click="push"></i>
+            <!-- <h2>追加成功</h2> -->
             <!-- Modal 元件上開一個洞 -->
             <slot></slot>
         </div>
@@ -39,6 +40,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
+        overflow-y: auto;
 
         i {
             position: absolute;
