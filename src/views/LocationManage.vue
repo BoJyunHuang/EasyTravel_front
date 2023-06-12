@@ -13,6 +13,7 @@ export default {
             searchText: '', // 搜尋關鍵字
             showEditButton: true,  // 是否顯示修改按鈕
             showDeleteButton: true,  // 是否顯示刪除按鈕
+            showControl: true, // 顯示操作行
             isShow: false // 顯示跳出式視窗
         };
     },
@@ -72,7 +73,7 @@ export default {
         </div>
         <p>※bikeAmountは自転車類の数、motorcycleAmountは二輪車の数、carAmountは四輪車の数を表しています。</p>
         <TableView :columns="tableColumns" :data="filteredData" :showEditButton="showEditButton"
-            :showDeleteButton="showDeleteButton" />
+            :showDeleteButton="showDeleteButton" :showControl="showControl" />
         <Modal v-if="isShow" @pushOutside="switchModal">
             <H2 class="m-2">サイト追加</H2>
             <table class="m-3 ">

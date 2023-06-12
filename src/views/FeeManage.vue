@@ -13,6 +13,7 @@ export default {
             searchText: '', // 搜尋關鍵字
             showEditButton: false,  // 是否顯示修改按鈕
             showDeleteButton: true,  // 是否顯示刪除按鈕
+            showControl: true, // 顯示操作行
             isShow: false // 顯示跳出式視窗
         };
     },
@@ -82,7 +83,7 @@ export default {
         </div>
         <p>※project「プロジェクト」はプラン、cc「シーシー」は排気量、rate「レート」は該時間帯の料金、threshold「しきい値」は該時間帯となります。</p>
         <TableView :columns="tableColumns" :data="filteredData" :showEditButton="showEditButton"
-            :showDeleteButton="showDeleteButton" />
+            :showDeleteButton="showDeleteButton" :showControl="showControl" />
         <Modal v-if="isShow" @pushOutside="switchModal">
             <H2 class="m-2">新規料金プランの追加</H2>
             <table class="m-3 ">

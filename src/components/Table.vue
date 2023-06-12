@@ -11,7 +11,8 @@ export default {
             type: Number,
             default: 15
         }, showEditButton: true,  // 是否顯示修改按鈕
-        showDeleteButton: true  // 是否顯示刪除按鈕
+        showDeleteButton: true,  // 是否顯示刪除按鈕
+        showControl: true // 顯示操作行
     },
     data() {
         return {
@@ -57,7 +58,7 @@ export default {
             <thead> <!-- 標題名稱 -->
                 <tr class="table-dark"> <!-- 使用迴圈印出"標題名稱" -->
                     <th v-for="column in columns" :key="column">{{ column }}</th>
-                    <th> <!-- 新增 "操作" 欄位 -->
+                    <th v-if="showControl"> <!-- 新增 "操作" 欄位 -->
                         <div>
                             <input type="checkbox" id='control' value="false" v-model="control">
                             <label for="control">操作</label>
@@ -68,7 +69,7 @@ export default {
             <tbody> <!-- 表個內容 -->
                 <tr v-for="(item, index) in paginatedData" :key="item.id"> <!-- 印出該分頁筆數(列) -->
                     <td v-for="column in columns" :key="column">{{ item[column] }}</td> <!-- 印出該分頁對應標題的內容(欄) -->
-                    <td> <!-- 進行編輯修改操作的按鈕 -->
+                    <td v-if="showControl"> <!-- 進行編輯修改操作的按鈕 -->
                         <button class="btn btn-primary py-0" v-if="control && showEditButton"
                             @click="editItem(item)">変更</button>
                         <button class="btn btn-danger py-0" v-if="control && showDeleteButton"
