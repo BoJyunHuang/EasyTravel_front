@@ -12,7 +12,6 @@ export default {
     <div class="frame">
         <div class="modal">
             <i class="fa-solid fa-x" @click="push"></i>
-            <h2>Modal</h2>
             <!-- Modal 元件上開一個洞 -->
             <slot></slot>
         </div>
