@@ -29,11 +29,11 @@ export default {
     justify-content: space-between;
 
     .link {
-        width: 20%;
+        width: 15%;
     }
 
     .main-page {
-        width: 80%;
+        width: 85%;
     }
 }
 </style>
