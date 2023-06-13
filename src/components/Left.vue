@@ -8,17 +8,17 @@ export default {
 }
 </script>
 <template>
-     <div class="out">
-         
-          <div class="p-4">
-               <RouterLink class="link fs-6" to="/active">アクティブ化</RouterLink>
-          </div>
-          <div class="p-4">
-               <RouterLink class="link fs-6" to="/member-search">お問い合わせ</RouterLink>
-          </div>
-          <div class="p-4">
-               <!-- 改訂会員情報 -->
-               <RouterLink class="link fs-6" to="/update">会員情報変更</RouterLink>
+     <!-- <div class="out"> -->
+
+          <!-- <div class="p-4">
+                              <RouterLink class="link fs-6" to="/active">アクティブ化</RouterLink>
+                         </div> -->
+          <!-- <div class="p-4">
+                              <RouterLink class="link fs-6" to="/member-search">お問い合わせ</RouterLink>
+                         </div> -->
+          <!-- <div class="p-4">
+               改訂会員情報 -->
+               <!-- <RouterLink class="link fs-6" to="/update">会員情報変更</RouterLink>
           </div>
           <div class="p-4">
                <RouterLink class="link fs-6" to="/upgrade">有料会員</RouterLink>
@@ -26,26 +26,44 @@ export default {
           </div>
           <div class="p-4">
                <RouterLink class="link fs-6" to="/deleteVIP">取り消すVIP</RouterLink>
+          </div> -->
+     <!-- </div> -->
+     <div class="accordion accordion-flush" id="accordionFlushExample">
+          <div class="accordion-item">
+               <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                         data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                         会員情報管理
+                    </button>
+               </h2>
+               <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                    data-bs-parent="#accordionFlushExample">
+                    <div class="d-flex flex-column">
+                         <RouterLink class="linkUser fs-6" to="/update">会員情報変更</RouterLink>
+                         <RouterLink class="linkUser fs-6" to="/upgrade">有料会員</RouterLink>
+                         <RouterLink class="linkUser fs-6" to="/deleteVIP">取り消すVIP</RouterLink>
+                         <!-- <RouterLink class="link" to="/vehicle-add-car">新增車輛</RouterLink> -->
+                         <!-- <RouterLink class="link" to="/vehicle-find-car-and-update">修改車輛</RouterLink> -->
+                         <!-- <RouterLink class="link" to="/vehicle-scrap-car">報廢車輛</RouterLink> -->
+                    </div>
+               </div>
           </div>
-
-
      </div>
 </template>
 
 <style lang="scss" scoped>
-
-
 .out {
      // display: flex;
 
      width: 20vw;
 
      padding-bottom: 0.5rem;
-     background-color: #C1395E;
+     background-color: rgb(26, 16, 109);
+     border-radius: 5%;
      font-size: 1.5rem;
      // 
 
-     .link {
+     .linkUser {
           // 取消下底線
           text-decoration: none;
           color: white;

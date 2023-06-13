@@ -4,7 +4,6 @@
 
 <template>
   <main>
-    <h2>這是首頁</h2>
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
@@ -36,6 +35,7 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
+    <i class="fa-thin fa-bicycle"></i>
   </main>
 </template>
 

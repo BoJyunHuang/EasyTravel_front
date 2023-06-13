@@ -16,28 +16,28 @@ export default {
                     <RouterLink class="link" to="/register">新規会員登録</RouterLink>
                     <RouterLink class="link" to="/administrator">管理者</RouterLink>
                 </div>
-
                 <div class="link-area">
                     <!-- 各大項連結 -->
                     <RouterLink class="link" to="/">イージートラベル</RouterLink>
                     <RouterLink class="link" to="/search-map">店舗を探す</RouterLink>
                     <RouterLink class="link" to="/fee-map">車種と料金</RouterLink>
                     <RouterLink class="link" to="/calculate">予約する</RouterLink>
-                    <RouterLink class="link" to="/member-info">会員情報管理</RouterLink>
+                    <RouterLink class="link" to="/member-search">会員情報管理</RouterLink>
                 </div>
-
             </div>
         </div>
-
     </header>
 </template>
 
 <style lang="scss" scoped>
 header {
     width: 100%;
-    height: 9.5rem;
-    padding: 0.5rem 2rem;
-    background-color: #C1395E;
+    height: 150px;
+    padding: 2rem;
+    // background-color: #5b39c1;
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgb(0, 13, 36) 0%, rgba(9, 70, 121, 1) 35%, rgba(0, 172, 255, 1) 100%);
+
     font-size: 1.5rem;
     display: flex;
     align-items: center;
