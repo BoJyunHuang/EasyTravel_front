@@ -1,46 +1,29 @@
 <script>
+import { RouterLink } from "vue-router";
+import Manager from "./Administrator.vue"
 export default {
+     components: {
+          Manager
+     },
      data() {
           return {
                // 自己宣告 ，用於雙向綁定
-               account: null,
-               pwd: null,
+               account: "",
+               pwd: "",
+               bol: false,
           }
      },
      methods: {
-          login: (acc, pwd) => {
-               const body = {
-                    // "REQ名稱"
-                    account: acc,
-                    password: pwd,
-
+          // 用if判斷,是否為管理者帳號,不用連接後端
+          AminiLogin() {
+               console.log(this.account);
+               if (this.account == "M001" && this.pwd == "M0123456") {
+                    let testBut = document.getElementById("testBut");
+                    testBut.click();
                }
-               console.log(body)
-               fetch("http://localhost:8080/user_login", {
-
-                    method: "POST",//預設是get
-                    headers: {
-                         'Content-Type':
-                              'application/json',
-                    },
-                    body: JSON.stringify(body),
-
-
-
-               })
-                    .then(function (response) {
-                         return response.json()
-                    })
-                    .then(function (data) {
-                         console.log(data)
-                         // --
-                         // session set (key:你要綁的東西)
-                         sessionStorage.setItem("userInfo", JSON.stringify(data.userInfo));
-                         // --
-                         // sessionStorage.setItem("userInfo", data)
-                         // let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
-                         // console.log(userInfo.name)
-                    })
+               else {
+                    alert("失敗")
+               }
 
 
           }
@@ -53,7 +36,7 @@ export default {
 <template>
      <div class="wrap-login d-flex  flex-column justify-content-center align-items-center">
           <div class="title-login">
-               <h2 class="text-white">ログイン</h2>
+               <h2 class="text-white">管理者ログイン</h2>
           </div>
           <!-- <p>{{ login }}</p> -->
           <div class="login-area border border-danger rounded mt-4" style="height: auto;width: 350px;">
@@ -72,7 +55,11 @@ export default {
 
 
                     <div class="btnlogin">
-                         <button class="log-btn mt-5" type="button" @click="login(this.account, this.pwd)">ログイン</button>
+                         <button class="log-btn mt-5" type="button" @click="AminiLogin">ログイン</button>
+                         <RouterLink class="link text-white" to="/administrator">
+                              <button class="log-btn mt-5" type="button" id="testBut" style="display: none;">ログイン</button>
+                         </RouterLink>
+
                     </div>
                </div>
 
@@ -86,8 +73,8 @@ export default {
      .title-login {
           background-color: #C1395E;
           border-radius: 5px;
-          height: 35px;
-          width: 150px;
+          height: 40px;
+          width: 300px;
           display: flex;
           justify-content: center;
           // margin-left: 50%;

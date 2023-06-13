@@ -54,7 +54,12 @@ const router = createRouter({
           component: () => import("../views/DeleteVIP.vue")
         },
       ]
-    }, {
+    },
+    {
+      path: '/administrator-login',
+      name: 'administrator-login',
+      component: () => import("../views/AdministratorLogin.vue"),
+    } ,{
       path: '/administrator',
       name: 'administrator',
       component: () => import("../views/Administrator.vue"),

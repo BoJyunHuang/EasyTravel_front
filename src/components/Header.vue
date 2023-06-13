@@ -23,7 +23,9 @@ export default {
             <RouterLink class="link" to="/search-map">店舗を探す</RouterLink>
             <RouterLink class="link" to="/fee-map">車種と料金</RouterLink>
             <RouterLink class="link" to="/calculate">予約する</RouterLink>
-            <RouterLink class="link" to="/member-info">会員情報管理</RouterLink>
+            <!-- <RouterLink class="link" to="/member-info">会員情報管理</RouterLink> -->
+            <RouterLink class="link" to="/member-search">会員情報管理</RouterLink>
+
         </div>
     </header>
 </template>
@@ -33,7 +35,10 @@ header {
     width: 100%;
     height: 150px;
     padding: 2rem;
-    background-color: #C1395E;
+    // background-color: #5b39c1;
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgb(0, 13, 36) 0%, rgba(9, 70, 121, 1) 35%, rgba(0, 172, 255, 1) 100%);
+
     font-size: 1.5rem;
 
     .upper {
