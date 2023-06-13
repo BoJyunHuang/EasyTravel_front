@@ -28,9 +28,9 @@ const router = createRouter({
       name: 'calculate',
       component: () => import("../views/calculate.vue")
     }, {
-      path: '/member-info',
-      name: 'member-info',
-      component: () => import("../views/MemberInfo.vue"),
+      path: '/member-search',
+      name: 'member-search',
+      component: () => import("../views/MemberSearch.vue"),
       children: [
         {
           path: '/active',
@@ -59,7 +59,7 @@ const router = createRouter({
       path: '/administrator-login',
       name: 'administrator-login',
       component: () => import("../views/AdministratorLogin.vue"),
-    } ,{
+    }, {
       path: '/administrator',
       name: 'administrator',
       component: () => import("../views/Administrator.vue"),
