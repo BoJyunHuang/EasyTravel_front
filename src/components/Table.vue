@@ -10,24 +10,31 @@ export default {
         }, itemsPerPage: { // 分頁，預設一頁為15筆資料 
             type: Number,
             default: 15
-        }, showEditButton: true,  // 是否顯示修改按鈕
-        showDeleteButton: true  // 是否顯示刪除按鈕
+        },
+        showControl: true, // 顯示操作行
+        showEditButton: true,  // 是否顯示修改按鈕
+        showDeleteButton: true,  // 是否顯示刪除按鈕
+        showCompleteButton: true, // 是否顯示完成按鈕
     },
     data() {
         return {
             currentPage: 1, // 分頁預設第1頁
             control: false, // 可否操作
+            item: {} // 子層參數
         };
-    }, computed: {
+    },
+    computed: {
         totalPages() { // 計算總頁數的方法
             return Math.ceil(this.data.length / this.itemsPerPage);
-        }, paginatedData() { // 顯示目前頁數資料總筆數的方法
+        },
+        paginatedData() { // 顯示目前頁數資料總筆數的方法
             const sortedData = this.data.slice().reverse(); // 最新資料顯示在最上面
             const startIndex = (this.currentPage - 1) * this.itemsPerPage; // 起始筆數
             const endIndex = startIndex + this.itemsPerPage; // 終止筆數
             return sortedData.slice(startIndex, endIndex); // 回傳該頁筆數的序號
         }
-    }, methods: {
+    },
+    methods: {
         previousPage() { // 前一頁方法
             if (this.currentPage > 1) {
                 this.currentPage--;
@@ -39,13 +46,12 @@ export default {
         }, goToPage(page) { // 跳至該分頁
             this.currentPage = page;
         }, editItem(item) {
-            // 執行修改操作
-            // 可以將 item 傳遞到後端方法進行處理
-            console.log('修改', item);
+            console.log(item)
+            this.$emit('edit', item); // 触发edit事件并将索引作为参数传递给父组件
         }, deleteItem(item) {
-            // 執行刪除操作
-            // 可以將 item 傳遞到後端方法進行處理
-            console.log('刪除', item);
+            this.$emit('delete', item); // 触发delete事件并将索引作为参数传递给父组件
+        }, completeItem(item) {
+            this.$emit('complete', item); // 触发complete事件并将索引作为参数传递给父组件
         }
     }
 };
@@ -57,7 +63,7 @@ export default {
             <thead> <!-- 標題名稱 -->
                 <tr class="table-dark"> <!-- 使用迴圈印出"標題名稱" -->
                     <th v-for="column in columns" :key="column">{{ column }}</th>
-                    <th> <!-- 新增 "操作" 欄位 -->
+                    <th v-if="showControl"> <!-- 新增 "操作" 欄位 -->
                         <div>
                             <input type="checkbox" id='control' value="false" v-model="control">
                             <label for="control">操作</label>
@@ -68,11 +74,13 @@ export default {
             <tbody> <!-- 表個內容 -->
                 <tr v-for="(item, index) in paginatedData" :key="item.id"> <!-- 印出該分頁筆數(列) -->
                     <td v-for="column in columns" :key="column">{{ item[column] }}</td> <!-- 印出該分頁對應標題的內容(欄) -->
-                    <td> <!-- 進行編輯修改操作的按鈕 -->
+                    <td v-if="showControl"> <!-- 進行編輯修改操作的按鈕 -->
                         <button class="btn btn-primary py-0" v-if="control && showEditButton"
                             @click="editItem(item)">変更</button>
                         <button class="btn btn-danger py-0" v-if="control && showDeleteButton"
                             @click="deleteItem(item)">削除</button>
+                        <button class="btn btn-secondary py-0" v-if="control && showCompleteButton"
+                            @click="completeItem(item)">完了</button>
                     </td>
                 </tr>
             </tbody>
