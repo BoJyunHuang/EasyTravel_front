@@ -1,15 +1,30 @@
 <script>
 import Modal from "../components/Modal.vue"
+import TableView from "../components/Table.vue"
 export default {
   components: {
-    Modal
+    Modal,
+    TableView
   },
   data() {
     return {
+      vehicleColumn: [`licensePlate`, `category`, `cc`, `startServingDate`, `latestCheckDate`, `available`, `city`, `location`, `odo`, `price`],
+      vehicleData: [],
+      // table button 編輯按鈕
+      showEditButton: true,
+      showDeleteButton: true,
+      // modal
       isAddCarShow: false,
       isScrapCarShow: false,
+      isUpdateCarShow: false,
+      modalTitle: null,
       ccRange: "bike : 0\nscooter : 1~250\nmotorcycle : 251~550\nheavy motorcycle : >550\nsedan/ven/suv : 自定義(1200~6600)",
-      title: null
+      // fetch / find by category
+      carInfo: document.getElementById("carInfo"),
+      categoryInput: document.getElementById("categoryInput"),
+      // fetch / add car
+      plateNumInput
+
     }
   },
   methods: {
@@ -18,7 +33,44 @@ export default {
     },
     switchScrapCar() {
       this.isScrapCarShow = !this.isScrapCarShow
+    },
+    switchUpdateCar(){
+      this.isUpdateCarShow = !this.isUpdateCarShow
+    },
+    // find by category
+    findCar() {
+      let body = {
+        "category" : categoryInput.value
+      }
+      // console.log("click")
+      fetch ("http://localhost:8080/find_car_by_category", {
+        method: "POST",
+        headers: {
+          "Content-type" : "application/json"
+        },
+        body: JSON.stringify(body)
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        if(data.message == "Success!"){
+          this.vehicleData = data.vehicleList
+        }
+      })
     }
+
+
+
+  },
+  mounted() {
+    // 找所有車輛 ( 網頁一進去自動顯示 )
+    fetch("http://localhost:8080/find_all_car")
+    .then(res => res.json())
+    .then(data => {
+      console.log(data.vehicleList)
+      this.vehicleData = data.vehicleList
+    })
+    
   }
 }
 </script>
@@ -27,9 +79,11 @@ export default {
   <div class="input-area d-flex flex-column p-4 h-100">
 
     <div class="btn-area align-items-center justify-content-md-between mb-3">
+      <!-- find by category -->
       <div class="find-by-category">
       <span class="my-2 mx-3 align-items-center">車種</span>
       <select name="車種" id="categoryInput" class="mb-2 me-3">
+        <option>--------</option>
         <option value="bike">bike</option>
         <option value="scooter">scooter</option>
         <option value="motorcycle">motorcycle</option>
@@ -39,21 +93,28 @@ export default {
         <option value="suv">suv</option>
       </select>
 
-      <button class="workBtn btn btn-success">検索</button>
+      <button class="workBtn btn btn-success" @click="findCar">検索</button>
       </div>
 
+      <!-- button -->
       <button type="button" class="functionBtn btn btn-success w-25" @click="switchAddCar">新規登錄</button>
-      <button type="button" class="functionBtn btn btn-success w-25" @click="switchScrapCar">報廢</button>
-      <!-- <button type="button" class="functionBtn btn btn-success w-25" @click="switchFindCar">車種で検索</button> -->
+      <button type="button" class="functionBtn btn btn-success w-25" @click="switchScrapCar">車の廃棄</button>
     </div>
 
+    <!-- table -->
+    <div class="carInfoTable">
+      <TableView :columns="vehicleColumn" :data="vehicleData" :showEditButton="showEditButton"
+            :showDeleteButton="showDeleteButton" />
+    </div>
+
+    <!-- Modal -->
     <!-- Add Car -->
     <Modal v-if="isAddCarShow" @pushOutside="switchAddCar">
       <h2 class="mt-4 text-vehicle fw-bold">新規登錄</h2>
       <table class="h-50">
         <tr class="my-2">
           <th>車両番号</th>
-          <td><input type="text"></td>
+          <td><input type="text" id="plateNumInput"></td>
         </tr>
         <tr class="my-2">
           <th>車種</th>
@@ -71,11 +132,11 @@ export default {
         </tr>
         <tr class="my-2">
           <th :title="ccRange">タンク容量</th>
-          <td><input type="text" id="tank" :title="ccRange"></td>
+          <td><input type="number" id="tankInput" :title="ccRange"></td>
         </tr>
         <tr class="my-2">
           <th>値段</th>
-          <td><input type="text" id="price"></td>
+          <td><input type="number" id="priceInput"></td>
         </tr>
       </table>
 
@@ -86,14 +147,14 @@ export default {
     <!-- Scrap Car -->
     <Modal v-if="isScrapCarShow" @pushOutside="switchScrapCar">
       <h2 class="mt-4 text-vehicle fw-bold">車の廃棄</h2>
-      <table class="table">
+      <table class="table table-hover">
         <thead>
           <tr>
             <th scope="col">車両番号</th>
             <th scope="col">車種</th>
             <th scope="col">追加日</th>
             <th scope="col">最新検査日</th>
-            <th scope="col">レンタル状態</th>
+            <th scope="col">ステータス</th>
             <th scope="col">走行距離</th>
             <!-- <th scope="col">値段</th> -->
             <th scope="col">廃棄</th>
@@ -105,29 +166,10 @@ export default {
       </table>
     </Modal>
 
-      <!-- table -->
-
-    <div class="carInfoTable">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">車牌號碼</th>
-            <th scope="col">車種</th>
-            <th scope="col">新增日期</th>
-            <th scope="col">最新檢查日</th>
-            <th scope="col">可租借狀態</th>
-            <th scope="col">總里程數</th>
-            <th scope="col">價格</th>
-            <th scope="col">修改</th>
-          </tr>
-        </thead>
-        
-        <tbody id="carInfo">
-        </tbody>
-        
-      </table>
-    </div>
-
+    <!-- Update Car -->
+    <Modal v-if="isUpdateCarShow" @pushOutside="switchUpdateCar">
+      <h2 class="mt-4 text-vehicle fw-bold">車の情報変更</h2>
+    </Modal>
 
   </div>
 </template>
