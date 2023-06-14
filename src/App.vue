@@ -26,7 +26,7 @@ export default {
 
 <style lang="scss" scoped>
 .main-area {
-  width: auto;
+  width: 100vw;
   height: 1200px;
   padding: 2rem;
 

@@ -62,7 +62,7 @@ export default {
         <table class="table mb-5 table-striped table-fixed table-hover">
             <thead> <!-- 標題名稱 -->
                 <tr class="table-dark"> <!-- 使用迴圈印出"標題名稱" -->
-                    <th v-for="column in columns" :key="column">{{ column }}</th>
+                    <th v-for="column in columns" :key="key">{{ column.column }}</th>
                     <th v-if="showControl"> <!-- 新增 "操作" 欄位 -->
                         <div>
                             <input type="checkbox" id='control' value="false" v-model="control">
@@ -73,7 +73,7 @@ export default {
             </thead>
             <tbody> <!-- 表個內容 -->
                 <tr v-for="(item, index) in paginatedData" :key="item.id"> <!-- 印出該分頁筆數(列) -->
-                    <td v-for="column in columns" :key="column">{{ item[column] }}</td> <!-- 印出該分頁對應標題的內容(欄) -->
+                    <td v-for="column in columns" :key="key">{{ item[column.key] }}</td> <!-- 印出該分頁對應標題的內容(欄) -->
                     <td v-if="showControl"> <!-- 進行編輯修改操作的按鈕 -->
                         <button class="btn btn-primary py-0" v-if="control && showEditButton"
                             @click="editItem(item)">変更</button>
