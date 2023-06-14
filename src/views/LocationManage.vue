@@ -1,20 +1,34 @@
 <script>
 import TableView from "../components/Table.vue"
 import Modal from "../components/Modal.vue"
+import MessageModal from "../components/messageModal.vue"
 export default {
     components: {
         TableView, // 帶入表格元件
-        Modal // 帶入跳出式視窗元件
+        Modal, // 帶入跳出式視窗元件
+        MessageModal // 回覆視窗
     },
     data() {
         return {
             tableColumns: ['city', 'location', 'bikeAmount', 'motorcycleAmount', 'carAmount'], // 表格標題
             locationsData: [], // 表格內容
             searchText: '', // 搜尋關鍵字
+
+            isShow: false, // 顯示跳出式視窗
+            isMessage: false, // 顯示回覆式視窗
+            modalType: '', // 跳出式視窗形式
+            item: {}, // 從table傳回來的資料
+            message: '', // 執行後端方法的回覆
+
             showEditButton: true,  // 是否顯示修改按鈕
-            showDeleteButton: true,  // 是否顯示刪除按鈕
             showControl: true, // 顯示操作行
-            isShow: false // 顯示跳出式視窗
+
+            city: '',
+            location: '',
+            bikeAmount: '',
+            motorcycleAmount: '',
+            carAmount: ''
+
         };
     },
     mounted() { // 預設執行方法，進入頁面後隨即執行，後端-顯示所有站點資料
@@ -31,8 +45,54 @@ export default {
             return this.locationsData.filter(item => // 將資料進行過濾，回傳含關鍵字資料
                 item.city.includes(keyword)
             )
-        }, switchModal() { // 跳出式視窗顯示與否
-            this.isShow = !this.isShow
+        }, switchModal(type) { // 跳出式視窗顯示與否
+            this.isShow = true
+            this.modalType = type
+        }, finaladd() {
+            const body = {
+                "city": this.city,
+                "location": this.location,
+                "bikeAmount": this.bikeAmount,
+                "motorcycleAmount": this.motorcycleAmount,
+                "motorcycleAmount": this.carAmount
+            }
+            fetch("http://localhost:8080/add_stop", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            }).then(res => res.json())
+                .then(data => this.message = data.message)
+            this.isMessage = true
+        }, closeModal() {
+            this.isShow = false
+            item = null
+        }, editItem(item) {
+            this.isShow = true
+            this.modalType = 'edit'
+            this.item = item
+        }, finaledit() {
+            const body = {
+                "city": this.item.city,
+                "location": this.item.location,
+                "bike_amount": this.bikeAmount,
+                "motorcycle_amount": this.motorcycleAmount,
+                "car_amount": this.carAmount
+            }
+            fetch("http://localhost:8080/renew_amount", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            }).then(res => res.json())
+                .then(data => this.message = data.message)
+            this.isMessage = true
+        }, Reload() {
+            this.isShow = false
+            this.isMessage = false
+            window.location.reload()
         }
     },
     watch: { // 事件監聽
@@ -72,37 +132,69 @@ export default {
             <button type="button" class="btn btn-success mb-2 px-3" @click="switchModal">サイト追加</button>
         </div>
         <p>※bikeAmountは自転車類の数、motorcycleAmountは二輪車の数、carAmountは四輪車の数を表しています。</p>
-        <TableView :columns="tableColumns" :data="filteredData" :showEditButton="showEditButton"
-            :showDeleteButton="showDeleteButton" :showControl="showControl" />
-        <Modal v-if="isShow" @pushOutside="switchModal">
+        <TableView :columns="tableColumns" :data="filteredData" :showEditButton="showEditButton" :showControl="showControl"
+            @edit="editItem" @delete="" />
+        <Modal v-if="isShow && modalType == 'add'" @pushOutside="closeModal">
             <H2 class="m-2">サイト追加</H2>
             <table class="m-3 ">
                 <tr>
                     <th><label for="city" class="my-2">都道府県</label></th>
-                    <td><input type="text" placeholder="ex:東京都" id="city"></td>
+                    <td><input type="text" placeholder="ex:東京都" id="city" v-model="city"></td>
                 </tr>
                 <tr>
                     <th><label for="location" class="my-2">ロケーション</label></th>
-                    <td><input type="text" min="0" title="会社の拠点" id="location"></td>
+                    <td><input type="text" min="0" title="会社の拠点" id="location" v-model="location"></td>
                 </tr>
                 <tr>
                     <th><label for="bike_amount" class="my-2">自転車類の数</label></th>
-                    <td><input type="number" min="0" title="0以上を含む" id="bike_amount"></td>
+                    <td><input type="number" min="0" title="0以上を含む" id="bike_amount" v-model="bikeAmount"></td>
                 </tr>
                 <tr>
                     <th><label for="motorcycle_amount" class="my-2">二輪車の数</label></th>
-                    <td><input type="number" min="0" title="0以上を含む" id="motorcycle_amount"></td>
+                    <td><input type="number" min="0" title="0以上を含む" id="motorcycle_amount" v-model="motorcycleAmount"></td>
                 </tr>
                 <tr>
                     <th><label for="car_amount" class="my-2">四輪車の数</label></th>
-                    <td><input type="number" min="0" title="0以上を含む" id="car_amount"></td>
+                    <td><input type="number" min="0" title="0以上を含む" id="car_amount" v-model="carAmount"></td>
                 </tr>
             </table>
             <div class="w-25 d-flex justify-content-between">
-                <button type="button" class="btn btn-success btn-sm px-3">決定</button>
+                <button type="button" class="btn btn-success btn-sm px-3" @click="finaladd">決定</button>
                 <button type=" button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
             </div>
         </Modal>
+        <Modal v-if="isShow && modalType == 'edit'" @pushOutside="closeModal">
+            <H2 class="m-2">サイト調整</H2>
+            <table class="m-3 ">
+                <tr>
+                    <th><label for="city" class="my-2">都道府県</label></th>
+                    <td>{{ item.city }}</td>
+                </tr>
+                <tr>
+                    <th><label for="location" class="my-2">ロケーション</label></th>
+                    <td>{{ item.location }}</td>
+                </tr>
+                <tr>
+                    <th><label for="bike_amount" class="my-2">自転車類の数</label></th>
+                    <td><input type="number" id="bike_amount" v-model="bikeAmount"></td>
+                </tr>
+                <tr>
+                    <th><label for="motorcycle_amount" class="my-2">二輪車の数</label></th>
+                    <td><input type="number" id="motorcycle_amount" v-model="motorcycleAmount"></td>
+                </tr>
+                <tr>
+                    <th><label for="car_amount" class="my-2">四輪車の数</label></th>
+                    <td><input type="number" id="car_amount" v-model="carAmount"></td>
+                </tr>
+            </table>
+            <div class="w-25 d-flex justify-content-between">
+                <button type="button" class="btn btn-success btn-sm px-3" @click="finaledit">決定</button>
+                <button type=" button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
+            </div>
+        </Modal>
+        <MessageModal v-if="isMessage" @getReady="Reload">
+            <p>{{ message }}</p>
+        </MessageModal>
     </div>
 </template>
 

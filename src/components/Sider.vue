@@ -76,7 +76,10 @@ export default {
             </h2>
             <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive"
                 data-bs-parent="#accordionFlushExample">
-                <RouterLink class="link" to="/finance">レポート</RouterLink>
+                <div class="d-flex flex-column">
+                    <RouterLink class="link" to="/finance">レポート</RouterLink>
+                    <RouterLink class="link" to="/finance-chart">チャート</RouterLink>
+                </div>
             </div>
         </div>
     </div>
