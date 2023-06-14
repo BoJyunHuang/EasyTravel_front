@@ -108,6 +108,10 @@ const router = createRouter({
           path: '/finance',
           name: 'finance',
           component: () => import("../views/Finance.vue")
+        }, {
+          path: '/finance-chart',
+          name: 'finance-chart',
+          component: () => import("../views/FinanceChart.vue")
         }
       ]
     }
