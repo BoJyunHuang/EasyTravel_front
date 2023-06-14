@@ -35,8 +35,8 @@ export default {
                 <div class="d-flex flex-column">
                     <RouterLink class="link" to="/AddCar">追加</RouterLink>
                     <RouterLink class="link" to="/ResearchCar">検索</RouterLink>
-                    <RouterLink class="link" to="/DeleteCar">削除</RouterLink>
-                    <RouterLink class="link" to="/FinishCar">結單</RouterLink>
+                    <!-- <RouterLink class="link" to="/DeleteCar">削除</RouterLink>
+                    <RouterLink class="link" to="/FinishCar">結單</RouterLink> -->
                 </div>
             </div>
         </div>
