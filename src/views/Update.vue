@@ -1,5 +1,11 @@
 <script>
+// import跳出視窗的元件
+import Modal from '../components/Modal.vue';
 export default {
+     // 宣告跳出視窗元件
+     components: {
+          Modal
+     },
      data() {
           return {
                // 自己宣告 ，用於雙向綁定
@@ -8,12 +14,21 @@ export default {
                pwd: null,
                birthday: null,
                scooter: false,
-               car: false
+               car: false,
+               // 宣告跳出視窗的內容
+               message: "",
+               // 宣告跳出視窗頁面的v-if布林值
+               isShow: false
           }
      },
      methods: {
-          // 要分開方法:舊資料&連結API
-          medata() {
+          // 開啟&關閉 插入的視窗方法
+          change() {
+               this.isShow = !this.isShow;
+          }
+          // 要分開方法:秀出舊資料&連結API
+          // 1.該會員資訊
+          , medata() {
                // 從session取出key值(暫存的會員資料)
                let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
                console.log(userInfo);
@@ -43,18 +58,19 @@ export default {
                     testBut4.checked = true
                }
           },
+          // 2.連結API,修改資訊
           meUpdate() {
-               // 修改預設的汽機車駕照true/false
+               // (1)修改預設的汽機車駕照true/false
+               // 抓節點
                let scoYes = document.getElementById("ip1");
-               let scoNo = document.getElementById("ip2");
                let motoYes = document.getElementById("ip3");
-               let motoNO = document.getElementById("ip4");
+               // 宣告汽機車預設值為false(下方body有設對應REQ)
                let scoSet = false;
                let motoSet = false;
+
                if (scoYes.checked == true) {
                     scoSet = true
-                    // console.log(scoSet)
-               } else{
+               } else {
                     scoSet = false
                }
                if (motoYes.checked == true) {
@@ -64,21 +80,22 @@ export default {
                }
 
 
-
-
-
+               // 抓登入時暫存的資訊session,利用key值
                let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
 
                const body = {
-                    // "REQ名稱"
+                    // "後端REQ名稱":key值.指定的帳密值
                     account: userInfo.account,
                     password: userInfo.password,
+                    //  "後端REQ名稱":前端修改傳回的生日
                     birthday: this.birthday,
+                    // "後端REQ名稱":前端自定義的布林值
                     motorcycleLicense: scoSet,
                     drivingLicense: motoSet
 
                }
                console.log(body)
+               // 連接後端API方法
                fetch("http://localhost:8080/user_info_update", {
 
                     method: "POST",//預設是get
@@ -92,14 +109,24 @@ export default {
                     .then(function (response) {
                          return response.json()
                     })
-                    .then(function (data) {
+                    // .then(function (data) {
+                    //      console.log(data)
+                    // })
+                    .then((data) => {
                          console.log(data)
+                         // 從後端找到跳出視窗要顯示的訊息後,回傳前端
+                         this.message = data.message
+                         // 做change:開啟或關閉的方法
+                         this.change();
                     })
 
-          },
-          // 刷新頁面做的事情
+          }
+
      },
+     //  mounted:刷新頁面做的事情
+     // mounted有箭頭抓不到this
      mounted() {
+          // 刷新頁面(進入頁面)時做一次此方法
           this.medata()
      }
 }
@@ -107,7 +134,9 @@ export default {
 <template>
      <div class="wrap-update">
           <div class="title-update">
-               <h4>会員情報変更</h4>
+               <h4 class="border-bottom ms-3" style="height: auto;width: 150px;">会員情報変更</h4>
+               <p class="note">※名前、アカウント、パスワードは変更できません。</p>
+               <p class="note ms-3">※もし変更をご希望の場合はEasyTravelでご連絡ください。</p>
           </div>
 
           <div class="update-area">
@@ -150,7 +179,13 @@ export default {
 
 
                     <div class="btn-update">
-                         <button type="button" @click="meUpdate">変更</button>
+                         <button type="button" @click="meUpdate" class="upbtn text-white"
+                              style="height: auto;width: 80px;">変更</button>
+                         <!-- 元件洞口 -->
+                         <Modal v-if="isShow" @pushOutside="change">
+
+                              <h2>{{ message }}</h2>
+                         </Modal>
                     </div>
                </div>
 
@@ -162,12 +197,12 @@ export default {
 <style lang="scss" scoped>
 .wrap-update {
      .title-update {
-          background-color: #b30e0e;
-
-          width: 100vw;
 
           text-align: center;
           font-size: 1.5rem;
+          .note{
+               font-size: 1rem;
+          }
      }
 
      .update-area {
@@ -178,8 +213,19 @@ export default {
           .btn-update {
                padding: 10% 25%;
 
+               .upbtn {
+                    height: 35px;
+                    width: 300px;
+                    border-radius: 5px;
+                    background: rgb(17, 61, 184);
+                    background: linear-gradient(90deg, rgba(17, 61, 184, 0.8354978354978355) 12%, rgb(52, 111, 206) 62%, rgb(33, 94, 185) 83%);
+                    border-radius: 5%;
+               }
 
           }
      }
 }
+h2 {
+          margin: auto auto;
+     }
 </style>

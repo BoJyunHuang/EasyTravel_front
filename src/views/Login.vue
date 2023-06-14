@@ -1,14 +1,28 @@
 <script>
+// import跳出視窗的元件
+import Modal from '../components/Modal.vue';
 export default {
+     // 宣告跳出視窗元件
+     components: {
+          Modal
+     },
      data() {
           return {
                // 自己宣告 ，用於雙向綁定
                account: null,
                pwd: null,
+               // 宣告跳出視窗的內容
+               message: "",
+               // 宣告跳出視窗頁面的v-if布林值
+               isShow: false
           }
      },
      methods: {
-          login: (acc, pwd) => {
+          // 開啟&關閉 插入的視窗方法
+          change() {
+               this.isShow = !this.isShow;
+          },
+          login(acc, pwd){
                const body = {
                     // "REQ名稱"
                     account: acc,
@@ -31,13 +45,15 @@ export default {
                     .then(function (response) {
                          return response.json()
                     })
-                    .then(function (data) {
+                    .then((data) => {
                          console.log(data)
-                         // --
+                         // 從後端找到跳出視窗要顯示的訊息後,回傳前端
+                         this.message = data.message
+                         // 做change:開啟或關閉的方法
+                         this.change();
+
                          // session set (key:你要綁的東西)
                          sessionStorage.setItem("userInfo", JSON.stringify(data.userInfo));
-                         // --
-                         // sessionStorage.setItem("userInfo", data)
                          // let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
                          // console.log(userInfo.name)
                     })
@@ -51,64 +67,79 @@ export default {
 
 </script>
 <template>
-     <div class="wrap-login d-flex  flex-column justify-content-center align-items-center">
-          <div class="title-login">
-               <h2 class="text-white">ログイン</h2>
-          </div>
-          <!-- <p>{{ login }}</p> -->
-          <div class="login-area border border-danger rounded mt-4" style="height: auto;width: 350px;">
-               <div>
+     <div class="wrap">
 
-                    <div class="account-login">
-                         <h4 class="mt-5 text-white">アカウント :</h4>
-                         <input type="text" v-model="account" class="logInput ms-5">
+          <div class="wrap-login d-flex  flex-column justify-content-center align-items-center">
+               <div class="title-login">
+                    <h2 class="border-bottom rounded border-4 text-center mb-3">ログイン</h2>
+               </div>
+               <!-- <p>{{ login }}</p> -->
+               <div class="login-area mt-4" style="height: auto;width: 350px;">
+                    <div>
+
+                         <div class="account-login mt-5">
+                              <h4 class="ms-5">アカウント :</h4>
+                              <input type="text" v-model="account" class="logInput ms-5"  placeholder="アカウントを入力してください">
+                         </div>
+                         <div class="pwd-login mt-5">
+                              <h4 class="ms-5">パスワード :</h4>
+
+                              <input type="text" v-model="pwd" class="logInput ms-5"  placeholder="パスワードを入力してください">
+
+                         </div>
+
+
+                         <div class="btnlogin">
+                              <button class="log-btn mt-5" type="button" @click="login(this.account, this.pwd)">ログイン</button>
+                              <Modal v-if="isShow" @pushOutside="change">
+                                   <h2>{{ message }}</h2>
+                              </Modal>
+                              
+                         </div>
+                         
                     </div>
-                    <div class="pwd-login">
-                         <h4 class="text-white">パスワード :</h4>
 
-                         <input type="text" v-model="pwd" class="logInput ms-5">
-
-                    </div>
-
-
-                    <div class="btnlogin">
-                         <button class="log-btn mt-5" type="button" @click="login(this.account, this.pwd)">ログイン</button>
-                    </div>
                </div>
 
           </div>
+          <div class="other">
+               <h5 class="text-center mt-5 mb-4">登録方法</h5>
+               <h5 class="ms-5">①会員情報を入力</h5>
+               <p class="ms-5">画面の指示に従い、会員情報を入力してください。</p>
+               <h5 class="ms-5">②会員プランを選択</h5>
+               <p class="ms-5">料金プランをお選びください。</p>
+               <p class="ms-5">詳細は、料金表をご確認ください。
+                    ※ご登録後、「アカウント」メニューからプラン変更が可能です。</p>
+          </div>
+          <h3 class="text-center">Welcome back！</h3>
 
      </div>
 </template>
 
 <style lang="scss" scoped>
 .wrap-login {
+     h2 {
+          margin: auto auto;
+          height: 30px;
+     }
+
      .title-login {
-          background-color: #C1395E;
-          border-radius: 5px;
+
           height: 35px;
           width: 150px;
           display: flex;
           justify-content: center;
-          // margin-left: 50%;
 
-
-          // width: 100vw;
-          // border: 0.3rem solid black;
-          // text-align: center;
-          // font-size: 1.5rem;
      }
 
      .login-area {
           display: flex;
-          // flex-direction: column;
-          justify-content: center;
-          background-color: #C1395E;
 
-          // align-items: center;
+          justify-content: center;
+
           .logInput {
-               border-radius: 5px;
-               border: 1px solid white;
+               border-radius: 3px;
+               width: 300px;
 
           }
 
@@ -119,7 +150,7 @@ export default {
                     border-radius: 5px;
                     // background-color: #C1395E;
                     border: 1px solid white;
-                    margin-left: 50%;
+                    margin-left: 65%;
                     height: 35px;
                     width: 100px;
                }
@@ -127,5 +158,9 @@ export default {
 
           }
      }
+}
+
+h3 {
+     margin-top: 25%;
 }
 </style>
