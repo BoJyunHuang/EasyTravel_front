@@ -52,7 +52,7 @@ export default {
 <template>
     <div class="wrap-search">
         <div class="title-search">
-            <h4>會員資訊</h4>
+            <h4 class="">会員資訊</h4>
         </div>
 
         <div class="search-area">
@@ -103,10 +103,8 @@ export default {
 <style lang="scss" scoped>
 .wrap-search {
     .title-search {
-        background-color: #b30e0e;
-
-        width: 100vw;
-        // border: 0.3rem solid black;
+        height: auto;
+        border-radius: 5%;
         text-align: center;
         font-size: 1.5rem;
     }

@@ -7,7 +7,7 @@ export default {
 </script>
 
 <template>
-    <header>
+    <header class="d-flex">
         <div class="upper">
             <img src="../../public/logo2.png" alt="" class="icon">
             <div class="button-area">
@@ -16,6 +16,7 @@ export default {
                     <RouterLink class="link" to="/register">新規会員登録</RouterLink>
                     <RouterLink class="link" to="/administrator">管理者</RouterLink>
                 </div>
+                <img src=".." alt="">
                 <div class="link-area">
                     <!-- 各大項連結 -->
                     <RouterLink class="link" to="/">イージートラベル</RouterLink>
@@ -35,9 +36,8 @@ header {
     height: 150px;
     padding: 2rem;
     // background-color: #5b39c1;
-    background: rgb(2, 0, 36);
-    background: linear-gradient(90deg, rgb(0, 13, 36) 0%, rgba(9, 70, 121, 1) 35%, rgba(0, 172, 255, 1) 100%);
-
+    background: rgb(30, 26, 98);
+    background: linear-gradient(90deg, rgba(30, 26, 98, 0.9164915966386554) 0%, rgba(9, 70, 121, 1) 35%, rgba(18, 162, 231, 1) 100%);
     font-size: 1.5rem;
     display: flex;
     align-items: center;
@@ -71,6 +71,7 @@ header {
                 margin-left: 4.5%;
 
             }
+
             .link {
                 text-decoration: none;
                 color: black;
@@ -78,7 +79,7 @@ header {
                 transition: 0.3s;
                 margin: 0 1rem;
                 color: white;
-        
+
                 &:hover {
                     color: #79dfb1;
                 }

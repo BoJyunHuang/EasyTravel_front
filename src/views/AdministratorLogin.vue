@@ -34,68 +34,72 @@ export default {
 
 </script>
 <template>
-     <div class="wrap-login d-flex  flex-column justify-content-center align-items-center">
-          <div class="title-login">
-               <h2 class="text-white">管理者ログイン</h2>
-          </div>
-          <!-- <p>{{ login }}</p> -->
-          <div class="login-area border border-danger rounded mt-4" style="height: auto;width: 350px;">
-               <div>
+     <nav>
+          <div class="wrap">
 
-                    <div class="account-login">
-                         <h4 class="mt-5 text-white">アカウント :</h4>
-                         <input type="text" v-model="account" class="logInput ms-5">
+               <div class="wrap-login d-flex  flex-column justify-content-center align-items-center">
+                    <div class="title-login">
+                         <h2 class="border-bottom rounded border-4 text-center mb-3">管理者</h2>
+                         <h2 class="border-bottom rounded border-4 text-center mb-3">ログイン</h2>
                     </div>
-                    <div class="pwd-login">
-                         <h4 class="text-white">パスワード :</h4>
+                    
+                    <div class="login-area mt-4" style="height: auto;width: 350px;">
+                         <div>
 
-                         <input type="text" v-model="pwd" class="logInput ms-5">
+                              <div class="account-login">
+                                   <h4 class="mt-5">アカウント :</h4>
+                                   <input type="text" v-model="account" class="logInput ms-5">
+                              </div>
+                              <div class="pwd-login mt-5">
+                                   <h4 class="">パスワード :</h4>
+
+                                   <input type="text" v-model="pwd" class="logInput ms-5">
+
+                              </div>
+
+
+                              <div class="btnlogin">
+                                   <button class="log-btn mt-5" type="button"
+                                        @click="login(this.account, this.pwd)">ログイン</button>
+                              </div>
+                         </div>
 
                     </div>
 
-
-                    <div class="btnlogin">
-                         <button class="log-btn mt-5" type="button" @click="AminiLogin">ログイン</button>
-                         <RouterLink class="link text-white" to="/administrator">
-                              <button class="log-btn mt-5" type="button" id="testBut" style="display: none;">ログイン</button>
-                         </RouterLink>
-
-                    </div>
                </div>
 
-          </div>
+               <h3 class="text-center">Welcome back！</h3>
 
-     </div>
+          </div>
+     </nav>
+     
 </template>
 
 <style lang="scss" scoped>
+
 .wrap-login {
+     h2 {
+          margin: auto auto;
+          height: 30px;
+     }
+
      .title-login {
-          background-color: #C1395E;
-          border-radius: 5px;
-          height: 40px;
-          width: 300px;
+          
+          height: 50px;
+          width: 150px;
           display: flex;
           justify-content: center;
-          // margin-left: 50%;
-
-
-          // width: 100vw;
-          // border: 0.3rem solid black;
-          // text-align: center;
-          // font-size: 1.5rem;
+          
      }
 
      .login-area {
           display: flex;
-          // flex-direction: column;
+          
           justify-content: center;
-          background-color: #C1395E;
-
-          // align-items: center;
+          
           .logInput {
                border-radius: 5px;
-               border: 1px solid white;
+               border: 1px solid black;
 
           }
 
@@ -106,7 +110,7 @@ export default {
                     border-radius: 5px;
                     // background-color: #C1395E;
                     border: 1px solid white;
-                    margin-left: 50%;
+                    margin-left: 65%;
                     height: 35px;
                     width: 100px;
                }
@@ -115,4 +119,7 @@ export default {
           }
      }
 }
+     h3{
+          margin-top: 25%;
+     }
 </style>

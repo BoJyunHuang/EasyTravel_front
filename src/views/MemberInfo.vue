@@ -17,6 +17,7 @@ export default {
                <Left />
           </div>
           <div class="main-page">
+               <!-- 這是 -->
                <RouterView />
           </div>
      </div>
@@ -24,17 +25,17 @@ export default {
 
 <style lang="scss" scoped>
 .wrap {
-     width: 100vw;
+     // width: 100vw;
      display: flex;
      justify-content: space-between;
 
      .link {
-          width: 20%;
+          width: 15%;
      }
 
      .main-page {
-          width: 80%;
-          border: 1px solid black;
+          width: 85%;
+          // border: 1px solid black;
      }
 }
 </style>

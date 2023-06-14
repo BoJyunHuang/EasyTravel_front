@@ -8,26 +8,6 @@ export default {
 }
 </script>
 <template>
-     <!-- <div class="out"> -->
-
-          <!-- <div class="p-4">
-                              <RouterLink class="link fs-6" to="/active">アクティブ化</RouterLink>
-                         </div> -->
-          <!-- <div class="p-4">
-                              <RouterLink class="link fs-6" to="/member-search">お問い合わせ</RouterLink>
-                         </div> -->
-          <!-- <div class="p-4">
-               改訂会員情報 -->
-               <!-- <RouterLink class="link fs-6" to="/update">会員情報変更</RouterLink>
-          </div>
-          <div class="p-4">
-               <RouterLink class="link fs-6" to="/upgrade">有料会員</RouterLink>
-
-          </div>
-          <div class="p-4">
-               <RouterLink class="link fs-6" to="/deleteVIP">取り消すVIP</RouterLink>
-          </div> -->
-     <!-- </div> -->
      <div class="accordion accordion-flush" id="accordionFlushExample">
           <div class="accordion-item">
                <h2 class="accordion-header" id="flush-headingOne">
@@ -42,9 +22,6 @@ export default {
                          <RouterLink class="linkUser fs-6" to="/update">会員情報変更</RouterLink>
                          <RouterLink class="linkUser fs-6" to="/upgrade">有料会員</RouterLink>
                          <RouterLink class="linkUser fs-6" to="/deleteVIP">取り消すVIP</RouterLink>
-                         <!-- <RouterLink class="link" to="/vehicle-add-car">新增車輛</RouterLink> -->
-                         <!-- <RouterLink class="link" to="/vehicle-find-car-and-update">修改車輛</RouterLink> -->
-                         <!-- <RouterLink class="link" to="/vehicle-scrap-car">報廢車輛</RouterLink> -->
                     </div>
                </div>
           </div>
