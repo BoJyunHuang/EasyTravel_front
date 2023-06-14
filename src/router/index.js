@@ -84,15 +84,18 @@ const router = createRouter({
           path: '/ResearchCar',
           name: 'ResearchCar',
           component: () => import("../views/researchCar.vue")
-        }, {
-          path: '/DeleteCar',
-          name: 'DeleteCar',
-          component: () => import("../views/deleteCar.vue")
-        }, {
-          path: '/FinishCar',
-          name: 'FinishCar',
-          component: () => import("../views/finishCar.vue")
-        }, {
+        }, 
+        // {
+        //   path: '/DeleteCar',
+        //   name: 'DeleteCar',
+        //   component: () => import("../views/deleteCar.vue")
+        // }, 
+        // {
+        //   path: '/FinishCar',
+        //   name: 'FinishCar',
+        //   component: () => import("../views/finishCar.vue")
+        // }, 
+        {
           path: '/feeManager',
           name: 'feeManager',
           component: () => import("../views/FeeManage.vue"),

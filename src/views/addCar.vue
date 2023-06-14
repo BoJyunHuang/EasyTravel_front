@@ -12,25 +12,28 @@
         <button type="button" class="btn btn-success mb-2 px-3" @click="switchReasonCodeModal">車両修理の原因コード</button>
       </div>
     </div>
-    <p>※bikeAmountは自転車類の数、motorcycleAmountは二輪車の数、carAmountは四輪車の数を表しています。</p>
-    <TableView :columns="tableColumns" :data="formattedData" :showEditButton="showEditButton"
-      :showDeleteButton="showDeleteButton" />
+
+    <TableView :columns="tableColumns" :data="formattedData" :showEditButton="showEditButton" :showControl="showControl"
+      :showDeleteButton="showDeleteButton" @delete="deleteItem" :showCompleteButton="showCompleteButton"
+      @complete="finishItem" />
     <Modal v-if="isShow" @pushOutside="switchModal">
       <div class="con">
+
         <h2 class="m-2">以下の情報を入力してください。</h2>
+
         <table class="m-3 ">
           <tr>
             <th><label for="city" class="my-2">ナンバープレート</label></th>
-            <td><input type="text" placeholder="ex:DB02" id="city"></td>
+            <td><input type="text" placeholder="ex:DB02" id="city" v-model="licensePlate"></td>
           </tr>
         </table>
         <div class="cont">
-          <button type="button" class="btn btn-success btn-sm px-3">確認</button>
+          <button type="button" class="btn btn-success btn-sm px-3" @click="finaladd">確認</button>
           <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
         </div>
       </div>
     </Modal>
-  
+
     <Modal v-if="isReasonCodeModalShow" @pushOutside="switchReasonCodeModal">
       <div class="con">
         <h2 class="m-2">車両修理の原因コード</h2>
@@ -94,28 +97,100 @@
         </table>
       </div>
     </Modal>
+    <Modal v-if="isShow && modalType == 'delete'" @pushOutside="closeModal">
+      <H2 class="m-2">修理フォームの削除</H2>
+      <table class="m-3 border">
+        <tr>
+          <th><label class="my-2">車牌</label></th>
+          <td>{{ item.licensePlate }}</td>
+        </tr>
+        <tr>
+          <th><label class="my-2">開始維修時間</label></th>
+          <td>{{ item.startTime.replace('T', ' ') }}</td>
+        </tr>
+        <tr>
+          <th><label class="my-2">註記</label></th>
+          <td>{{ item.note }}</td>
+        </tr>
+
+      </table>
+      <div class="cont">
+        <button type="button" class="btn btn-success btn-sm px-3" @click="finaldelete">決定</button>
+        <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
+      </div>
+    </Modal>
+    <Modal v-if="isShow && modalType == 'finish'" @pushOutside="closeModal">
+      <div class="con">
+        <h2 class="m-2">以下の情報を入力してください。</h2>
+        <table class="m-3 ">
+          <tr>
+            <th><label for="city" class="my-2">価格</label></th>
+            <td><input type="text" placeholder="ex:1500" id="city" v-model="price"></td>
+          </tr>
+          <tr>
+            <th><label for="city" class="my-2">注記</label></th>
+            <td>
+              <select id="city" v-model="note">
+                <option value="">コードを選択してください</option>
+                <option value="A01">A01</option>
+                <option value="A02">A02</option>
+                <option value="A03">A03</option>
+                <option value="B01">B01</option>
+                <option value="B02">B02</option>
+                <option value="B03">B03</option>
+                <option value="C01">C01</option>
+                <option value="C02">C02</option>
+                <option value="C03">C03</option>
+                <option value="C04">C04</option>
+                <option value="C05">C05</option>
+
+              </select>
+            </td>
+
+          </tr>
+        </table>
+        <div class="cont1">
+          <button type="button" class="btn btn-success btn-sm px-3" @click="finalfinish">確認</button>
+          <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
+        </div>
+      </div>
+    </Modal>
+    <MessageModal v-if="isMessage" @getReady="Reload">
+      <p>{{ message }}</p>
+    </MessageModal>
   </div>
 </template>
 
 <script>
 import TableView from "../components/Table.vue";
 import Modal from "../components/Modal.vue";
+import MessageModal from "../components/messageModal.vue"
 
 export default {
   components: {
     TableView,
-    Modal
+    Modal,
+    MessageModal
   },
   data() {
     return {
       tableColumns: ['licensePlate', 'startTime', 'note'],
       maintenanceData: [],
       searchText: '',
-      showEditButton: true,
+      showEditButton: false,
       showDeleteButton: true,
+      showCompleteButton: true,
       isShow: false,
       isReasonCodeModalShow: false,
-      sortOption: 'timeDesc' // 預設以時間降序排序
+      sortOption: 'timeDesc', // 預設以時間降序排序
+      showControl: true,
+      licensePlate: '',
+      price: '',
+      note: '',
+      message: '', // 執行後端方法的回覆
+      isMessage: false,
+      item: {},
+      modalType: '',
     };
   },
   mounted() {
@@ -128,19 +203,91 @@ export default {
         .then(data => {
           console.log(data);
           this.maintenanceData = data.maintenanceList.map(item => {
+
             return {
               ...item,
-              startTime: new Date(item.startTime).toLocaleString('ja-JP'),
-              endTime: new Date(item.endTime).toLocaleString('ja-JP')
+              startTime: item.startTime.replace('T', ' '),
+              endTime: item.endTime
             };
           });
         });
+    },
+    finaladd() {
+      const body = {
+        "licensePlate": this.licensePlate,
+      }
+      fetch("http://localhost:8080/Add_abnormal", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      }).then(res => res.json())
+        .then(data => this.message = data.message)
+      this.isMessage = true
+      // 關閉跳出式視窗
+    },
+    finalfinish() {
+      const body = {
+        "licensePlate": this.item.licensePlate,
+        "price": this.price,
+        "note": this.note,
+      }
+      console.log(body);
+      fetch("http://localhost:8080/finish_abnormal", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      }).then(res => res.json())
+        .then(data => {
+          this.message = data.message
+          console.log(data);
+        })
+      this.isMessage = true
+      // 關閉跳出式視窗
+    },
+    closeModal() {
+      this.isShow = false
+      item = null
+      // 執行刪除操作
+      // 可以將 item 傳遞到後端方法進行處理
+    }, deleteItem(item) {
+
+      this.isShow = !this.isShow
+      this.modalType = 'delete'
+      this.item = item
+    }, finaldelete() {
+      const body = {
+        "licensePlate": this.item.licensePlate,
+        "startTime": this.item.startTime
+      };
+      console.log(body);
+      fetch("http://localhost:8080/delete_abnormal", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      })
+        .then(res => res.json())
+        .then(data => {
+          this.message = data.message;
+        });
+      this.isMessage = true;
+    }
+    , Reload() {
+      this.isShow = false
+      this.isMessage = false
+      window.location.reload()
     },
     switchReasonCodeModal() {
       this.isReasonCodeModalShow = !this.isReasonCodeModalShow;
     },
     switchModal() { // 跳出式視窗顯示與否
       this.isShow = !this.isShow
+      this.modalType = type
     },
     updateFilteredData() {
       if (!this.searchText) {
@@ -151,10 +298,16 @@ export default {
     },
     sortData() {
       if (this.sortOption === 'timeAsc') {
-        this.filteredData.sort((a, b) => new Date(a.startTime) - new Date(b.startTime)); // 按開始時間升序排序
-      } else if (this.sortOption === 'timeDesc') {
         this.filteredData.sort((a, b) => new Date(b.startTime) - new Date(a.startTime)); // 按開始時間降序排序
+      } else if (this.sortOption === 'timeDesc') {
+        this.filteredData.sort((a, b) => new Date(a.startTime) - new Date(b.startTime)); // 按開始時間升序排序
       }
+    },
+    finishItem(item) {
+      console.log('finishItem被觸發了');
+      this.isShow = !this.isShow
+      this.modalType = 'finish'
+      this.item = item
     }
   },
   watch: {
@@ -174,13 +327,14 @@ export default {
       return this.filteredData.map(item => {
         return {
           ...item,
-          startTime: new Date(item.startTime).toLocaleString('ja-JP'),
-          endTime: new Date(item.endTime).toLocaleString('ja-JP')
+          startTime: item.startTime,
+          endTime: item.endTime
         };
       });
     }
   }
-};
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -196,6 +350,25 @@ export default {
   flex-direction: column;
   align-items: center;
   margin-top: 4rem;
+
+}
+
+.cont1 {
+  display: flex;
+  width: 170px;
+  justify-content: space-between;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+
+
+.cont {
+  display: flex;
+  width: 170px;
+  justify-content: space-between;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
 .twobtn {
@@ -203,20 +376,9 @@ export default {
   justify-content: space-around;
 }
 
-.cont {
-  display: flex;
-  justify-content: space-between;
-  width: 200px;
-  height: 40px;
-  margin-top: 2rem;
-}
 
-table {
-  border-collapse: collapse;
-  border: 1px solid black;
-  font-size: 14px;
-  width: 100%;
-}
+
+
 
 th,
 td {
