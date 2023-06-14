@@ -12,7 +12,7 @@ export default {
     return {
       vehicleColumn: [
         {key: `licensePlate`, column: "車両番号"}, {key: `category`, column: "車種"},
-        {key: `cc`, column: "タンク容量"}, {key: `startServingDate`, column: "追加日"},
+        {key: `cc`, column: "排気量"}, {key: `startServingDate`, column: "追加日"},
         {key: `latestCheckDate`, column: "最新検査日"}, {key: `available`, column: "ステータス"},
         {key: `city`, column: "エリア"}, {key: `location`, column: "ポート"},
         {key: `odo`, column: "走行距離"}, {key: `price`, column: "値段"}],
@@ -235,7 +235,7 @@ export default {
           </td>
         </tr>
         <tr class="my-2">
-          <th :title="ccRange">タンク容量</th>
+          <th :title="ccRange">排気量(cc)</th>
           <td><input type="number" v-model="tankInput" :title="ccRange"></td>
         </tr>
         <tr class="my-2">
@@ -269,8 +269,8 @@ export default {
           <td>{{ item.category }}</td>
         </tr>
         <tr class="my-2">
-          <th>タンク容量</th>
-          <td>{{ item.cc }}</td>
+          <th>排気量</th>
+          <td>{{ item.cc }}<span>cc</span></td>
         </tr>
         <tr class="my-2">
           <th>追加日</th>

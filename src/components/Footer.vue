@@ -31,9 +31,9 @@ export default {
 
 <style lang="scss" scoped>
 footer {
+     width: 100vw;
 
 .bg{
-     width: 100%;
      height: 120px;
      padding: 2rem;
      background: rgb(23, 15, 147);
