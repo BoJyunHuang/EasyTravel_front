@@ -11,16 +11,18 @@ export default {
             type: Number,
             default: 15
         },
-        showControl: true, // 顯示操作行
-        showEditButton: true,  // 是否顯示修改按鈕
-        showDeleteButton: true,  // 是否顯示刪除按鈕
-        showCompleteButton: true, // 是否顯示完成按鈕
+        showControl: false, // 顯示操作行
+        showEditButton: false,  // 是否顯示修改按鈕
+        showDeleteButton: false,  // 是否顯示刪除按鈕
+        showCompleteButton: false, // 是否顯示完成按鈕
+
+        showChooseButton: false // 顯示選擇按鈕
     },
     data() {
         return {
             currentPage: 1, // 分頁預設第1頁
             control: false, // 可否操作
-            item: {} // 子層參數
+            item: {}, // 子層參數
         };
     },
     computed: {
@@ -46,12 +48,14 @@ export default {
         }, goToPage(page) { // 跳至該分頁
             this.currentPage = page;
         }, editItem(item) {
-            console.log(item)
             this.$emit('edit', item); // 触发edit事件并将索引作为参数传递给父组件
         }, deleteItem(item) {
             this.$emit('delete', item); // 触发delete事件并将索引作为参数传递给父组件
         }, completeItem(item) {
             this.$emit('complete', item); // 触发complete事件并将索引作为参数传递给父组件
+        }, chooseItem() {
+            const list = this.paginatedData.filter(item => item.selected)
+            this.$emit('choose', list); // 触发choose事件并将索引作为参数传递给父组件
         }
     }
 };
@@ -69,6 +73,9 @@ export default {
                             <label for="control">操作</label>
                         </div>
                     </th>
+                    <th v-if="showChooseButton">
+                        <button class="btn btn-secondary py-0" @click="chooseItem">選ぶ</button>
+                    </th>
                 </tr>
             </thead>
             <tbody> <!-- 表個內容 -->
@@ -81,6 +88,9 @@ export default {
                             @click="deleteItem(item)">削除</button>
                         <button class="btn btn-secondary py-0" v-if="control && showCompleteButton"
                             @click="completeItem(item)">完了</button>
+                    </td>
+                    <td v-if="showChooseButton">
+                        <input type="checkbox" id=item v-model="item.selected">
                     </td>
                 </tr>
             </tbody>

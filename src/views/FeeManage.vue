@@ -20,9 +20,7 @@ export default {
             item: {}, // 從table傳回來的資料
             message: '', // 執行後端方法的回覆
 
-            showEditButton: false,  // 是否顯示修改按鈕
             showDeleteButton: true,  // 是否顯示刪除按鈕
-            showCompleteButton: false, // 是否顯示完成按鈕
             showControl: true, // 顯示操作行
 
             project: '',
@@ -73,7 +71,7 @@ export default {
             // 執行刪除操作
             // 可以將 item 傳遞到後端方法進行處理
         }, deleteItem(item) {
-            this.isShow = !this.isShow
+            this.isShow = true
             this.modalType = 'delete'
             this.item = item
         }, finaldelete() {
@@ -146,9 +144,8 @@ export default {
             <button type="button" class="btn btn-success mb-2 px-3" @click="switchModal('add')">新規料金プランの追加</button>
         </div>
         <p>※project「プロジェクト」はプラン、cc「シーシー」は排気量、rate「レート」は該時間帯の料金、threshold「しきい値」は該時間帯となります。</p>
-        <TableView :columns="tableColumns" :data="filteredData" :showEditButton="showEditButton"
-            :showDeleteButton="showDeleteButton" :showCompleteButton="showCompleteButton" :showControl="showControl"
-            @edit="editItem" @delete="deleteItem" />
+        <TableView :columns="tableColumns" :data="filteredData" :showDeleteButton="showDeleteButton"
+            :showControl="showControl" @delete="deleteItem" />
         <Modal v-if="isShow && modalType == 'add'" @pushOutside="closeModal">
             <H2 class="m-2">新規料金プランの追加</H2>
             <table class="m-3 ">
