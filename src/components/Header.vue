@@ -31,7 +31,7 @@ export default {
 
 <style lang="scss" scoped>
 header {
-    width: 100%;
+    width: 100vw;
     height: 150px;
     padding: 2rem;
     // background-color: #5b39c1;

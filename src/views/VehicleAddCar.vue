@@ -10,7 +10,12 @@ export default {
   },
   data() {
     return {
-      vehicleColumn: [`licensePlate`, `category`, `cc`, `startServingDate`, `latestCheckDate`, `available`, `city`, `location`, `odo`, `price`],
+      vehicleColumn: [
+        {key: `licensePlate`, column: "車両番号"}, {key: `category`, column: "車種"},
+        {key: `cc`, column: "タンク容量"}, {key: `startServingDate`, column: "追加日"},
+        {key: `latestCheckDate`, column: "最新検査日"}, {key: `available`, column: "ステータス"},
+        {key: `city`, column: "エリア"}, {key: `location`, column: "ポート"},
+        {key: `odo`, column: "走行距離"}, {key: `price`, column: "値段"}],
       vehicleData: [],
       deleteData: [],    // 刪除車資料
       // table button 編輯按鈕
