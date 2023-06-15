@@ -11,9 +11,10 @@ export default {
             financeDate: {},
             financeRatio: {},
 
-
-            cTotal: ["total_income", "total_expense"],
-            cRatio: ["vip_income", "rent_income_ratio", "maintenance_cost_ratio", "vehicle_cost_ratio"]
+            iTitle: ["vip_income", "rent_income_ratio"],
+            iDetail: ["rent_income"],
+            eTitle: ["vehicle_cost_ratio", "maintenance_cost_ratio"],
+            eDetail: ["vehicle_cost", "maintenance_cost"]
         };
     },
     mounted() { // 預設執行方法，進入頁面後隨即執行，後端-顯示所有站點資料
@@ -63,12 +64,12 @@ export default {
     //             .then(data => this.financeRatio = data.financeMap)
     //     }
     // },
-    // watch: { // 事件監聽
-    //     sliderValue: function (newText, oldText) { // 當"搜尋內容"發生改變時
-    //         // 在 sliderValue 變化時執行相應的操作
-    //         this.updateData();
-    //     }
-    // }
+    watch: { // 事件監聽
+        sliderValue: function (newText, oldText) { // 當"搜尋內容"發生改變時
+            // 在 sliderValue 變化時執行相應的操作
+            this.updateData();
+        }
+    }
 };
 </script>
 
@@ -78,7 +79,10 @@ export default {
         <input class="movebar" type="range" id="rangeInput" v-model="sliderValue" min="1" max="5" step="1">
         <span class="mx-3">{{ sliderValue }}</span>
         <label for="rangeInput">月</label>
-        <PieChart class="w-50 p-5" :chartData="financeRatio" :outerLabel="cTotal" :innerLabel="cRatio"></PieChart>
+        <div class="d-flex">
+            <PieChart class="w-50 p-5" :chartData="financeRatio" :outerLabel="iTitle" :innerLabel="iDetail">収益</PieChart>
+            <PieChart class="w-50 p-5" :chartData="financeRatio" :outerLabel="eTitle" :innerLabel="eDetail">出費</PieChart>
+        </div>
         <BarChart class="w-50" :data="financeDate"></BarChart>
     </div>
 </template>
