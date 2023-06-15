@@ -19,9 +19,16 @@ export default {
                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
                     data-bs-parent="#accordionFlushExample">
                     <div class="d-flex flex-column">
-                         <RouterLink class="linkUser fs-6" to="/update">会員情報変更</RouterLink>
-                         <RouterLink class="linkUser fs-6" to="/upgrade">有料会員</RouterLink>
-                         <RouterLink class="linkUser fs-6" to="/deleteVIP">取り消すVIP</RouterLink>
+                         <RouterLink class="router-link" to="/member-search">会員情報</RouterLink>
+
+                         <RouterLink class="router-link" to="/member-info/update">会員情報変更</RouterLink>
+
+                         <!-- <button> -->
+                         <RouterLink class="router-link" to="/upgrade">有料会員</RouterLink>
+                         <!-- </button> -->
+                         <!-- <button> -->
+                         <RouterLink class="router-link" to="/deleteVIP">取り消すVIP</RouterLink>
+                         <!-- </button> -->
                     </div>
                </div>
           </div>
@@ -29,21 +36,24 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+     .router-link {
+     // 取消下底線
+     text-decoration: none;
+     color: #006000;
+     margin: 0.5rem 0rem;
+     transition: 0.4s;
+
+          &:hover {
+
+               // color: rgb(63, 131, 14);
+               color: #43db43;
+          }
+     }
 .out {
-     // display: flex;
 
-     width: 20vw;
-
-     padding-bottom: 0.5rem;
-     background-color: rgb(26, 16, 109);
-     border-radius: 5%;
-     font-size: 1.5rem;
-     // 
-
-     .linkUser {
-          // 取消下底線
-          text-decoration: none;
-          color: white;
+     // width: 20vw;
+     .router-link {
+    
           cursor: pointer;
           transition: 0.4s;
           // scale: 01.5rem;
@@ -54,8 +64,8 @@ export default {
                color: rgb(201, 201, 103);
           }
      }
-
-
-
 }
+
+
+
 </style>

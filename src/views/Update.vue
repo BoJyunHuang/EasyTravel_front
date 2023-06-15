@@ -18,7 +18,8 @@ export default {
                // 宣告跳出視窗的內容
                message: "",
                // 宣告跳出視窗頁面的v-if布林值
-               isShow: false
+               isShow: false,
+               error:""
           }
      },
      methods: {
@@ -57,6 +58,9 @@ export default {
                } else {
                     testBut4.checked = true
                }
+              
+               
+
           },
           // 2.連結API,修改資訊
           meUpdate() {
@@ -95,6 +99,21 @@ export default {
 
                }
                console.log(body)
+
+               // 現在日期
+               const currentDate = new Date();
+               // 使用者輸入的生日
+               const selectedDate = new Date(this.birthday);
+               // 檢查生日是否在未来&小於0歲!
+               if (selectedDate < currentDate 
+                   || selectedDate > 1870 ) {
+                    // console.log('date error');
+                    this.message = '生年月日の日付が有効期間外です。';
+                    // 插入元件的洞口變true
+                    this.isShow = !this.isShow;
+                    return;
+                    
+               }
                // 連接後端API方法
                fetch("http://localhost:8080/user_info_update", {
 
@@ -200,7 +219,8 @@ export default {
 
           text-align: center;
           font-size: 1.5rem;
-          .note{
+
+          .note {
                font-size: 1rem;
           }
      }
@@ -225,7 +245,8 @@ export default {
           }
      }
 }
+
 h2 {
-          margin: auto auto;
-     }
+     margin: auto auto;
+}
 </style>
