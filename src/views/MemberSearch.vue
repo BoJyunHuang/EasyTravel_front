@@ -1,5 +1,10 @@
 <script>
+import { RouterView } from "vue-router";
+import LeftView from '../../src/components/Left.vue'
 export default {
+    components:{
+        LeftView
+    },
     data() {
         return {
             // 自己宣告 ，用於雙向綁定
@@ -50,6 +55,8 @@ export default {
 }
 </script>
 <template>
+
+
     <div class="wrap-search">
         <div class="title-search">
             <h4 class="">会員資訊</h4>

@@ -28,23 +28,26 @@ const router = createRouter({
       name: 'calculate',
       component: () => import("../views/calculate.vue")
     }, {
-      path: '/member-search',
-      name: 'member-search',
-      component: () => import("../views/MemberSearch.vue"),
+      path: '/member-info',
+      name: 'member-info',
+      component: () => import("../views/MemberInfo.vue"),
       children: [
-        {
-          path: '/active',
-          name: 'active',
-          component: () => import("../views/Active.vue")
-        }, {
-          path: '/update',
+        // {
+        //   path: '/active',
+        //   name: 'active',
+        //   component: () => import("../views/Active.vue")
+        // },
+         {
+          path: 'update',
           name: 'update',
           component: () => import("../views/Update.vue")
-        }, {
+        },
+         {
           path: '/member-search',
           name: 'member-search',
           component: () => import("../views/MemberSearch.vue")
-        }, {
+        },
+         {
           path: '/upgrade',
           name: 'upgrade',
           component: () => import("../views/Upgrade.vue")
