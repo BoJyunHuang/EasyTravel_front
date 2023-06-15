@@ -1,9 +1,9 @@
 <template>
   <div class="fee-manager">
-    <h2>車両修理の追加と変更</h2>
+    <h2>車両修理フォームの追加と変更</h2>
     <div class="d-flex justify-content-between">
       <select class="form-select w-50 mb-2" v-model="sortOption" @change="sortData">
-        <option value="" disabled selected>近頃</option>
+        <option value="" disabled selected>ソート検索</option>
         <option value="timeAsc">時間: 遠い順</option>
         <option value="timeDesc">時間: 近い順</option>
       </select>
@@ -23,7 +23,7 @@
 
         <table class="m-3 ">
           <tr>
-            <th><label for="city" class="my-2">ナンバープレート</label></th>
+            <th><label for="city" class="my-2">車両番号</label></th>
             <td><input type="text" placeholder="ex:DB02" id="city" v-model="licensePlate"></td>
           </tr>
         </table>
@@ -101,11 +101,11 @@
       <H2 class="m-2">修理フォームの削除</H2>
       <table class="m-3 border">
         <tr>
-          <th><label class="my-2">車牌</label></th>
+          <th><label class="my-2">車両番号</label></th>
           <td>{{ item.licensePlate }}</td>
         </tr>
         <tr>
-          <th><label class="my-2">開始維修時間</label></th>
+          <th><label class="my-2">修理開始時刻</label></th>
           <td>{{ item.startTime.replace('T', ' ') }}</td>
         </tr>
         <tr>
@@ -123,6 +123,10 @@
       <div class="con">
         <h2 class="m-2">以下の情報を入力してください。</h2>
         <table class="m-3 ">
+          <tr>
+            <th><label class="my-2">車両番号</label></th>
+            <td>{{ item.licensePlate }}</td>
+          </tr>
           <tr>
             <th><label for="city" class="my-2">価格</label></th>
             <td><input type="text" placeholder="ex:1500" id="city" v-model="price"></td>
@@ -174,7 +178,10 @@ export default {
   },
   data() {
     return {
-      tableColumns: ['licensePlate', 'startTime', 'note'],
+      tableColumns: [
+        { key: `licensePlate`, column: "車両番号" },
+        { key: `startTime`, column: "修理開始時刻" },
+        { key: `note`, column: "註記" }],
       maintenanceData: [],
       searchText: '',
       showEditButton: false,

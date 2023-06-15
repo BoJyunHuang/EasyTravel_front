@@ -1,9 +1,9 @@
 <template>
   <div class="fee-manager">
-    <h2>車両修理の検索</h2>
+    <h2>車両修理完了フォームの検索</h2>
     <div class="d-flex justify-content-between">
       <select class="form-select w-50 mb-2" v-model="sortOption" @change="sortData">
-        <option value="" disabled selected>ソートして検索する</option>
+        <option value="" disabled selected>ソート検索</option>
         <option value="timeAsc">時間: 遠い順</option>
         <option value="timeDesc">時間: 近い順</option>
         <option value="priceAsc">価格: 高い順</option>
@@ -11,18 +11,21 @@
       </select>
 
     </div>
-    <p>※bikeAmountは自転車類の数、motorcycleAmountは二輪車の数、carAmountは四輪車の数を表しています。</p>
+    <!-- <p>{{ item }}</p>
+    <p>aa</p> -->
+
     <TableView :columns="tableColumns" :data="formattedData" :showEditButton="showEditButton" :showControl="showControl"
-      :showDeleteButton="showDeleteButton" @delete="deleteItem" />
+      :showDeleteButton="showDeleteButton" @delete="deleteItem"  />
     <Modal v-if="isShow && modalType == 'delete'" @pushOutside="closeModal">
       <H2 class="m-2">修理フォームの削除</H2>
       <table class="m-3 border">
         <tr>
-          <th><label class="my-2">車牌</label></th>
+          <th><label class="my-2">車両番号</label></th>
           <td>{{ item.licensePlate }}</td>
+
         </tr>
         <tr>
-          <th><label class="my-2">開始維修時間</label></th>
+          <th><label class="my-2">修理開始時刻</label></th>
           <td>{{ item.startTime.replace('T', ' ') }}</td>
         </tr>
         <tr>
@@ -56,23 +59,35 @@ export default {
   },
   data() {
     return {
-      tableColumns: ['licensePlate', 'price', 'startTime', 'endTime', 'note'],
+      tableColumns: [
+      {key: `licensePlate`, column: "車両番号"}, 
+      {key: `price`, column: "価格"}, 
+      {key: `startTime`, column: "修理開始時刻"}, 
+      {key: `endTime`, column: "修理終了時刻"},
+      {key: `note`, column: "註記"}],
       maintenanceData: [],
       searchText: '',
+      // item:"",
       showEditButton: false,
       showDeleteButton: true,
       isMessage: false,
       isShow: false,
       message: '',
+      modalType: '',
       showControl: true,
       sortOption: 'timeDesc' // 預設以時間降序排序
     };
   },
   mounted() {
+
     fetch("http://localhost:8080/find_all_finished_abnormal")
       .then(res => res.json())
       .then(data => {
+        // console.log("data"+"!!!!");
         console.log(data);
+        // !!
+        // this.item=data.maintenanceList[1].licensePlate;
+        // alert(this.item)
         this.maintenanceData = data.maintenanceList.map(item => {
           return {
             ...item,
@@ -94,10 +109,10 @@ export default {
       );
     },
     deleteItem(item) {
-
       this.isShow = !this.isShow
       this.modalType = 'delete'
       this.item = item
+      console.log(item);
     },
     finaldelete() {
       const body = {
@@ -133,16 +148,16 @@ export default {
       this.isShow = !this.isShow;
     },
     sortData() {
-  if (this.sortOption === 'timeAsc') {
-    this.filteredData.sort((a, b) => new Date(b.startTime) - new Date(a.startTime)); // 按開始時間遠到近排序
-  } else if (this.sortOption === 'timeDesc') {
-    this.filteredData.sort((a, b) => new Date(a.startTime) - new Date(b.startTime)); // 按開始時間近到遠排序
-  } else if (this.sortOption === 'priceAsc') {
-    this.filteredData.sort((a, b) => a.price - b.price); // 按價格升序排序
-  } else if (this.sortOption === 'priceDesc') {
-    this.filteredData.sort((a, b) => b.price - a.price); // 按價格降序排序
-  }
-}
+      if (this.sortOption === 'timeAsc') {
+        this.filteredData.sort((a, b) => new Date(b.startTime) - new Date(a.startTime)); // 按開始時間遠到近排序
+      } else if (this.sortOption === 'timeDesc') {
+        this.filteredData.sort((a, b) => new Date(a.startTime) - new Date(b.startTime)); // 按開始時間近到遠排序
+      } else if (this.sortOption === 'priceAsc') {
+        this.filteredData.sort((a, b) => a.price - b.price); // 按價格升序排序
+      } else if (this.sortOption === 'priceDesc') {
+        this.filteredData.sort((a, b) => b.price - a.price); // 按價格降序排序
+      }
+    }
   },
   watch: {
     searchText() {
