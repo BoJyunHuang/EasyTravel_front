@@ -1,18 +1,22 @@
 <script>
 import PlanBtnView from "../components/PlanButton.vue"
 import TableView from "../components/Table.vue"
+import PlanTableView from "../components/FeePlanTable.vue"
 export default {
     components: {
         PlanBtnView,
-        TableView
+        TableView,
+        PlanTableView
     },
     data() {
         return {
             // TableView
+            title: ``,
             columns: [
-                {key: 'project', column: "プラン"},{key: 'cc', column: "排気量"}, 
-                {key: 'rate', column: "時間帯料金"}, {key: 'threshold', column: "時間帯"}], // 表格標題
+                { key: 'project', column: "プラン" },
+                { key: 'rate', column: "時間帯料金" }, { key: 'threshold', column: "時間帯" }], // 表格標題
             feesData: [], // 表格內容
+            columns1: [],
             showControl: false,
 
             // PlanButton propTitle
@@ -44,13 +48,16 @@ export default {
             fetch("http://localhost:8080/find_projects", {
                 method: "POST",
                 headers: {
-                    "Content-type" : "application/json"
+                    "Content-type": "application/json"
                 },
                 body: JSON.stringify(body)
             })
-            .then(res => res.json())
-            .then(data => this.feesData = data.feeList)
-        }, 
+                .then(res => res.json())
+                .then(data => {
+                    this.feesData = data.feeList
+                    this.title = body.project
+                })
+        },
         fetchScooterData() {
             const body = {
                 "project": 'scooter',
@@ -63,8 +70,11 @@ export default {
                 },
                 body: JSON.stringify(body)
             })
-            .then(res => res.json())
-            .then(data => this.feesData = data.feeList)
+                .then(res => res.json())
+                .then(data => {
+                    this.feesData = data.feeList
+                    this.title = body.project
+                })
         },
         fetchMotorData() {
             const body = {
@@ -78,8 +88,11 @@ export default {
                 },
                 body: JSON.stringify(body)
             })
-            .then(res => res.json())
-            .then(data => this.feesData = data.feeList)
+                .then(res => res.json())
+                .then(data => {
+                    this.feesData = data.feeList
+                    this.title = body.project
+                })
         },
         fetchHeavyMotorData() {
             const body = {
@@ -93,8 +106,11 @@ export default {
                 },
                 body: JSON.stringify(body)
             })
-            .then(res => res.json())
-            .then(data => this.feesData = data.feeList)
+                .then(res => res.json())
+                .then(data => {
+                    this.feesData = data.feeList
+                    this.title = body.project
+                })
         },
         fetchSedanData() {
             const body = {
@@ -108,8 +124,11 @@ export default {
                 },
                 body: JSON.stringify(body)
             })
-            .then(res => res.json())
-            .then(data => this.feesData = data.feeList)
+                .then(res => res.json())
+                .then(data => {
+                    this.feesData = data.feeList
+                    this.title = body.project
+                })
         },
         fetchVenData() {
             const body = {
@@ -123,8 +142,11 @@ export default {
                 },
                 body: JSON.stringify(body)
             })
-            .then(res => res.json())
-            .then(data => this.feesData = data.feeList)
+                .then(res => res.json())
+                .then(data => {
+                    this.feesData = data.feeList
+                    this.title = body.project
+                })
         },
         fetchSuvData() {
             const body = {
@@ -138,9 +160,36 @@ export default {
                 },
                 body: JSON.stringify(body)
             })
-            .then(res => res.json())
-            .then(data => this.feesData = data.feeList)
+                .then(res => res.json())
+                .then(data => {
+                    this.feesData = data.feeList
+                    this.title = body.project
+                })
         }
+    },
+    mounted() {
+        console.log("123")
+        const body = {
+            "project": 'bike',
+            "cc": 0,
+        }
+        fetch("http://localhost:8080/find_projects", {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(body)
+        })
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data.feesData)
+                this.feesData = data.feeList
+                let unit = { key: 'unit', column: "時"}
+                this.columns1.push(this.columns, unit)
+                // this.columns = columns
+                console.log(this.columns1)
+                this.title = body.project
+            })
     }
 }
 </script>
@@ -149,15 +198,15 @@ export default {
     <div class="background">
         <h2>車種・料金</h2>
         <!-- <p>プラン (ぷらん) - 方案、計劃
-                タリフ (たりふ) - 費率、價格表
-                オプション (おぷしょん) - 附加選項、額外費用
-                キャンペーン (きゃんぺーん) - 優惠活動、促銷活動
-                ディスカウント (でぃすかうんと) - 折扣、優惠
-                シーズン料金 (しーずんりょうきん) - 季節價格、旺季價格
-                特別料金 (とくべつりょうきん) - 特別價格、優惠價格
-                固定料金 (こていりょうきん) - 固定價格、包車價格
-                時間帯料金 (じかんたいりょうきん) - 時段價格、時段費用
-                レンタルプラン (れんたるぷらん) - 租車方案、租車計劃</p> -->
+                    タリフ (たりふ) - 費率、價格表
+                    オプション (おぷしょん) - 附加選項、額外費用
+                    キャンペーン (きゃんぺーん) - 優惠活動、促銷活動
+                    ディスカウント (でぃすかうんと) - 折扣、優惠
+                    シーズン料金 (しーずんりょうきん) - 季節價格、旺季價格
+                    特別料金 (とくべつりょうきん) - 特別價格、優惠價格
+                    固定料金 (こていりょうきん) - 固定價格、包車價格
+                    時間帯料金 (じかんたいりょうきん) - 時段價格、時段費用
+                    レンタルプラン (れんたるぷらん) - 租車方案、租車計劃</p> -->
         <div class="plan">
             <div class="planBtn" @click="fetchBicycleData">
                 <PlanBtnView :propImg="bikeImg" :propTitle="bike" />
@@ -181,23 +230,32 @@ export default {
                 <PlanBtnView :propImg="suvImg" :propTitle="suv" />
             </div>
         </div>
-        
+
         <!-- <TableView :columns="columns" :data="feesData" :showControl="showControl" /> -->
 
-        <table class="planInfo">
-            <thead> <!-- 標題名稱 -->
-                <tr class="table-info"> <!-- 使用迴圈印出"標題名稱" -->
+        <h2>{{ title }} の利用料金</h2>
+
+        <!-- <PlanTableView :columns="this.columns" :data="feesData" /> -->
+        <div class="plan-info-card">
+            <div v-for="(item, index) in feesData" :key="index" class="plan-info">
+                <PlanTableView :columns="columns" :columns1="columns1" :data="item" />
+            </div>
+
+        </div>
+
+        <!-- <table class="planInfo">
+            <thead>
+                <tr class="table-info">
                     <th class="fs-3 text-center" v-for="column in columns" :key="key">{{ column.column }}</th>
                 </tr>
             </thead>
-            <tbody> <!-- 表個內容 -->
-                <tr v-for="(item, index) in feesData" :key="item.id"> <!-- 印出該分頁筆數(列) -->
-                    <td class="fs-4 text-center" v-for="column in columns" :key="key">{{ item[column.key] }}</td> <!-- 印出該分頁對應標題的內容(欄) -->
+            <tbody>
+                <tr v-for="(item, index) in feesData" :key="item.id">
+                    <td class="fs-4 text-center" v-for="column in columns" :key="key">{{ item[column.key] }}</td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
     </div>
-
 </template>
 
 <style lang="scss" scoped>
@@ -219,23 +277,37 @@ export default {
             width: 14.2%;
             cursor: pointer;
             transition: 0.3s;
-        
+
             &:hover {
                 scale: 1.05;
             }
-        
+
             &:active {
                 scale: 0.95;
             }
-        
-        
+
+
         }
 
     }
 
+    h2 {
+        margin: 2rem 0;
+    }
+
+    .plan-info-card {
+        width: 70%;
+        display: flex;
+        justify-content: space-between;
+
+        .plan-info {
+            width: 23%;
+            height: 20rem;
+        }
+    }
+
     .planInfo {
         width: 70%;
-        margin-top: 2rem;
         // background-color: #209696;
 
         thead {
@@ -257,5 +329,4 @@ export default {
         }
     }
 }
-
 </style>
