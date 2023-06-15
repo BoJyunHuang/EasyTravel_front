@@ -18,8 +18,8 @@ export default {
                 data-bs-parent="#accordionFlushExample">
                 <div class="d-flex flex-column">
                     <RouterLink class="link" to="/vehicle-add-car">新增車輛</RouterLink>
-                    <RouterLink class="link" to="/vehicle-find-car-and-update">修改車輛</RouterLink>
-                    <RouterLink class="link" to="/vehicle-scrap-car">報廢車輛</RouterLink>
+                    <!-- <RouterLink class="link" to="/vehicle-find-car-and-update">修改車輛</RouterLink>
+                    <RouterLink class="link" to="/vehicle-scrap-car">報廢車輛</RouterLink> -->
                 </div>
             </div>
         </div>
