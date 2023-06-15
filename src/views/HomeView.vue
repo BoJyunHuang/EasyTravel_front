@@ -44,7 +44,8 @@
       </div>
       <h3 class="text-center mt-5">EasyTravel とは</h3>
       <div class="down">
-        <img src="https://pngimg.com/uploads/hyundai/hyundai_PNG11233.png" style="height: 90px;">
+        <!-- <img src="https://pngimg.com/uploads/hyundai/hyundai_PNG11233.png" style="height: 90px;"> -->
+        <img src="https://3.bp.blogspot.com/-lOomA6mrfYc/WCqddq_T6ZI/AAAAAAAA_hI/zhOD4BbIpO095LLo3DsDOwBFAe1SEpusQCLcB/s400/car_spare_tire_koukan.png" style="height: 10rem;">
         <div class="note mt-5">
           <p class="text-center">EasyTravel とは</p>
           <p class="text-center">乗りたい時に借りて、行きたい場所で</p>
@@ -54,8 +55,8 @@
           <p class="text-center">颯爽と赤い電動自転車でラクラクと</p>
           <p class="text-center">漕ぎ出してみませんか？</p>
         </div>
-        <img src="https://tse1.mm.bing.net/th?id=OIP.4Ag7SKI1WQ2yIdzNxegPGwHaEW&pid=Api&P=0&h=180" alt=""
-          style="height: 120px;">
+        <img src="https://3.bp.blogspot.com/-svNlUnpKnnQ/VkxNjoNoE_I/AAAAAAAA0xQ/nW21lLgRjVs/s500/jitensya_tenjiblock.png" alt="homebicycle"
+          style="height: 10rem;">
       </div>
       <nav class="area" style="height: 300px;width: 500px;">
         <div class="bg">
@@ -66,7 +67,7 @@
 
             お近くのポート情報が地図上から検索できるほか、各コミュニティサイクルに登録できたり、最新情報も受け取れる公式アプリです。</p>
           <nav>
-            <img src="../../public/appstore.jpg" class="store">
+            <img src="../../public/appstore.png" class="store">
           </nav>
         </div>
         <!-- <img src="https://tse3.mm.bing.net/th?id=OIP.pOMEk61ug9XSsDMDtMmDAQHaFH&pid=Api&P=0&h=180" -->
@@ -99,19 +100,23 @@ img {
 .area {
   display: flex;
   margin-left: 30%;
+  align-items: center;
+    justify-content: center;
 }
 
 .logo {
-  height: 50px;
-  width: 50px;
-  margin-left: 30%;
-  margin-top: 65%;
+  height: 60px;
+  width: 107px;
+  // margin-left: 30%;
+  margin-top: 4rem;
 }
 
 .bg {
-  background-image: url("../../public/phone.jpg");
-  height: 250px;
-  width: 450px;
+  // background-image: url("../../public/phone.jpg");
+  background-image: url("../../public/phoneImg.png");
+  height: 200px;
+  width: 400px;
+  margin-right: 1rem;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -126,7 +131,7 @@ img {
 
 .store {
   height: 40px;
-  width: 130px;
+  // width: 15rem;
 }
 // .sco{
 //   margin-top: 5rem;

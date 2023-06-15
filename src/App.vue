@@ -29,6 +29,7 @@ export default {
   width: 100vw;
   height: 1200px;
   padding: 2rem;
+  background-color: #e3f3fc;
 
 }
 </style>

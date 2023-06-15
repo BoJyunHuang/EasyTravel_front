@@ -68,15 +68,17 @@ const router = createRouter({
           path: '/vehicle-add-car',
           name: 'VehicleAddCar',
           component: () => import("../views/VehicleAddCar.vue")
-        }, {
-          path: '/vehicle-find-car-and-update',
-          name: 'VehicleFindCarAndUpdate',
-          component: () => import("../views/VehicleFindCarAndUpdate.vue")
-        }, {
-          path: '/vehicle-scrap-car',
-          name: 'VehicleScrapCar',
-          component: () => import("../views/VehicleScrapCar.vue")
-        }, {
+        }, 
+        // {
+        //   path: '/vehicle-find-car-and-update',
+        //   name: 'VehicleFindCarAndUpdate',
+        //   component: () => import("../views/VehicleFindCarAndUpdate.vue")
+        // }, {
+        //   path: '/vehicle-scrap-car',
+        //   name: 'VehicleScrapCar',
+        //   component: () => import("../views/VehicleScrapCar.vue")
+        // }, 
+        {
           path: '/AddCar',
           name: 'AddCar',
           component: () => import("../views/AddCar.vue")
