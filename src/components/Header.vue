@@ -20,7 +20,7 @@ export default {
                 <div class="link-area">
                     <!-- 各大項連結 -->
                     <RouterLink class="link" to="/">イージートラベル</RouterLink>
-                    <RouterLink class="link" to="/search-map">店舗を探す</RouterLink>
+                    <RouterLink class="link" to="/search-map">サイト情報</RouterLink>
                     <RouterLink class="link" to="/fee-map">車種と料金</RouterLink>
                     <RouterLink class="link" to="/calculate">予約する</RouterLink>
                     <RouterLink class="link" to="/member-search">会員情報管理</RouterLink>
