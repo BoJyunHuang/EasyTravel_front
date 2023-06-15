@@ -15,11 +15,11 @@ export default {
         //       可以取到在pinia裡面的狀態資料
         ...mapState(indexStore, ["login", "manager"]),
     },
-   methods: {
+    methods: {
         // 帶入pinia的方法
         ...mapActions(indexStore, ["signOut"]),
         out() {
-        //    呼叫pinia的登出方法
+            //    呼叫pinia的登出方法
             this.signOut();
         }
     },
@@ -44,9 +44,10 @@ export default {
                     <RouterLink class="link" to="/">イージートラベル</RouterLink>
                     <RouterLink class="link" to="/search-map">店舗一覧</RouterLink>
                     <RouterLink class="link" to="/fee-map">車種と料金</RouterLink>
-                    <RouterLink class="link" to="/calculate">予約する</RouterLink>
-                    <RouterLink class="link" v-if="login" to="/member-info">会員情報管理</RouterLink>
+                    <RouterLink class="link" to="/rent">予約する</RouterLink>
                     <!-- <p>{{ login }}</p> -->
+                    <RouterLink class="link" v-if="login" to="/member-info">会員情報管理</RouterLink>
+
                 </div>
             </div>
         </div>

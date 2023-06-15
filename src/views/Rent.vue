@@ -6,7 +6,7 @@ export default {
 
 <template>
     <div>
-        <h2>試算</h2>
+        <h2> rent</h2>
     </div>
 </template>
 
