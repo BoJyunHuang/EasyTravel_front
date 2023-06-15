@@ -1,8 +1,8 @@
 <script>
-import messageModal from '../components/messageModal.vue';
+import Modal from '../components/Modal.vue';
 export default {
      components: {
-          messageModal
+          Modal
      },
      data() {
           return {
@@ -30,6 +30,7 @@ export default {
           },
           // 方法(參數)
           creat() {
+               console.log("ccc");
                const body = {
                     // 後端req屬性名稱:參數
                     account: this.account,
@@ -48,6 +49,7 @@ export default {
 
                })
                     .then(function (response) {
+                         // console.log(response);
                          return response.json()
                     })
                     .then((data) => {
@@ -66,6 +68,7 @@ export default {
 }
 </script>
 <template>
+     <!-- <button @click="creat">aa</button> -->
      <div class="big-wrap ">
 
           <h2 class="title-h4 border-bottom  border-4 text-center mb-3 rounded">新規会員登録</h2>
@@ -110,15 +113,14 @@ export default {
                               <h4 class="mt-3 ms-4" style="width: 135px">誕生日 :</h4>
                               <input type="date" v-model="birthday" class="regInput   ps-5 pe-4 ms-4">
                          </div>
-                         
+                         <!-- <button @click="creat">sss</button> -->
                          <div class="btn-regist">
                               <!-- 觸發事件，參數帶入 -->
-                              <button type="button" class="regbtn mt-5 " @click="creat">登録</button>
+                              <button type="button" class="regbtn mt-5" @click="creat">登録</button>
                               <!-- 元件洞口 -->
-                              <messageModal v-if="isShow" @getReady="change">
-
+                              <Modal v-if="isShow" @pushOutside="change">
                                    <h2>{{ message }}</h2>
-                              </messageModal>
+                              </Modal>
                          </div>
                     </div>
                </div>

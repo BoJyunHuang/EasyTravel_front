@@ -1,3 +1,4 @@
+
 <script>
 import { RouterLink } from "vue-router";
 import Manager from "./Administrator.vue"
@@ -29,11 +30,12 @@ export default {
 
           // 開啟&關閉 插入的視窗方法
           change() {
-                // 若訊息跳出成功,按下確認是 換會員資訊
-                if(this.message=="Successful!"){
+               // 若訊息跳出成功,按下確認是 換會員資訊
+               if (this.message == "Successful!") {
                     console.log("Successful");
                     // 否則按下確認是關閉視窗
-               }else{
+
+               } else {
                     this.isShow = !this.isShow;
                }
           },
@@ -41,15 +43,17 @@ export default {
           AminiLogin() {
                console.log(this.account);
                if (this.account == "M001" && this.pwd == "M0123456") {
-
+                    // 設定跳出視窗顯示的訊息
                     this.message = "Successful!";
-                    // 做change:開啟或關閉的方法
+                    // 做change:開啟或關閉視窗的方法
                     this.change();
-
-
-                    // 呼叫pinia方法
+                    // 呼叫pinia方法:管理者登入狀態
                     this.managerPage();
-
+                    // 監聽:登入後抓出管理者頁面 綁定的id
+                    let managerLink = document.getElementById("managerLink")
+                    console.log(managerLink);
+                    // 進入後自動按link
+                    managerLink.click();
                }
                else {
                     this.message = "Login failed!";
@@ -71,8 +75,8 @@ export default {
 
                <div class="wrap-login d-flex  flex-column justify-content-center align-items-center">
                     <!-- <div class="title-login"> -->
-                         <h2 class="border-bottom rounded border-4 text-center mb-3">管理者ログイン</h2>
-                         <!-- <h2 class="border-bottom rounded border-4 text-center mb-3">ログイン</h2> -->
+                    <h2 class="border-bottom rounded border-4 text-center mb-3">管理者ログイン</h2>
+                    <!-- <h2 class="border-bottom rounded border-4 text-center mb-3">ログイン</h2> -->
                     <!-- </div> -->
 
                     <div class="login-area mt-4" style="height: auto;width: 350px;">
@@ -80,12 +84,14 @@ export default {
 
                               <div class="account-login mt-5">
                                    <h4 class="ms-5">アカウント :</h4>
-                              <input type="text" v-model="account" class="logInput ms-5"  placeholder="アカウントを入力してください" style="width: 280px; height: 35px;">
-                              
+                                   <input type="text" v-model="account" class="logInput ms-5" placeholder="アカウントを入力してください"
+                                        style="width: 280px; height: 35px;">
+
                               </div>
                               <div class="pwd-login mt-5">
                                    <h4 class="ms-5">パスワード :</h4>
-                                   <input type="text" v-model="pwd" class="logInput ms-5"  placeholder="パスワードを入力してください"  style="width: 280px; height: 35px;">
+                                   <input type="text" v-model="pwd" class="logInput ms-5" placeholder="パスワードを入力してください"
+                                        style="width: 280px; height: 35px;">
 
 
 
@@ -94,6 +100,8 @@ export default {
 
                               <div class="btnlogin">
                                    <button class="log-btn mt-5" type="button" id="testBut" @click="AminiLogin">ログイン</button>
+                                   <!-- 要再看一次 -->
+                                   <RouterLink class="link" to="/administrator" id="managerLink">管理者</RouterLink>
                                    <MessageModal v-if="isShow" @getReady="change">
                                         <h2>{{ message }}</h2>
                                    </MessageModal>
@@ -111,12 +119,16 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-     h2 {
-          margin: auto auto;
-          height: 45px;
-          width: 250px;
-          
-     }
+#managerLink{
+     display: none;
+}
+h2 {
+     margin: auto auto;
+     height: 45px;
+     width: 250px;
+
+}
+
 .wrap-login {
 
      .title-login {

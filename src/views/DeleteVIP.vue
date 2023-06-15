@@ -79,6 +79,8 @@ export default {
 
 <style lang="scss" scoped>
 .wrap-delete {
+     height: 450px;
+
      .title-delete {
      
           text-align: center;
