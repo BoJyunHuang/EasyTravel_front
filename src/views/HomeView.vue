@@ -67,7 +67,7 @@
 
             お近くのポート情報が地図上から検索できるほか、各コミュニティサイクルに登録できたり、最新情報も受け取れる公式アプリです。</p>
           <nav>
-            <img src="../../public/appstore.jpg" class="store">
+            <img src="../../public/appstore.png" class="store">
           </nav>
         </div>
         <!-- <img src="https://tse3.mm.bing.net/th?id=OIP.pOMEk61ug9XSsDMDtMmDAQHaFH&pid=Api&P=0&h=180" -->
