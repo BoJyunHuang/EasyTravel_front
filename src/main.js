@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
+
 import '../node_modules/bootstrap/dist/js/bootstrap'
 import './assets/main.scss'
 import App from './App.vue'

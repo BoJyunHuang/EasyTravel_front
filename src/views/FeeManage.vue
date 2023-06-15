@@ -10,7 +10,7 @@ export default {
     },
     data() {
         return {
-            tableColumns: ['project', 'cc', 'rate', 'threshold'], // 表格標題
+            tableColumns: [{ key: 'project', column: 'プラン' }, { key: 'cc', column: '排気量' }, { key: 'rate', column: '時間帯の料金' }, { key: 'threshold', column: '時間帯' }], // 表格標題
             feesData: [], // 表格內容
             searchText: '', // 搜尋關鍵字
 
@@ -143,7 +143,6 @@ export default {
             </select>
             <button type="button" class="btn btn-success mb-2 px-3" @click="switchModal('add')">新規料金プランの追加</button>
         </div>
-        <p>※project「プロジェクト」はプラン、cc「シーシー」は排気量、rate「レート」は該時間帯の料金、threshold「しきい値」は該時間帯となります。</p>
         <TableView :columns="tableColumns" :data="filteredData" :showDeleteButton="showDeleteButton"
             :showControl="showControl" @delete="deleteItem" />
         <Modal v-if="isShow && modalType == 'add'" @pushOutside="closeModal">

@@ -10,7 +10,7 @@ export default {
     },
     data() {
         return {
-            tableColumns: ['title', 'detail', 'price', 'buildTime'], // 表格標題
+            financeColumns: [{ key: 'title', column: "主要項目" }, { key: 'detail', column: "次要項目" }, { key: 'price', column: "金額" }, { key: 'buildTime', column: "作成日" }], // 表格標題
             financeData: [], // 表格內容
             searchText: '', // 搜尋關鍵字
 
@@ -39,7 +39,7 @@ export default {
             }
             const keyword = this.searchText.toLowerCase();
             return this.financeData.filter(item =>
-                item.project.toLowerCase().includes(keyword)
+                item.title.toLowerCase().includes(keyword)
             )
         }
     },
@@ -60,7 +60,7 @@ export default {
             return this.financeData.filter(item => {
                 // 根據需要調整下面的條件
                 return (
-                    item.project.toLowerCase().includes(keyword)
+                    item.title.toLowerCase().includes(keyword)
                 );
             });
         }
@@ -71,27 +71,17 @@ export default {
 <template>
     <div class="fee-manager">
         <h2>財務</h2>
-        <div class="d-flex justify-content-between">
+        <div class="d-flex">
             <select class="form-select w-50 mb-2" aria-label="Default select example" v-model="searchText">
-                <option value="" disabled selected>プラン選択</option>
-                <option value="">全てのプランから選ぶ</option>
-                <optgroup label="自転車の分類">
-                    <option value="bike">自転車(bike)</option>
-                </optgroup>
-                <optgroup label="オートバイの分類 ">
-                    <option value="scooter"> スクーター</option>
-                    <option value="motorcycle">モーターサイクル</option>
-                    <option value="heavy motorcycle"> 大型バイク</option>
-                </optgroup>
-                <optgroup label="自動車の分類">
-                    <option value="sedan">セダン </option>
-                    <option value="ven">バン</option>
-                    <option value="suv">SUV</option>
-                </optgroup>
+                <option value="" disabled selected>主要項目</option>
+                <option value="">全ての選ぶ</option>
+                <option value="vip_income">有料会員収益</option>
+                <option value="rent_income">レンタカー収入</option>
+                <option value="vehicle_cost">車輛購入支出</option>
+                <option value="maintenance_cost">メンテナンス費支出</option>
             </select>
         </div>
-        <p>※</p>
-        <TableView :columns="tableColumns" :data="filteredData" />
+        <TableView :columns="financeColumns" :data="filteredData" />
     </div>
 </template>
 

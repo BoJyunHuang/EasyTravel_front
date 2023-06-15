@@ -10,7 +10,7 @@ export default {
     },
     data() {
         return {
-            tableColumns: ['city', 'location', 'bikeAmount', 'motorcycleAmount', 'carAmount'], // 表格標題
+            tableColumns: [{ key: 'city', column: "都道府県" }, { key: 'location', column: "サイト" }, { key: 'bikeAmount', column: "自転車の数" }, { key: 'motorcycleAmount', column: "二輪車の数" }, { key: 'carAmount', column: "四輪車の数" }], // 表格標題
             locationsData: [], // 表格內容
             searchText: '', // 搜尋關鍵字
 
@@ -131,7 +131,6 @@ export default {
             </select>
             <button type="button" class="btn btn-success mb-2 px-3" @click="switchModal">サイト追加</button>
         </div>
-        <p>※bikeAmountは自転車類の数、motorcycleAmountは二輪車の数、carAmountは四輪車の数を表しています。</p>
         <TableView :columns="tableColumns" :data="filteredData" :showEditButton="showEditButton" :showControl="showControl"
             @edit="editItem" @delete="" />
         <Modal v-if="isShow && modalType == 'add'" @pushOutside="closeModal">
@@ -142,11 +141,11 @@ export default {
                     <td><input type="text" placeholder="ex:東京都" id="city" v-model="city"></td>
                 </tr>
                 <tr>
-                    <th><label for="location" class="my-2">ロケーション</label></th>
+                    <th><label for="location" class="my-2">サイト</label></th>
                     <td><input type="text" min="0" title="会社の拠点" id="location" v-model="location"></td>
                 </tr>
                 <tr>
-                    <th><label for="bike_amount" class="my-2">自転車類の数</label></th>
+                    <th><label for="bike_amount" class="my-2">自転車の数</label></th>
                     <td><input type="number" min="0" title="0以上を含む" id="bike_amount" v-model="bikeAmount"></td>
                 </tr>
                 <tr>
@@ -171,11 +170,11 @@ export default {
                     <td>{{ item.city }}</td>
                 </tr>
                 <tr>
-                    <th><label for="location" class="my-2">ロケーション</label></th>
+                    <th><label for="location" class="my-2">サイト</label></th>
                     <td>{{ item.location }}</td>
                 </tr>
                 <tr>
-                    <th><label for="bike_amount" class="my-2">自転車類の数</label></th>
+                    <th><label for="bike_amount" class="my-2">自転車の数</label></th>
                     <td><input type="number" id="bike_amount" v-model="bikeAmount"></td>
                 </tr>
                 <tr>

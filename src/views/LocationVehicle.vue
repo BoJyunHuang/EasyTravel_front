@@ -10,7 +10,8 @@ export default {
     },
     data() {
         return {
-            tableColumns: ['licensePlate', 'category', 'cc', 'available'], // 表格標題
+            tableColumns: [{ key: `licensePlate`, column: "車両番号" }, { key: `category`, column: "車種" },
+            { key: `cc`, column: "排気量" }, { key: `available`, column: "ステータス" }], // 表格標題
             subLocations: [], // 該縣市站點陣列
             vehicleData: [], // 表格內容
             searchCity: '', // 搜尋關鍵字
@@ -62,6 +63,7 @@ export default {
             this.isShow = true
         }, closeModal() {
             this.isShow = false
+            this.showChooseButton = false
         }, finalDispatch() {
             const licensePlateList = this.dispatchList.map(item => item.licensePlate);
             const body = {
@@ -107,7 +109,6 @@ export default {
             <button type="button" class="btn btn-success mb-2 px-3" @click="findvehicles">探す</button>
             <button type="button" class="btn btn-success mb-2 px-3" @click="chooseVehicles">車両調度</button>
         </div>
-        <p>※</p>
         <TableView :columns="tableColumns" :data="vehicleData" :showChooseButton="showChooseButton" @choose="dispatch" />
         <Modal v-if="isShow" @pushOutside="closeModal">
             <H2 class="m-2">車両調度</H2>
@@ -127,7 +128,7 @@ export default {
             </select>
             <div class="w-25 d-flex justify-content-between">
                 <button type="button" class="btn btn-success btn-sm px-3" @click="finalDispatch">決定</button>
-                <button type=" button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
+                <button type=" button" class="btn btn-danger btn-sm px-3" @click="closeModal">キャンセル</button>
             </div>
         </Modal>
         <MessageModal v-if="isMessage" @getReady="Reload">

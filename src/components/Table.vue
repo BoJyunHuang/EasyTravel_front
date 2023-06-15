@@ -21,6 +21,7 @@ export default {
     data() {
         return {
             currentPage: 1, // 分頁預設第1頁
+            displayedPages: [],
             control: false, // 可否操作
             item: {}, // 子層參數
         };
@@ -41,12 +42,24 @@ export default {
             if (this.currentPage > 1) {
                 this.currentPage--;
             }
+            this.updateDisplayedPages();
         }, nextPage() { // 後一頁方法
             if (this.currentPage < this.totalPages) {
                 this.currentPage++;
             }
+            this.updateDisplayedPages();
         }, goToPage(page) { // 跳至該分頁
             this.currentPage = page;
+            this.updateDisplayedPages();
+        }, updateDisplayedPages() {
+            const range = 2; // 顯示的頁碼範圍，根據需求進行調整
+            const startPage = Math.max(1, this.currentPage - range);
+            const endPage = Math.min(this.totalPages, this.currentPage + range);
+
+            this.displayedPages = [];
+            for (let i = startPage; i <= endPage; i++) {
+                this.displayedPages.push(i);
+            }
         }, editItem(item) {
             this.$emit('edit', item); // 触发edit事件并将索引作为参数传递给父组件
         }, deleteItem(item) {
@@ -57,6 +70,9 @@ export default {
             const list = this.paginatedData.filter(item => item.selected)
             this.$emit('choose', list); // 触发choose事件并将索引作为参数传递给父组件
         }
+    },
+    mounted() {
+        this.updateDisplayedPages();
     }
 };
 </script>
@@ -104,8 +120,20 @@ export default {
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li> <!-- 至該分頁 -->
-                <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: page === currentPage }">
+                <li class="page-item" v-if="currentPage > 3">
+                    <a class="page-link" @click="goToPage(1)">1</a>
+                </li>
+                <li class="page-item" v-if="currentPage > 4">
+                    <span class="page-link">...</span>
+                </li>
+                <li class="page-item" v-for="page in displayedPages" :key="page" :class="{ active: page === currentPage }">
                     <a class="page-link" @click="goToPage(page)">{{ page }}</a>
+                </li>
+                <li class="page-item" v-if="currentPage < totalPages - 3">
+                    <span class="page-link">...</span>
+                </li>
+                <li class="page-item" v-if="currentPage < totalPages - 2">
+                    <a class="page-link" @click="goToPage(totalPages)">{{ totalPages }}</a>
                 </li>
                 <li class="page-item"> <!-- 後頁 -->
                     <a class="page-link" aria-label="Next" @click="nextPage" :disabled="currentPage === totalPages">
@@ -121,5 +149,9 @@ export default {
 .table-fixed {
     table-layout: fixed;
     width: 100%;
+}
+
+.pagination .page-link:hover {
+    cursor: pointer;
 }
 </style>
