@@ -1,10 +1,10 @@
 <script>
-import PieChart from '../components/Chart.vue';
 import BarChart from '../components/BarChart.vue';
+import Doughnut from '../components/Doughnut.vue';
 export default {
     components: {
-        PieChart,
-        BarChart
+        BarChart,
+        Doughnut
     }, data() {
         return {
             sliderValue: 1,
@@ -21,15 +21,14 @@ export default {
         let body = {
             "month": 1
         }
-
-        // fetch("http://localhost:8080/monthly_report", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(body)
-        // }).then(res => res.json())
-        //     .then(data => this.financeDate = data.financeMap)
+        fetch("http://localhost:8080/monthly_report", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        }).then(res => res.json())
+            .then(data => this.financeDate = data.financeMap)
         fetch("http://localhost:8080/monthly_ratio", {
             method: "POST",
             headers: {
@@ -64,26 +63,17 @@ export default {
     //             .then(data => this.financeRatio = data.financeMap)
     //     }
     // },
-    watch: { // 事件監聽
-        sliderValue: function (newText, oldText) { // 當"搜尋內容"發生改變時
-            // 在 sliderValue 變化時執行相應的操作
-            this.updateData();
-        }
-    }
 };
 </script>
 
 <template>
-    <div class="w-100">
+    <div class="w-100 p-3">
         <h2>データ整理</h2>
         <input class="movebar" type="range" id="rangeInput" v-model="sliderValue" min="1" max="5" step="1">
         <span class="mx-3">{{ sliderValue }}</span>
         <label for="rangeInput">月</label>
-        <div class="d-flex">
-            <PieChart class="w-50 p-5" :chartData="financeRatio" :outerLabel="iTitle" :innerLabel="iDetail">収益</PieChart>
-            <PieChart class="w-50 p-5" :chartData="financeRatio" :outerLabel="eTitle" :innerLabel="eDetail">出費</PieChart>
-        </div>
-        <BarChart class="w-50" :data="financeDate"></BarChart>
+        <BarChart />
+        <Doughnut />
     </div>
 </template>
 

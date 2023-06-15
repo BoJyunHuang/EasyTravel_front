@@ -22,7 +22,7 @@ export default {
                     <RouterLink class="link" to="/">イージートラベル</RouterLink>
                     <RouterLink class="link" to="/search-map">店舗を探す</RouterLink>
                     <RouterLink class="link" to="/fee-map">車種と料金</RouterLink>
-                    <RouterLink class="link" to="/calculate">予約する</RouterLink>
+                    <RouterLink class="link" to="/rent">予約する</RouterLink>
                     <RouterLink class="link" to="/member-search">会員情報管理</RouterLink>
                 </div>
             </div>

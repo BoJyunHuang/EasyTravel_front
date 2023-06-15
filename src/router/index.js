@@ -24,9 +24,9 @@ const router = createRouter({
       name: 'fee-map',
       component: () => import("../views/FeeMap.vue")
     }, {
-      path: '/calculate',
-      name: 'calculate',
-      component: () => import("../views/calculate.vue")
+      path: '/rent',
+      name: 'rent',
+      component: () => import("../views/Rent.vue")
     }, {
       path: '/member-search',
       name: 'member-search',
@@ -84,7 +84,7 @@ const router = createRouter({
           path: '/ResearchCar',
           name: 'ResearchCar',
           component: () => import("../views/researchCar.vue")
-        }, 
+        },
         // {
         //   path: '/DeleteCar',
         //   name: 'DeleteCar',
