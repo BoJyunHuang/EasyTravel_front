@@ -1,13 +1,21 @@
 <script>
 import PlanBtnView from "../components/PlanButton.vue"
+import TableView from "../components/Table.vue"
 export default {
     components: {
-        PlanBtnView
+        PlanBtnView,
+        TableView
     },
     data() {
         return {
-            columns: ['project', 'cc', 'rate', 'threshold'], // 表格標題
+            // TableView
+            columns: [
+                {key: 'project', column: "プラン"},{key: 'cc', column: "排気量"}, 
+                {key: 'rate', column: "時間帯料金"}, {key: 'threshold', column: "時間帯"}], // 表格標題
             feesData: [], // 表格內容
+            showControl: false,
+
+            // PlanButton propTitle
             bike: `Bike`,
             scooter: `Scooter`,
             motorcycle: `Motorcycle`,
@@ -15,6 +23,8 @@ export default {
             sedan: `Sedan`,
             ven: `Ven`,
             suv: `Suv`,
+
+            // PlanButton propImg
             bikeImg: '../../public/bike.png',
             scooterImg: '../../public/scooter.png',
             motorcycleImg: '../../public/motorcycle.png',
@@ -34,12 +44,14 @@ export default {
             fetch("http://localhost:8080/find_projects", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-type" : "application/json"
                 },
                 body: JSON.stringify(body)
-            }).then(res => res.json())
-                .then(data => this.feesData = data.feeList)
-        }, fetchMotorData() {
+            })
+            .then(res => res.json())
+            .then(data => this.feesData = data.feeList)
+        }, 
+        fetchScooterData() {
             const body = {
                 "project": 'scooter',
                 "cc": 150,
@@ -50,8 +62,84 @@ export default {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(body)
-            }).then(res => res.json())
-                .then(data => this.feesData = data.feeList)
+            })
+            .then(res => res.json())
+            .then(data => this.feesData = data.feeList)
+        },
+        fetchMotorData() {
+            const body = {
+                "project": 'motorcycle',
+                "cc": 250,
+            }
+            fetch("http://localhost:8080/find_projects", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            })
+            .then(res => res.json())
+            .then(data => this.feesData = data.feeList)
+        },
+        fetchHeavyMotorData() {
+            const body = {
+                "project": 'heavy motorcycle',
+                "cc": 550,
+            }
+            fetch("http://localhost:8080/find_projects", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            })
+            .then(res => res.json())
+            .then(data => this.feesData = data.feeList)
+        },
+        fetchSedanData() {
+            const body = {
+                "project": 'sedan',
+                "cc": 1600,
+            }
+            fetch("http://localhost:8080/find_projects", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            })
+            .then(res => res.json())
+            .then(data => this.feesData = data.feeList)
+        },
+        fetchVenData() {
+            const body = {
+                "project": 'ven',
+                "cc": 2000,
+            }
+            fetch("http://localhost:8080/find_projects", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            })
+            .then(res => res.json())
+            .then(data => this.feesData = data.feeList)
+        },
+        fetchSuvData() {
+            const body = {
+                "project": 'suv',
+                "cc": 2400,
+            }
+            fetch("http://localhost:8080/find_projects", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            })
+            .then(res => res.json())
+            .then(data => this.feesData = data.feeList)
         }
     }
 }
@@ -74,40 +162,42 @@ export default {
             <div class="planBtn" @click="fetchBicycleData">
                 <PlanBtnView :propImg="bikeImg" :propTitle="bike" />
             </div>
-            <div class="planBtn" @click="fetchBicycleData">
+            <div class="planBtn" @click="fetchScooterData">
                 <PlanBtnView :propImg="scooterImg" :propTitle="scooter" />
             </div>
-            <div class="planBtn" @click="fetchBicycleData">
+            <div class="planBtn" @click="fetchMotorData">
                 <PlanBtnView :propImg="motorcycleImg" :propTitle="motorcycle" />
             </div>
-            <div class="planBtn" @click="fetchBicycleData">
+            <div class="planBtn" @click="fetchHeavyMotorData">
                 <PlanBtnView :propImg="heavyMotorcycleImg" :propTitle="heavyMotorcycle" />
             </div>
-            <div class="planBtn" @click="fetchBicycleData">
+            <div class="planBtn" @click="fetchSedanData">
                 <PlanBtnView :propImg="sedanImg" :propTitle="sedan" />
             </div>
-            <div class="planBtn" @click="fetchBicycleData">
+            <div class="planBtn" @click="fetchVenData">
                 <PlanBtnView :propImg="venImg" :propTitle="ven" />
             </div>
-            <div class="planBtn" @click="fetchBicycleData">
+            <div class="planBtn" @click="fetchSuvData">
                 <PlanBtnView :propImg="suvImg" :propTitle="suv" />
             </div>
         </div>
+        
+        <!-- <TableView :columns="columns" :data="feesData" :showControl="showControl" /> -->
 
+        <table class="planInfo">
+            <thead> <!-- 標題名稱 -->
+                <tr class="table-info"> <!-- 使用迴圈印出"標題名稱" -->
+                    <th class="fs-3 text-center" v-for="column in columns" :key="key">{{ column.column }}</th>
+                </tr>
+            </thead>
+            <tbody> <!-- 表個內容 -->
+                <tr v-for="(item, index) in feesData" :key="item.id"> <!-- 印出該分頁筆數(列) -->
+                    <td class="fs-4 text-center" v-for="column in columns" :key="key">{{ item[column.key] }}</td> <!-- 印出該分頁對應標題的內容(欄) -->
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <table>
-        <thead> <!-- 標題名稱 -->
-            <tr class="table-dark"> <!-- 使用迴圈印出"標題名稱" -->
-                <th v-for="column in columns" :key="column">{{ column }}</th>
-            </tr>
-        </thead>
-        <tbody> <!-- 表個內容 -->
-            <tr v-for="(item, index) in feesData" :key="item.id"> <!-- 印出該分頁筆數(列) -->
-                <td v-for="column in columns" :key="column">{{ item[column] }}</td> <!-- 印出該分頁對應標題的內容(欄) -->
-            </tr>
-        </tbody>
-    </table>
 </template>
 
 <style lang="scss" scoped>
@@ -117,11 +207,11 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: cadetblue;
+    // background-color: cadetblue;
 
     .plan {
         width: 95%;
-        background-color: gray;
+        // background-color: gray;
         display: flex;
         justify-content: space-between;
 
@@ -141,6 +231,30 @@ export default {
         
         }
 
+    }
+
+    .planInfo {
+        width: 70%;
+        margin-top: 2rem;
+        // background-color: #209696;
+
+        thead {
+            tr {
+                background-color: #9dcbfc;
+
+                th {
+                    width: 27%;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                    width: 27%;
+                }
+            }
+        }
     }
 }
 

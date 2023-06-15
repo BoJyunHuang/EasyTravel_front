@@ -13,7 +13,7 @@ export default {
 <template>
   <div>
     <img :src="propImg" alt="img">
-    <p>{{ propTitle }}</p>
+    <p class="fs-3 m-0 fw-bold text-center">{{ propTitle }}</p>
   </div>
 </template>
 
@@ -27,6 +27,16 @@ div {
 
   img {
     width: 100%;
+  }
+
+  p {
+    color: #007ec8;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #91f6d4;
   }
 }
 </style>
