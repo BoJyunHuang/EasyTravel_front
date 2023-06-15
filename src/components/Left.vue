@@ -20,15 +20,11 @@ export default {
                     data-bs-parent="#accordionFlushExample">
                     <div class="d-flex flex-column">
                          <RouterLink class="router-link" to="/member-search">会員情報</RouterLink>
-
                          <RouterLink class="router-link" to="/member-info/update">会員情報変更</RouterLink>
-
-                         <!-- <button> -->
                          <RouterLink class="router-link" to="/upgrade">有料会員</RouterLink>
-                         <!-- </button> -->
-                         <!-- <button> -->
                          <RouterLink class="router-link" to="/deleteVIP">取り消すVIP</RouterLink>
-                         <!-- </button> -->
+                         <RouterLink class="router-link" to="/rentData">レンタル</RouterLink>
+                         
                     </div>
                </div>
           </div>

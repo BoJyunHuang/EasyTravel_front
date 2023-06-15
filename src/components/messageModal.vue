@@ -12,7 +12,7 @@ export default {
     <div class="frame">
         <div class="modal">
             <slot></slot>
-            <button type="button" class="btn btn-success" @click="push">確認</button>
+            <button type="button" class="btn btn-success mt-3" @click="push">確認</button>
         </div>
         <div class="bg"></div>
     </div>

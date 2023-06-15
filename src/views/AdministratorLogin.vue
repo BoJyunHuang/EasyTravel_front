@@ -3,13 +3,13 @@ import { RouterLink } from "vue-router";
 import Manager from "./Administrator.vue"
 import { mapState, mapActions } from "pinia";
 import indexStore from "../stores/counter";
-import Modal from '../components/Modal.vue';
+import MessageModal from '../components/messageModal.vue';
 
 export default {
      components: {
           Manager,
           // 宣告跳出視窗元件
-          Modal
+          MessageModal
      },
      data() {
           return {
@@ -29,7 +29,13 @@ export default {
 
           // 開啟&關閉 插入的視窗方法
           change() {
-               this.isShow = !this.isShow;
+                // 若訊息跳出成功,按下確認是 換會員資訊
+                if(this.message=="Successful!"){
+                    console.log("Successful");
+                    // 否則按下確認是關閉視窗
+               }else{
+                    this.isShow = !this.isShow;
+               }
           },
           // 用if判斷,是否為管理者帳號,不用連接後端
           AminiLogin() {
@@ -88,9 +94,9 @@ export default {
 
                               <div class="btnlogin">
                                    <button class="log-btn mt-5" type="button" id="testBut" @click="AminiLogin">ログイン</button>
-                                   <Modal v-if="isShow" @pushOutside="change">
+                                   <MessageModal v-if="isShow" @getReady="change">
                                         <h2>{{ message }}</h2>
-                                   </Modal>
+                                   </MessageModal>
                               </div>
                          </div>
 
