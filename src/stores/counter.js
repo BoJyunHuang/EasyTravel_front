@@ -14,6 +14,7 @@ export default defineStore("indexStore", {
           // 預設寫法
           login: false,
           manager: false,
+          isRent: false
      }),
 
 
@@ -49,6 +50,12 @@ export default defineStore("indexStore", {
                this.manager = false;
                console.log(this.manager);
 
+          },
+          rent() {
+               this.isRent = true
+          },
+          getback() {
+               this.isRent = false
           }
      }
 })
