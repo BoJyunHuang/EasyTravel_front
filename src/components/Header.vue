@@ -1,8 +1,28 @@
 <script>
 import { RouterLink } from "vue-router";
 import { mapState, mapActions } from "pinia";
+import indexStore from "../stores/counter";
 export default {
 
+    data() {
+        return {
+            // login :false,
+            // ...mapState(indexStore,["login"])
+        }
+    },
+    computed: {
+        //  mapState =>pinia:state,getters
+        //       可以取到在pinia裡面的狀態資料
+        ...mapState(indexStore, ["login", "manager"]),
+    },
+   methods: {
+        // 帶入pinia的方法
+        ...mapActions(indexStore, ["signOut"]),
+        out() {
+        //    呼叫pinia的登出方法
+            this.signOut();
+        }
+    },
 }
 </script>
 
@@ -12,9 +32,11 @@ export default {
             <img src="../../public/logo2.png" alt="" class="icon">
             <div class="button-area">
                 <div class="login-area">
-                    <RouterLink class="link" to="/login">ログイン</RouterLink>
+                    <RouterLink class="link" to="/login" v-if="!login">ログイン</RouterLink>
+                    <!-- @click="方法名稱" -->
+                    <button class="sign-out" v-if="login" @click="out">ログアウト</button>
                     <RouterLink class="link" to="/register">新規会員登録</RouterLink>
-                    <RouterLink class="link" to="/administrator">管理者</RouterLink>
+                    <RouterLink class="link" v-if="manager" to="/administrator">管理者</RouterLink>
                 </div>
                 <img src=".." alt="">
                 <div class="link-area">
@@ -23,7 +45,8 @@ export default {
                     <RouterLink class="link" to="/search-map">店舗を探す</RouterLink>
                     <RouterLink class="link" to="/fee-map">車種と料金</RouterLink>
                     <RouterLink class="link" to="/calculate">予約する</RouterLink>
-                    <RouterLink class="link" to="/member-info">会員情報管理</RouterLink>
+                    <RouterLink class="link" v-if="login" to="/member-info">会員情報管理</RouterLink>
+                    <!-- <p>{{ login }}</p> -->
                 </div>
             </div>
         </div>
@@ -70,6 +93,21 @@ header {
                 justify-content: start;
                 margin-left: 4.5%;
 
+            }
+
+            .sign-out {
+                border: 0px;
+                background-color: transparent;
+                text-decoration: none;
+                color: black;
+                cursor: pointer;
+                transition: 0.3s;
+                margin: 0 1rem;
+                color: white;
+
+                &:hover {
+                    color: #79dfb1;
+                }
             }
 
             .link {

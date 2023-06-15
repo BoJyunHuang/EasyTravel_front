@@ -1,7 +1,10 @@
 <script>
 // import跳出視窗的元件
 import Modal from '../components/Modal.vue';
+import { mapState, mapActions } from "pinia";
+import indexStore from "../stores/counter";
 export default {
+     
      // 宣告跳出視窗元件
      components: {
           Modal
@@ -18,6 +21,8 @@ export default {
           }
      },
      methods: {
+           // [方法名稱]
+        ...mapActions(indexStore,["loginPage"]),
           // 開啟&關閉 插入的視窗方法
           change() {
                this.isShow = !this.isShow;
@@ -49,6 +54,10 @@ export default {
                          console.log(data)
                          // 從後端找到跳出視窗要顯示的訊息後,回傳前端
                          this.message = data.message
+                         if(data.message=="Successful!"){
+                              // 呼叫方法
+                              this.loginPage();
+                         }
                          // 做change:開啟或關閉的方法
                          this.change();
 

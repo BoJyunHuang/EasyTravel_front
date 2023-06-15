@@ -18,17 +18,24 @@ export default {
 
 <template>
   <HeaderView v-if="isShow" />
-  <div class="main-area">
+  <div class="main-area ">
     <RouterView />
   </div>
   <FooterView />
 </template>
 
 <style lang="scss" scoped>
+
 .main-area {
-  width: 100vw;
+  // width: 100vw;
   // height: 1200px;
-  height: auto;
+
+  // height: 100%;
+  // box-sizing: border-box;
+  // margin: auto;
+  
+  
+  
   padding: 2rem;
 
 }

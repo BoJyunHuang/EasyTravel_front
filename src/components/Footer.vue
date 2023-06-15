@@ -1,7 +1,21 @@
 <script>
 import { RouterLink } from "vue-router";
-
+import { mapState, mapActions } from "pinia";
+import indexStore from "../stores/counter";
 export default {
+     
+    computed: {
+        //       可以取到在pinia裡面的狀態資料
+        ...mapState(indexStore, ["manager"]),
+    },
+     methods: {
+        // 帶入pinia的方法
+        ...mapActions(indexStore, ["manaSignOut"]),
+        out() {
+        //    呼叫pinia的登出方法
+            this.manaSignOut();
+        }
+    }
 
 }
 </script>
@@ -13,13 +27,14 @@ export default {
                     <img src="../../public/logo2.png" alt="" class="icon">
                </div>
                <div class="info" style="width: 600px;">
-               <RouterLink class="link text-white" to="/">| 企業情報 </RouterLink>
+               <RouterLink class="link text-white" to="/">|企業情報</RouterLink>
                </div>
+               <!-- <div style="width: 700px;"> -->
+               <!-- <RouterLink class="link text-white" to="/">| サイトポリシー </RouterLink> -->
+               <!-- </div> -->
                <div style="width: 700px;">
-               <RouterLink class="link text-white" to="/">| サイトポリシー </RouterLink>
-               </div>
-               <div style="width: 700px;">
-                    <RouterLink class="link text-white" to="/administrator-login">| 管理者ログイン</RouterLink>
+                    <RouterLink v-if="!manager" class="link text-white" to="/administrator-login">|管理者ログイン</RouterLink>
+                    <button class="sign-out" v-if="manager" @click="out">|ログアウト</button>
                </div>
           </div>
           <div class="copy">
@@ -74,10 +89,25 @@ footer {
                color: rgb(201, 201, 103);
           }
      }
+     .sign-out {
+                border: none;
+                background-color: transparent;
+                text-decoration: none;
+                color: black;
+                cursor: pointer;
+                transition: 0.3s;
+                margin: 0 1rem;
+                color: white;
+
+                &:hover {
+                    color: #79dfb1;
+                }
+            }
 
      .copy {
           background-color: black;
-         
+         height: 40px;
+         width: 100vw;
      }
 
 }

@@ -36,29 +36,24 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.router-link {
-     text-decoration: none;
-
-}
-
-.out {
-     // display: flex;
-
-     width: 20vw;
-
-     padding-bottom: 0.5rem;
-     background-color: rgb(26, 16, 109);
-     border-radius: 5%;
-     font-size: 1.5rem;
-     // 
-
-     
-     
-     
      .router-link {
      // 取消下底線
      text-decoration: none;
-          color: white;
+     color: #006000;
+     margin: 0.5rem 0rem;
+     transition: 0.4s;
+
+          &:hover {
+
+               // color: rgb(63, 131, 14);
+               color: #43db43;
+          }
+     }
+.out {
+
+     // width: 20vw;
+     .router-link {
+    
           cursor: pointer;
           transition: 0.4s;
           // scale: 01.5rem;
@@ -70,4 +65,7 @@ export default {
           }
      }
 }
+
+
+
 </style>
