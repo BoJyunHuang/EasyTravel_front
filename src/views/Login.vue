@@ -4,7 +4,7 @@ import Modal from '../components/Modal.vue';
 import { mapState, mapActions } from "pinia";
 import indexStore from "../stores/counter";
 export default {
-     
+
      // 宣告跳出視窗元件
      components: {
           Modal
@@ -21,13 +21,13 @@ export default {
           }
      },
      methods: {
-           // [方法名稱]
-        ...mapActions(indexStore,["loginPage"]),
+          // [方法名稱]
+          ...mapActions(indexStore, ["loginPage"]),
           // 開啟&關閉 插入的視窗方法
           change() {
                this.isShow = !this.isShow;
           },
-          login(acc, pwd){
+          login(acc, pwd) {
                const body = {
                     // "REQ名稱"
                     account: acc,
@@ -44,8 +44,6 @@ export default {
                     },
                     body: JSON.stringify(body),
 
-
-
                })
                     .then(function (response) {
                          return response.json()
@@ -54,7 +52,7 @@ export default {
                          console.log(data)
                          // 從後端找到跳出視窗要顯示的訊息後,回傳前端
                          this.message = data.message
-                         if(data.message=="Successful!"){
+                         if (data.message == "Successful!") {
                               // 呼叫方法
                               this.loginPage();
                          }
@@ -66,7 +64,6 @@ export default {
                          // let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
                          // console.log(userInfo.name)
                     })
-
 
           }
      }
@@ -88,12 +85,12 @@ export default {
 
                          <div class="account-login mt-5">
                               <h4 class="ms-5">アカウント :</h4>
-                              <input type="text" v-model="account" class="logInput ms-5"  placeholder="アカウントを入力してください">
+                              <input type="text" v-model="account" class="logInput ms-5" placeholder="アカウントを入力してください">
                          </div>
                          <div class="pwd-login mt-5">
                               <h4 class="ms-5">パスワード :</h4>
 
-                              <input type="text" v-model="pwd" class="logInput ms-5"  placeholder="パスワードを入力してください">
+                              <input type="text" v-model="pwd" class="logInput ms-5" placeholder="パスワードを入力してください">
 
                          </div>
 
@@ -103,9 +100,9 @@ export default {
                               <Modal v-if="isShow" @pushOutside="change">
                                    <h2>{{ message }}</h2>
                               </Modal>
-                              
+
                          </div>
-                         
+
                     </div>
 
                </div>

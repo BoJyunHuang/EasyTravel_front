@@ -9,7 +9,7 @@ export default {
             required: true
         },
     }, methods: {
-        rent(item) {
+        rentInit(item) {
             this.$emit('rent', item); // 触发complete事件并将索引作为参数传递给父组件
         }
     }
@@ -30,7 +30,7 @@ export default {
                     <td v-for="item in columns" :key="key">{{ vehicles[item.key] }}</td>
                     <!-- 印出該分頁對應標題的內容(欄) -->
                     <td>
-                        <button class="btn btn-primary py-0" @click="rent(item)">レンタル</button>
+                        <button class="btn btn-primary py-0" @click="rentInit(item)">レンタル</button>
                     </td>
                 </tr>
             </tbody>

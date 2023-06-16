@@ -2,13 +2,13 @@
 import { RouterLink } from "vue-router";
 import { mapState, mapActions } from "pinia";
 import indexStore from "../stores/counter";
-import Modal from "../components/Modal.vue"
-import MessageModal from "../components/messageModal.vue"
+// import Modal from "../components/Modal.vue"
+// import MessageModal from "../components/messageModal.vue"
 export default {
-    components: {
-        Modal,
-        MessageModal
-    },
+    // components: {
+    //     Modal,
+    //     MessageModal
+    // },
     data() {
         return {
             // login :false,
@@ -97,29 +97,29 @@ export default {
             </div>
         </div>
         <!-- <Modal v-if="isShow" @pushOutside="closeModal">
-                <H2 class="m-2">返却場所登録</H2>
-                <table class="m-3 ">
-                    <tr>
-                        <th><label for="city" class="my-2">都道府県</label></th>
-                        <td><input type="text" placeholder="ex:東京都" id="city" v-model="city"></td>
-                    </tr>
-                    <tr>
-                        <th><label for="location" class="my-2">サイト</label></th>
-                        <td><input type="text" min="0" title="会社の拠点" id="location" v-model="location"></td>
-                    </tr>
-                    <tr>
-                        <th><label for="odo" class="my-2">走行マイル数</label></th>
-                        <td><input type="number" min="0" title="0以上" id="odo" v-model="odo"></td>
-                    </tr>
-                </table>
-                <div class="w-25 d-flex justify-content-between">
-                    <button type="button" class="btn btn-success btn-sm px-3" @click="finalDropOff">決定</button>
-                    <button type=" button" class="btn btn-danger btn-sm px-3" @click="closeModal">キャンセル</button>
-                </div>
-            </Modal>
-            <MessageModal v-if="isMessage" @getReady="Reload">
-                <p>{{ message }}</p>
-            </MessageModal> -->
+                                <H2 class="m-2">返却場所登録</H2>
+                                <table class="m-3 ">
+                                    <tr>
+                                        <th><label for="city" class="my-2">都道府県</label></th>
+                                        <td><input type="text" placeholder="ex:東京都" id="city" v-model="city"></td>
+                                    </tr>
+                                    <tr>
+                                        <th><label for="location" class="my-2">サイト</label></th>
+                                        <td><input type="text" min="0" title="会社の拠点" id="location" v-model="location"></td>
+                                    </tr>
+                                    <tr>
+                                        <th><label for="odo" class="my-2">走行マイル数</label></th>
+                                        <td><input type="number" min="0" title="0以上" id="odo" v-model="odo"></td>
+                                    </tr>
+                                </table>
+                                <div class="w-25 d-flex justify-content-between">
+                                    <button type="button" class="btn btn-success btn-sm px-3" @click="finalDropOff">決定</button>
+                                    <button type=" button" class="btn btn-danger btn-sm px-3" @click="closeModal">キャンセル</button>
+                                </div>
+                            </Modal>
+                            <MessageModal v-if="isMessage" @getReady="Reload">
+                                <p>{{ message }}</p>
+                            </MessageModal> -->
     </header>
 </template>
 

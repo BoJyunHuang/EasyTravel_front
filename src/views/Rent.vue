@@ -111,10 +111,11 @@ export default {
         }, closeModal() {
             this.isShow = false
         },
-        rent(item) {
+        doRent(item) {
             this.userInfo = sessionStorage.getItem("userInfo")
-            if (!this.userInfo || !this.userInfo.account) {
-                next('/login')
+            console.log(this.userInfo)
+            if (sessionStorage.getItem("userInfo") == null || !this.userInfo.account) {
+                this.$router.push('/login')
             }
             this.isShow = true
         },
@@ -163,17 +164,17 @@ export default {
         <div class="box m-5 p-3" v-if="subLocation && subLocation.bikeAmount > 0">
             <h1 class="text-center">自転車</h1>
             <h1 class="text-center">{{ subLocation.bikeAmount }}</h1>
-            <RentTable :columns="carInfoColumn" :data="bikesData" @rent="rent" />
+            <RentTable :columns="carInfoColumn" :data="bikesData" @rent="doRent" />
         </div>
         <div class="box m-5 p-3" v-if="subLocation && subLocation.motorcycleAmount > 0">
             <h1 class="text-center">二輪車</h1>
             <h1 class="text-center">{{ subLocation.motorcycleAmount }}</h1>
-            <RentTable :columns="carInfoColumn" :data="motorsData" @rent="rent" />
+            <RentTable :columns="carInfoColumn" :data="motorsData" @rent="doRent" />
         </div>
         <div class="box m-5 p-3" v-if="subLocation && subLocation.carAmount > 0">
             <h1 class="text-center">四輪車</h1>
             <h1 class="text-center">{{ subLocation.carAmount }}</h1>
-            <RentTable :columns="carInfoColumn" :data="carsData" @rent="rent" />
+            <RentTable :columns="carInfoColumn" :data="carsData" @rent="doDent" />
         </div>
     </div>
     <Modal v-if="isShow" @pushOutside="closeModal">

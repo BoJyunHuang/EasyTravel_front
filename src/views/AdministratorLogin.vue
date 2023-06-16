@@ -4,12 +4,13 @@ import Manager from "./Administrator.vue"
 import { mapState, mapActions } from "pinia";
 import indexStore from "../stores/counter";
 import Modal from '../components/Modal.vue';
-
+import messageModal from "../components/messageModal.vue";
 export default {
      components: {
           Manager,
           // 宣告跳出視窗元件
-          Modal
+          Modal,
+          messageModal
      },
      data() {
           return {
@@ -30,6 +31,8 @@ export default {
           // 開啟&關閉 插入的視窗方法
           change() {
                this.isShow = !this.isShow;
+               this.$router.push('/administrator')
+
           },
           // 用if判斷,是否為管理者帳號,不用連接後端
           AminiLogin() {
@@ -43,7 +46,6 @@ export default {
 
                     // 呼叫pinia方法
                     this.managerPage();
-
                }
                else {
                     this.message = "Login failed!";
@@ -65,8 +67,8 @@ export default {
 
                <div class="wrap-login d-flex  flex-column justify-content-center align-items-center">
                     <!-- <div class="title-login"> -->
-                         <h2 class="border-bottom rounded border-4 text-center mb-3">管理者ログイン</h2>
-                         <!-- <h2 class="border-bottom rounded border-4 text-center mb-3">ログイン</h2> -->
+                    <h2 class="border-bottom rounded border-4 text-center mb-3">管理者ログイン</h2>
+                    <!-- <h2 class="border-bottom rounded border-4 text-center mb-3">ログイン</h2> -->
                     <!-- </div> -->
 
                     <div class="login-area mt-4" style="height: auto;width: 350px;">
@@ -74,12 +76,14 @@ export default {
 
                               <div class="account-login mt-5">
                                    <h4 class="ms-5">アカウント :</h4>
-                              <input type="text" v-model="account" class="logInput ms-5"  placeholder="アカウントを入力してください" style="width: 280px; height: 35px;">
-                              
+                                   <input type="text" v-model="account" class="logInput ms-5" placeholder="アカウントを入力してください"
+                                        style="width: 280px; height: 35px;">
+
                               </div>
                               <div class="pwd-login mt-5">
                                    <h4 class="ms-5">パスワード :</h4>
-                                   <input type="text" v-model="pwd" class="logInput ms-5"  placeholder="パスワードを入力してください"  style="width: 280px; height: 35px;">
+                                   <input type="text" v-model="pwd" class="logInput ms-5" placeholder="パスワードを入力してください"
+                                        style="width: 280px; height: 35px;">
 
 
 
@@ -88,9 +92,9 @@ export default {
 
                               <div class="btnlogin">
                                    <button class="log-btn mt-5" type="button" id="testBut" @click="AminiLogin">ログイン</button>
-                                   <Modal v-if="isShow" @pushOutside="change">
+                                   <messageModal v-if="isShow" @getReady="change">
                                         <h2>{{ message }}</h2>
-                                   </Modal>
+                                   </messageModal>
                               </div>
                          </div>
 
@@ -105,12 +109,13 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-     h2 {
-          margin: auto auto;
-          height: 45px;
-          width: 250px;
-          
-     }
+h2 {
+     margin: auto auto;
+     height: 45px;
+     width: 250px;
+
+}
+
 .wrap-login {
 
      .title-login {

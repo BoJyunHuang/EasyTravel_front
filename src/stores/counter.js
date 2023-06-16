@@ -17,8 +17,6 @@ export default defineStore("indexStore", {
           isRent: false
      }),
 
-
-
      // computed
      getters: {
           // 箭頭函式 帶入上方的state 跟vue寫法不同地方
