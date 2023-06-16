@@ -6,25 +6,24 @@ export default {
                 theme: "light2",
                 animationEnabled: true,
                 title: {
-                    text: "World Silicon Production"
+                    text: "rent_income_ratio"
                 },
                 subtitles: [{
-                    text: "in tonnes"
+                    text: "%"
                 }],
                 data: [{
                     type: "doughnut",
                     startAngle: 90,
                     indexLabel: "{label} {y}(#percent%)",
                     yValueFormatString: "#,##0K",
-                    toolTipContent: "<span style='\"'color: {color};'\"'>{label}</span>, {y} tonnes",
+                    toolTipContent: "<span style='\"'color: {color};'\"'>{label}</span>, {y} $",
                     dataPoints: [
-                        { label: "China", y: 4500, color: "#DE2910" },
-                        { label: "Russia", y: 600, color: "#0039A6" },
-                        { label: "India", y: 370, color: "#F79432" },
-                        { label: "United States Of America", y: 320, color: "#37366B" },
-                        { label: "Brazil", y: 210, color: "#F5D900" },
-                        { label: "Malaysia", y: 150, color: "#F7C600" },
-                        { label: "Others", y: 876, color: "#7a7677" }
+                        { label: "bike", y: 17.8, color: "#DE2910" },
+                        { label: "heavy motorcycle", y: 21.4, color: "#0039A6" },
+                        { label: "motorcycle", y: 6.3, color: "#F79432" },
+                        { label: "scooter", y: 31.4, color: "#37366B" },
+                        { label: "suv", y: 12.7, color: "#F5D900" },
+                        { label: "ven", y: 10.5, color: "#F7C600" },
                     ]
                 }]
             },

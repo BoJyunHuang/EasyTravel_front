@@ -30,7 +30,6 @@ export default {
             const body = {
                 "city": this.searchCity
             }
-            console.log(body)
             fetch("http://localhost:8080/find_city_stops", {
                 method: "POST",
                 headers: {

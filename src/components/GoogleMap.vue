@@ -12,7 +12,7 @@ export default {
             // 初始化地图
             const map = new google.maps.Map(document.getElementById("map"), {
                 center: { lat: 35.6814, lng: 139.7653 }, // 預設東京
-                zoom: 12,
+                zoom: 10,
             });
 
             // 标记多个位置
@@ -40,6 +40,8 @@ export default {
         addMarkerToMap(map, location) {
             new google.maps.Marker({
                 position: location,
+                icon: '../../public/mini-checked.png',
+                animation: google.maps.Animation.DROP,
                 map: map,
             });
         }
@@ -55,6 +57,6 @@ export default {
 
 <style lang="scss" scoped>
 #map {
-    height: 400px;
+    height: 800px;
 }
 </style>

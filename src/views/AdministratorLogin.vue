@@ -119,9 +119,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-#managerLink{
+#managerLink {
      display: none;
 }
+
 h2 {
      margin: auto auto;
      height: 45px;

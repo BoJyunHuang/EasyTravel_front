@@ -27,6 +27,10 @@ export default {
      methods: {
           // [方法名稱]
           ...mapActions(indexStore, ["loginPage"]),
+          // 開啟&關閉 插入的視窗方法
+          change() {
+               this.isShow = !this.isShow;
+          },
           login(acc, pwd) {
                const body = {
                     // "REQ名稱"
@@ -44,8 +48,6 @@ export default {
                     },
                     body: JSON.stringify(body),
 
-
-
                })
                     .then(function (response) {
                          return response.json()
@@ -54,7 +56,6 @@ export default {
                          console.log(data)
                          // 從後端找到跳出視窗要顯示的訊息後,回傳前端
                          this.message = data.message
-                         console.log(this.message);
                          if (data.message == "Successful!") {
                               // 呼叫方法
                               this.loginPage();
@@ -73,15 +74,15 @@ export default {
           infoPage() {
                console.log(this.message);
                // 若訊息跳出成功,按下確認是 換會員資訊
-               if(this.message=="Successful!"){
+               if (this.message == "Successful!") {
                     // console.log("??");
                     window.location.href = "/member-search"
                     // 否則按下確認是關閉視窗
-               }else{
+               } else {
                     this.isShow = !this.isShow;
                }
 
-          },  
+          },
           // 開啟&關閉 插入的視窗方法
           change() {
                this.isShow = !this.isShow;
@@ -115,7 +116,8 @@ export default {
                          <div class="pwd-login mt-5">
                               <h4 class="ms-5">パスワード :</h4>
 
-                              <input :type="show ? 'text' : 'password'" v-model="pwd" class="logInput ms-5" placeholder="パスワードを入力してください">
+                              <input :type="show ? 'text' : 'password'" v-model="pwd" class="logInput ms-5"
+                                   placeholder="パスワードを入力してください">
                               <div class="pwd ms-4 d-flex">
                                    <!-- @change事件 -->
                                    <input type="checkbox" @change="passwordChange">
@@ -132,7 +134,7 @@ export default {
                                    <h2>{{ message }}</h2>
 
                               </messageModal>
-                          
+
 
                          </div>
 
@@ -194,9 +196,8 @@ export default {
                     height: 35px;
                     width: 100px;
                }
-          .pwd-login{
-               
-          }
+
+               .pwd-login {}
 
 
           }
