@@ -8,10 +8,7 @@ export default {
       type: Array,
       required: true
     },
-    columns1: {
-      type: Array,
-      required: true
-    }
+    unitText: "",
   },
   data() {
     return {
@@ -25,11 +22,11 @@ export default {
 
     <div class="plan">
       <strong class="fs-4">{{ data['threshold'] }}</strong>
-      <span class="fs-4">{{ columns1['unit'] }}分以內</span>
+      <span class="fs-4">{{ unitText }}以內</span>
     </div>
     <div class="plan">
       <strong class="fs-4">{{ data['rate'] }}</strong>
-      <span class="fs-4">円/分</span>
+      <span class="fs-4">円/{{ unitText }}</span>
     </div>
   </div>
 </template>

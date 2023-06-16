@@ -16,7 +16,7 @@ export default {
                 { key: 'project', column: "プラン" },
                 { key: 'rate', column: "時間帯料金" }, { key: 'threshold', column: "時間帯" }], // 表格標題
             feesData: [], // 表格內容
-            columns1: [],
+            unit: "",
             showControl: false,
 
             // PlanButton propTitle
@@ -56,6 +56,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
+                    this.unit = "分"
                 })
         },
         fetchScooterData() {
@@ -74,6 +75,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
+                    this.unit = "日"
                 })
         },
         fetchMotorData() {
@@ -92,6 +94,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
+                    this.unit = "日"
                 })
         },
         fetchHeavyMotorData() {
@@ -110,6 +113,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
+                    this.unit = "日"
                 })
         },
         fetchSedanData() {
@@ -128,6 +132,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
+                    this.unit = "日"
                 })
         },
         fetchVenData() {
@@ -146,6 +151,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
+                    this.unit = "日"
                 })
         },
         fetchSuvData() {
@@ -164,6 +170,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
+                    this.unit = "日"
                 })
         }
     },
@@ -184,8 +191,7 @@ export default {
             .then(data => {
                 // console.log(data.feesData)
                 this.feesData = data.feeList
-                let unit = { key: 'unit', column: "時"}
-                this.columns1.push(this.columns, unit)
+                this.unit = "分"
                 // this.columns = columns
                 console.log(this.columns1)
                 this.title = body.project
@@ -238,7 +244,7 @@ export default {
         <!-- <PlanTableView :columns="this.columns" :data="feesData" /> -->
         <div class="plan-info-card">
             <div v-for="(item, index) in feesData" :key="index" class="plan-info">
-                <PlanTableView :columns="columns" :columns1="columns1" :data="item" />
+                <PlanTableView :columns="columns" :unitText="unit" :data="item" />
             </div>
 
         </div>
