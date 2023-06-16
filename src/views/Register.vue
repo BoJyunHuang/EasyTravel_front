@@ -124,9 +124,9 @@ export default {
                          </div>
                     </div>
                </div>
-               
+
           </div>
-          
+
           <div class="bottom-area">
                <h4 class="mb-5 mt-5">よくある質問</h4>
                <h5 class="mt-5">Ｑ．会員登録はどうすればよいですか？</h5>
@@ -190,7 +190,8 @@ export default {
 
           .pwd {
                margin-top: -20px;
-               .pw{
+
+               .pw {
                     margin-top: 18px;
                     margin-left: 2px;
                }
@@ -220,7 +221,8 @@ export default {
      h3 {
           margin-top: -1%;
      }
-     .bottom-area{
+
+     .bottom-area {
           margin-top: 10%;
      }
 }

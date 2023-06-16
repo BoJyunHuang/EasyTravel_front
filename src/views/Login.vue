@@ -19,7 +19,9 @@ export default {
                // 宣告跳出視窗的內容
                message: "",
                // 宣告跳出視窗頁面的v-if布林值
-               isShow: false
+               isShow: false,
+               // 秀出密碼與否
+               show: false
           }
      },
      methods: {
@@ -72,7 +74,7 @@ export default {
                console.log(this.message);
                // 若訊息跳出成功,按下確認是 換會員資訊
                if(this.message=="Successful!"){
-                    console.log("??");
+                    // console.log("??");
                     window.location.href = "/member-search"
                     // 否則按下確認是關閉視窗
                }else{
@@ -83,6 +85,11 @@ export default {
           // 開啟&關閉 插入的視窗方法
           change() {
                this.isShow = !this.isShow;
+          },
+          passwordChange() {
+               console.log(this.show)
+               this.show = !this.show
+
           }
      }
 }
@@ -108,8 +115,12 @@ export default {
                          <div class="pwd-login mt-5">
                               <h4 class="ms-5">パスワード :</h4>
 
-                              <input type="text" v-model="pwd" class="logInput ms-5" placeholder="パスワードを入力してください">
-
+                              <input :type="show ? 'text' : 'password'" v-model="pwd" class="logInput ms-5" placeholder="パスワードを入力してください">
+                              <div class="pwd ms-4 d-flex">
+                                   <!-- @change事件 -->
+                                   <input type="checkbox" @change="passwordChange">
+                                   <p class="pw">パスワードを表示する</p>
+                              </div>
                          </div>
 
 
@@ -183,6 +194,9 @@ export default {
                     height: 35px;
                     width: 100px;
                }
+          .pwd-login{
+               
+          }
 
 
           }
