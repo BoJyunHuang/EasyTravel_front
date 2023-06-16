@@ -41,7 +41,7 @@ export default defineStore("indexStore", {
           // 管理者登入
           managerPage() {
                this.manager = true;
-               console.log(this.manager);
+               
 
           },
           // 管理者登出

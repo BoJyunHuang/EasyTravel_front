@@ -50,7 +50,11 @@ const router = createRouter({
           path: '/deleteVIP',
           name: 'deleteVIP',
           component: () => import("../views/DeleteVIP.vue")
-        },
+        }, {
+          path: '/rentData',
+          name: 'rentData',
+          component: () => import("../views/RentData.vue")
+        }
       ]
     },
     {

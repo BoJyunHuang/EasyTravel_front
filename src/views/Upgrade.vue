@@ -90,6 +90,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrap-upgrade {
+     height: 450px;
      .title-upgrade {
           // background-color: #b30e0e;
 

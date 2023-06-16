@@ -1,13 +1,15 @@
 <script>
 // import跳出視窗的元件
 import Modal from '../components/Modal.vue';
+import messageModal from '../components/messageModal.vue';
 import { mapState, mapActions } from "pinia";
 import indexStore from "../stores/counter";
 export default {
-     
+
      // 宣告跳出視窗元件
      components: {
-          Modal
+          Modal,
+          messageModal
      },
      data() {
           return {
@@ -17,17 +19,15 @@ export default {
                // 宣告跳出視窗的內容
                message: "",
                // 宣告跳出視窗頁面的v-if布林值
-               isShow: false
+               isShow: false,
+               // 秀出密碼與否
+               show: false
           }
      },
      methods: {
-           // [方法名稱]
-        ...mapActions(indexStore,["loginPage"]),
-          // 開啟&關閉 插入的視窗方法
-          change() {
-               this.isShow = !this.isShow;
-          },
-          login(acc, pwd){
+          // [方法名稱]
+          ...mapActions(indexStore, ["loginPage"]),
+          login(acc, pwd) {
                const body = {
                     // "REQ名稱"
                     account: acc,
@@ -54,7 +54,8 @@ export default {
                          console.log(data)
                          // 從後端找到跳出視窗要顯示的訊息後,回傳前端
                          this.message = data.message
-                         if(data.message=="Successful!"){
+                         console.log(this.message);
+                         if (data.message == "Successful!") {
                               // 呼叫方法
                               this.loginPage();
                          }
@@ -67,6 +68,27 @@ export default {
                          // console.log(userInfo.name)
                     })
 
+
+          },
+          infoPage() {
+               console.log(this.message);
+               // 若訊息跳出成功,按下確認是 換會員資訊
+               if(this.message=="Successful!"){
+                    // console.log("??");
+                    window.location.href = "/member-search"
+                    // 否則按下確認是關閉視窗
+               }else{
+                    this.isShow = !this.isShow;
+               }
+
+          },  
+          // 開啟&關閉 插入的視窗方法
+          change() {
+               this.isShow = !this.isShow;
+          },
+          passwordChange() {
+               console.log(this.show)
+               this.show = !this.show
 
           }
      }
@@ -88,24 +110,32 @@ export default {
 
                          <div class="account-login mt-5">
                               <h4 class="ms-5">アカウント :</h4>
-                              <input type="text" v-model="account" class="logInput ms-5"  placeholder="アカウントを入力してください">
+                              <input type="text" v-model="account" class="logInput ms-5" placeholder="アカウントを入力してください">
                          </div>
                          <div class="pwd-login mt-5">
                               <h4 class="ms-5">パスワード :</h4>
 
-                              <input type="text" v-model="pwd" class="logInput ms-5"  placeholder="パスワードを入力してください">
-
+                              <input :type="show ? 'text' : 'password'" v-model="pwd" class="logInput ms-5" placeholder="パスワードを入力してください">
+                              <div class="pwd ms-4 d-flex">
+                                   <!-- @change事件 -->
+                                   <input type="checkbox" @change="passwordChange">
+                                   <p class="pw">パスワードを表示する</p>
+                              </div>
                          </div>
 
 
                          <div class="btnlogin">
                               <button class="log-btn mt-5" type="button" @click="login(this.account, this.pwd)">ログイン</button>
-                              <Modal v-if="isShow" @pushOutside="change">
+
+
+                              <messageModal v-if="isShow" @getReady="infoPage">
                                    <h2>{{ message }}</h2>
-                              </Modal>
-                              
+
+                              </messageModal>
+                          
+
                          </div>
-                         
+
                     </div>
 
                </div>
@@ -160,9 +190,13 @@ export default {
                     // background-color: #C1395E;
                     border: 1px solid white;
                     margin-left: 65%;
+
                     height: 35px;
                     width: 100px;
                }
+          .pwd-login{
+               
+          }
 
 
           }

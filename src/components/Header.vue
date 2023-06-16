@@ -14,6 +14,7 @@ export default {
         //  mapState =>pinia:state,getters
         //       可以取到在pinia裡面的狀態資料
         ...mapState(indexStore, ["login", "manager"]),
+        
     },
     methods: {
         // 帶入pinia的方法
@@ -23,6 +24,10 @@ export default {
             this.signOut();
         }
     },
+    mounted() {
+          // 刷新頁面(進入頁面)時做一次此方法
+          console.log(this.manager);
+     }
 }
 </script>
 
@@ -36,7 +41,8 @@ export default {
                     <!-- @click="方法名稱" -->
                     <button class="sign-out" v-if="login" @click="out">ログアウト</button>
                     <RouterLink class="link" to="/register">新規会員登録</RouterLink>
-                    <RouterLink class="link" v-if="manager" to="/administrator">管理者</RouterLink>
+                    <RouterLink class="link" v-if="manager" to="/administrator" >管理者</RouterLink>
+                 
                 </div>
                 <img src=".." alt="">
                 <div class="link-area">

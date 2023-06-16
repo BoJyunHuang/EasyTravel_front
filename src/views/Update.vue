@@ -105,8 +105,8 @@ export default {
                // 使用者輸入的生日
                const selectedDate = new Date(this.birthday);
                // 檢查生日是否在未来&小於0歲!
-               if (selectedDate < currentDate 
-                   || selectedDate > 1870 ) {
+               if (selectedDate > currentDate 
+                   || selectedDate.getFullYear() < 1870 ) {
                     // console.log('date error');
                     this.message = '生年月日の日付が有効期間外です。';
                     // 插入元件的洞口變true
