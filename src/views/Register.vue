@@ -27,6 +27,9 @@ export default {
           , change() {
                // false改成true!!!!
                this.isShow = !this.isShow;
+               if (this.message = "Successful!") {
+                    this.$router.push('/login');
+               }
           },
           // 方法(參數)
           creat() {

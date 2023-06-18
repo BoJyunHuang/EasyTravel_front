@@ -12,7 +12,7 @@ export default {
     data() {
         return {
             // login :false,
-            // ...mapState(indexStore,["login"])
+            // ...mapState(indexStore,["login"]),
             isShow: false, // 顯示跳出式視窗
             isMessage: false, // 顯示回覆式視窗
             message: '', // 執行後端方法的回覆
@@ -25,19 +25,21 @@ export default {
     computed: {
         //  mapState =>pinia:state,getters
         //       可以取到在pinia裡面的狀態資料
-        ...mapState(indexStore, ["login", "manager", "isRent"]),
+        ...mapState(indexStore, ["login", "manager", "isRent", "getUser"]),
     },
     methods: {
         // 帶入pinia的方法
-        ...mapActions(indexStore, ["signOut", "getback"]),
+        ...mapActions(indexStore, ["signOut", "updateLoginInfo", "manaSignOut", "getback", "refresh"]),
         out() {
             //    呼叫pinia的登出方法
             this.signOut();
+            this.refresh();
         },
         dropOff() {
-            this.userInfo = sessionStorage.getItem("userInfo")
+            // this.userInfo = sessionStorage.getItem("userInfo")
+            this.userInfo = this.getLoginInfo
             if (!this.userInfo || !this.userInfo.account) {
-                next('/login')
+                this.$router.push('/login');
             }
             this.isShow = true
         }, closeModal() {
@@ -77,17 +79,18 @@ export default {
             <img src="../../public/logo2.png" alt="" class="icon">
             <div class="button-area">
                 <div class="login-area">
-                    <RouterLink class="link" to="/login" v-if="!login">ログイン</RouterLink>
+                    <RouterLink class="link" to="/login" v-if="!login && !manager">ログイン</RouterLink>
                     <!-- @click="方法名稱" -->
+                    <p v-if="login">{{ getUser }}</p>
+                    <!-- <img src=".." alt=""> -->
                     <button class="sign-out" v-if="login" @click="out">ログアウト</button>
-                    <RouterLink class="link" to="/register">新規会員登録</RouterLink>
+                    <RouterLink class="link" to="/register" v-if="!login && !manager">新規会員登録</RouterLink>
                     <RouterLink class="link" v-if="manager" to="/administrator">管理者</RouterLink>
                     <div class="d-flex justify-center item-center" v-if="isRent">
                         <h5 class="rentText">レンタカー利用中</h5>
                         <button class="sign-out" @click="dropOff">返す</button>
                     </div>
                 </div>
-                <img src=".." alt="">
                 <div class="link-area">
                     <!-- 各大項連結 -->
                     <RouterLink class="link" to="/">イージートラベル</RouterLink>
@@ -101,35 +104,35 @@ export default {
             </div>
         </div>
         <!-- <Modal v-if="isShow" @pushOutside="closeModal">
-                                    <H2 class="m-2">返却場所登録</H2>
-                                    <table class="m-3 ">
-                                        <tr>
-                                            <th><label for="city" class="my-2">都道府県</label></th>
-                                            <td><input type="text" placeholder="ex:東京都" id="city" v-model="city"></td>
-                                        </tr>
-                                        <tr>
-                                            <th><label for="location" class="my-2">サイト</label></th>
-                                            <td><input type="text" min="0" title="会社の拠点" id="location" v-model="location"></td>
-                                        </tr>
-                                        <tr>
-                                            <th><label for="odo" class="my-2">走行マイル数</label></th>
-                                            <td><input type="number" min="0" title="0以上" id="odo" v-model="odo"></td>
-                                        </tr>
-                                    </table>
-                                    <div class="w-25 d-flex justify-content-between">
-                                        <button type="button" class="btn btn-success btn-sm px-3" @click="finalDropOff">決定</button>
-                                        <button type=" button" class="btn btn-danger btn-sm px-3" @click="closeModal">キャンセル</button>
-                                    </div>
-                                </Modal>
-                                <MessageModal v-if="isMessage" @getReady="Reload">
-                                    <p>{{ message }}</p>
-                                </MessageModal> -->
+                                        <H2 class="m-2">返却場所登録</H2>
+                                        <table class="m-3 ">
+                                            <tr>
+                                                <th><label for="city" class="my-2">都道府県</label></th>
+                                                <td><input type="text" placeholder="ex:東京都" id="city" v-model="city"></td>
+                                            </tr>
+                                            <tr>
+                                                <th><label for="location" class="my-2">サイト</label></th>
+                                                <td><input type="text" min="0" title="会社の拠点" id="location" v-model="location"></td>
+                                            </tr>
+                                            <tr>
+                                                <th><label for="odo" class="my-2">走行マイル数</label></th>
+                                                <td><input type="number" min="0" title="0以上" id="odo" v-model="odo"></td>
+                                            </tr>
+                                        </table>
+                                        <div class="w-25 d-flex justify-content-between">
+                                            <button type="button" class="btn btn-success btn-sm px-3" @click="finalDropOff">決定</button>
+                                            <button type=" button" class="btn btn-danger btn-sm px-3" @click="closeModal">キャンセル</button>
+                                        </div>
+                                    </Modal>
+                                    <MessageModal v-if="isMessage" @getReady="Reload">
+                                        <p>{{ message }}</p>
+                                    </MessageModal> -->
     </header>
 </template>
 
 <style lang="scss" scoped>
 header {
-    width: 100vw;
+    width: 100%;
     height: 150px;
     padding: 2rem;
     // background-color: #5b39c1;

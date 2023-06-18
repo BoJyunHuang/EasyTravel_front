@@ -11,11 +11,11 @@ export default {
   data() {
     return {
       vehicleColumn: [
-        {key: `licensePlate`, column: "車両番号"}, {key: `category`, column: "車種"},
-        {key: `cc`, column: "排気量"}, {key: `startServingDate`, column: "追加日"},
-        {key: `latestCheckDate`, column: "最新検査日"}, {key: `available`, column: "ステータス"},
-        {key: `city`, column: "エリア"}, {key: `location`, column: "ポート"},
-        {key: `odo`, column: "走行距離"}, {key: `price`, column: "値段"}],
+        { key: `licensePlate`, column: "車両番号" }, { key: `category`, column: "車種" },
+        { key: `cc`, column: "排気量" }, { key: `startServingDate`, column: "追加日" },
+        { key: `latestCheckDate`, column: "最新検査日" }, { key: `available`, column: "ステータス" },
+        { key: `city`, column: "エリア" }, { key: `location`, column: "ポート" },
+        { key: `odo`, column: "走行距離" }, { key: `price`, column: "値段" }],
       vehicleData: [],
       deleteData: [],    // 刪除車資料
       // table button 編輯按鈕
@@ -52,53 +52,53 @@ export default {
     switchScrapCar() {
       this.isScrapCarShow = !this.isScrapCarShow
     },
-    switchUpdateCar(){
+    switchUpdateCar() {
       this.isUpdateCarShow = !this.isUpdateCarShow
     },
     // find by category
     findCar() {
       let body = {
-        "category" : categoryInput.value
+        "category": categoryInput.value
       }
       // console.log("click")
-      fetch ("http://localhost:8080/find_car_by_category", {
+      fetch("http://localhost:8080/find_car_by_category", {
         method: "POST",
         headers: {
-          "Content-type" : "application/json"
+          "Content-type": "application/json"
         },
         body: JSON.stringify(body)
       })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        if(data.message == "Success!"){
-          this.vehicleData = data.vehicleList
-        }else {
-          this.Reload()
-        }
-      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          if (data.message == "Success!") {
+            this.vehicleData = data.vehicleList
+          } else {
+            this.Reload()
+          }
+        })
     },
     // add car
     addCar() {
       let body = {
-        "licensePlate" : this.plateNumInput,
-        "category" : this.categoryInput,
-        "cc" : this.tankInput,
-        "price" : this.priceInput
+        "licensePlate": this.plateNumInput,
+        "category": this.categoryInput,
+        "cc": this.tankInput,
+        "price": this.priceInput
       }
       console.log("add_click")
       fetch("http://localhost:8080/add_car", {
         method: "POST",
         headers: {
-          "Content-type" : "application/json"
+          "Content-type": "application/json"
         },
         body: JSON.stringify(body)
       })
-      .then(res => res.json())
-      .then(data => {
-        this.message = data.message
-        this.isMessage = true
-      })
+        .then(res => res.json())
+        .then(data => {
+          this.message = data.message
+          this.isMessage = true
+        })
     },
     // update car
     // 顯示更改視窗
@@ -109,46 +109,46 @@ export default {
     // 執行方法
     finalUpdateCar() {
       let body = {
-        "licensePlate" : this.item.licensePlate,
-        "odo" : this.reqOdo,
-        "available" : this.available
+        "licensePlate": this.item.licensePlate,
+        "odo": this.reqOdo,
+        "available": this.available
 
       }
       console.log("click")
       fetch("http://localhost:8080/update_car_info", {
         method: "POST",
         headers: {
-          "Content-type" : "application/json"
+          "Content-type": "application/json"
         },
         body: JSON.stringify(body)
       })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        this.message = data.message
-        this.isMessage = true
-      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          this.message = data.message
+          this.isMessage = true
+        })
     },
     // 報廢車
     scrapCar(item) {
       this.item = item
       let body = {
-        "licensePlate" : this.item.licensePlate
+        "licensePlate": this.item.licensePlate
       }
       console.log(body)
       fetch("http://localhost:8080/scrap_car", {
         method: "POST",
         headers: {
-          "Content-type" : "application/json"
+          "Content-type": "application/json"
         },
         body: JSON.stringify(body)
       })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        this.message = data.message
-        this.isMessage = true
-      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          this.message = data.message
+          this.isMessage = true
+        })
     },
     Reload() {
       this.isAddCarShow = false
@@ -162,42 +162,42 @@ export default {
   mounted() {
     // 找所有車輛 ( 網頁一進去自動顯示 )
     fetch("http://localhost:8080/find_all_car")
-    .then(res => res.json())
-    .then(data => {
-      console.log(data.vehicleList)
-      this.vehicleData = data.vehicleList
-    }),
-    // 找報廢
-    fetch("http://localhost:8080/find_car_near_scrap")
-    .then(res => res.json())
-    .then(data => {
-      console.log(data.vehicleList)
-      this.deleteData = data.vehicleList
-    })
-    
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.vehicleList)
+        this.vehicleData = data.vehicleList
+      }),
+      // 找報廢
+      fetch("http://localhost:8080/find_car_near_scrap")
+        .then(res => res.json())
+        .then(data => {
+          console.log(data.vehicleList)
+          this.deleteData = data.vehicleList
+        })
+
   }
 }
 </script>
 
 <template>
-  <div class="input-area d-flex flex-column p-4 h-100">
+  <div class="input-area d-flex flex-column">
 
     <div class="btn-area align-items-center justify-content-md-between mb-3">
       <!-- find by category -->
       <div class="find-by-category">
-      <span class="my-2 mx-3 align-items-center">車種</span>
-      <select name="車種" id="categoryInput" class="mb-2 me-3">
-        <option>--------</option>
-        <option value="bike">bike</option>
-        <option value="scooter">scooter</option>
-        <option value="motorcycle">motorcycle</option>
-        <option value="heavy motorcycle">heavy motorcycle</option>
-        <option value="sedan">sedan</option>
-        <option value="ven">ven</option>
-        <option value="suv">suv</option>
-      </select>
+        <span class="my-2 mx-3 align-items-center">車種</span>
+        <select name="車種" id="categoryInput" class="mb-2 me-3">
+          <option>--------</option>
+          <option value="bike">bike</option>
+          <option value="scooter">scooter</option>
+          <option value="motorcycle">motorcycle</option>
+          <option value="heavy motorcycle">heavy motorcycle</option>
+          <option value="sedan">sedan</option>
+          <option value="ven">ven</option>
+          <option value="suv">suv</option>
+        </select>
 
-      <button class="workBtn btn btn-success" @click="findCar">検索</button>
+        <button class="workBtn btn btn-success" @click="findCar">検索</button>
       </div>
 
       <!-- button -->
@@ -206,10 +206,8 @@ export default {
     </div>
 
     <!-- table -->
-    <div class="carInfoTable">
-      <TableView :columns="vehicleColumn" :data="vehicleData" :showControl="showControl" :showEditButton="showEditButton"
-            @edit="updateCar" />
-    </div>
+    <TableView :columns="vehicleColumn" :data="vehicleData" :showControl="showControl" :showEditButton="showEditButton"
+      @edit="updateCar" />
 
     <!-- Modal -->
     <!-- Add Car -->
@@ -251,7 +249,8 @@ export default {
     <!-- Scrap Car -->
     <Modal v-if="isScrapCarShow" @pushOutside="switchScrapCar">
       <h2 class="mt-4 text-vehicle fw-bold">車の廃棄</h2>
-      <TableView :columns="vehicleColumn" :data="deleteData" :showControl="showControl" :showDeleteButton="showDeleteButton" @delete="scrapCar">
+      <TableView :columns="vehicleColumn" :data="deleteData" :showControl="showControl"
+        :showDeleteButton="showDeleteButton" @delete="scrapCar">
 
       </TableView>
     </Modal>
@@ -285,7 +284,7 @@ export default {
           <td><select name="available" id="available" v-model="available">
               <option value="true">true</option>
               <option value="false">false</option>
-              </select>
+            </select>
           </td>
         </tr>
         <tr class="my-2">

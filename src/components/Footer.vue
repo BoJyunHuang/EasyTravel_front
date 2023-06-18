@@ -3,19 +3,20 @@ import { RouterLink } from "vue-router";
 import { mapState, mapActions } from "pinia";
 import indexStore from "../stores/counter";
 export default {
-     
-    computed: {
-        //       可以取到在pinia裡面的狀態資料
-        ...mapState(indexStore, ["manager"]),
-    },
+
+     computed: {
+          //       可以取到在pinia裡面的狀態資料
+          ...mapState(indexStore, ["manager"]),
+     },
      methods: {
-        // 帶入pinia的方法
-        ...mapActions(indexStore, ["manaSignOut"]),
-        out() {
-        //    呼叫pinia的登出方法
-            this.manaSignOut();
-        }
-    }
+          // 帶入pinia的方法
+          ...mapActions(indexStore, ["manaSignOut"]),
+          out() {
+               //    呼叫pinia的登出方法
+               this.manaSignOut();
+               this.$router.push('/administrator-login');
+          }
+     }
 
 }
 </script>
@@ -27,7 +28,7 @@ export default {
                     <img src="../../public/logo2.png" alt="" class="icon">
                </div>
                <div class="info" style="width: 600px;">
-               <RouterLink class="link text-white" to="/">|企業情報</RouterLink>
+                    <RouterLink class="link text-white" to="/">|企業情報</RouterLink>
                </div>
                <!-- <div style="width: 700px;"> -->
                <!-- <RouterLink class="link text-white" to="/">| サイトポリシー </RouterLink> -->
@@ -46,32 +47,33 @@ export default {
 
 <style lang="scss" scoped>
 footer {
-     width: 100vw;
+     width: 100%;
 
-.bg{
-     height: 120px;
-     padding: 2rem;
-     background: rgb(23, 15, 147);
-     background: linear-gradient(90deg, rgba(23, 15, 147, 0.9164915966386554) 0%, rgba(23, 92, 151, 1) 35%, rgba(15, 164, 211, 1) 100%);
-     font-size: 1.5rem;
-     display: flex;
-     // flex-direction: column;
-     justify-content: center;
-     // align-items: center;
+     .bg {
+          height: 120px;
+          padding: 2rem;
+          background: rgb(23, 15, 147);
+          background: linear-gradient(90deg, rgba(23, 15, 147, 0.9164915966386554) 0%, rgba(23, 92, 151, 1) 35%, rgba(15, 164, 211, 1) 100%);
+          font-size: 1.5rem;
+          display: flex;
+          // flex-direction: column;
+          justify-content: center;
+          // align-items: center;
 
-     .upper {
-          
-          .line{
-               background-color: white;
-               border-radius: 20%;
-               font-size: 2.5rem;
-               cursor: pointer;
+          .upper {
+
+               .line {
+                    background-color: white;
+                    border-radius: 20%;
+                    font-size: 2.5rem;
+                    cursor: pointer;
+               }
+
+               .icon {
+                    width: 15%;
+
+               }
           }
-          .icon {
-               width: 15%;
-               
-          }
-     }
      }
 
      .link {
@@ -89,25 +91,26 @@ footer {
                color: rgb(201, 201, 103);
           }
      }
-     .sign-out {
-                border: none;
-                background-color: transparent;
-                text-decoration: none;
-                color: black;
-                cursor: pointer;
-                transition: 0.3s;
-                margin: 0 1rem;
-                color: white;
 
-                &:hover {
-                    color: #79dfb1;
-                }
-            }
+     .sign-out {
+          border: none;
+          background-color: transparent;
+          text-decoration: none;
+          color: black;
+          cursor: pointer;
+          transition: 0.3s;
+          margin: 0 1rem;
+          color: white;
+
+          &:hover {
+               color: #79dfb1;
+          }
+     }
 
      .copy {
           background-color: black;
-         height: 40px;
-         width: 100vw;
+          height: 40px;
+          width: 100%;
      }
 
 }

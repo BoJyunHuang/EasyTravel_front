@@ -3,6 +3,7 @@
 import Modal from '../components/Modal.vue';
 import messageModal from '../components/messageModal.vue';
 import { mapState, mapActions } from "pinia";
+// 全域變數pinia  名字可自己訂  以下訂成'indexStore'
 import indexStore from "../stores/counter";
 export default {
 
@@ -25,8 +26,8 @@ export default {
           }
      },
      methods: {
-          // [方法名稱]
-          ...mapActions(indexStore, ["loginPage"]),
+          // [方法名稱]，更改登入狀態
+          ...mapActions(indexStore, ["loginPage", "updateLoginInfo", "updateName"]),
           // 開啟&關閉 插入的視窗方法
           change() {
                this.isShow = !this.isShow;
@@ -57,15 +58,21 @@ export default {
                          // 從後端找到跳出視窗要顯示的訊息後,回傳前端
                          this.message = data.message
                          if (data.message == "Successful!") {
+                              // 使用pinia
                               // 呼叫方法
                               this.loginPage();
+                              this.updateLoginInfo(data.userInfo)
+                              this.updateName(data.userInfo.name)
                          }
                          // 做change:開啟或關閉的方法
                          this.change();
 
+                         // 舊方法：使用瀏覽器的session
                          // session set (key:你要綁的東西)
-                         sessionStorage.setItem("userInfo", JSON.stringify(data.userInfo));
+                         // sessionStorage.setItem("userInfo", JSON.stringify(data.userInfo));
                          // let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+
+
                          // console.log(userInfo.name)
                     })
 
@@ -76,7 +83,10 @@ export default {
                // 若訊息跳出成功,按下確認是 換會員資訊
                if (this.message == "Successful!") {
                     // console.log("??");
-                    window.location.href = "/member-search"
+                    this.isShow = !this.isShow;
+                    // 以下這行不能使用，因為會清除網頁紀錄全部重新整理
+                    // window.location.href = "/member-search"
+                    this.$router.push("/member-search")
                     // 否則按下確認是關閉視窗
                } else {
                     this.isShow = !this.isShow;
@@ -152,7 +162,7 @@ export default {
                <p class="ms-5">詳細は、料金表をご確認ください。
                     ※ご登録後、「アカウント」メニューからプラン変更が可能です。</p>
           </div>
-          <h3 class="text-center">Welcome back！</h3>
+          <h3 class="text-center">Welcome back!</h3>
 
      </div>
 </template>

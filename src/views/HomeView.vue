@@ -11,18 +11,13 @@
           aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
           aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-          aria-label="Slide 3"></button>
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="../assets/pic/fuji.jpg" class="d-block w-100" alt="...">
+          <img src="../assets/pic/nihon.jpg" class="d-block w-100" alt="...">
         </div>
         <div class="carousel-item">
-          <img src="../assets/pic/fujisan.webp" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img src="../assets/pic/fuji.jpg" class="d-block w-100" alt="...">
+          <img src="../assets/pic/tokyo.jpg" class="d-block w-100" alt="...">
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -45,7 +40,9 @@
       <h3 class="text-center mt-5">EasyTravel とは</h3>
       <div class="down">
         <!-- <img src="https://pngimg.com/uploads/hyundai/hyundai_PNG11233.png" style="height: 90px;"> -->
-        <img src="https://3.bp.blogspot.com/-lOomA6mrfYc/WCqddq_T6ZI/AAAAAAAA_hI/zhOD4BbIpO095LLo3DsDOwBFAe1SEpusQCLcB/s400/car_spare_tire_koukan.png" style="height: 10rem;">
+        <img
+          src="https://3.bp.blogspot.com/-lOomA6mrfYc/WCqddq_T6ZI/AAAAAAAA_hI/zhOD4BbIpO095LLo3DsDOwBFAe1SEpusQCLcB/s400/car_spare_tire_koukan.png"
+          style="height: 10rem;">
         <div class="note mt-5">
           <p class="text-center">EasyTravel とは</p>
           <p class="text-center">乗りたい時に借りて、行きたい場所で</p>
@@ -55,8 +52,8 @@
           <p class="text-center">颯爽と赤い電動自転車でラクラクと</p>
           <p class="text-center">漕ぎ出してみませんか？</p>
         </div>
-        <img src="https://3.bp.blogspot.com/-svNlUnpKnnQ/VkxNjoNoE_I/AAAAAAAA0xQ/nW21lLgRjVs/s500/jitensya_tenjiblock.png" alt="homebicycle"
-          style="height: 10rem;">
+        <img src="https://3.bp.blogspot.com/-svNlUnpKnnQ/VkxNjoNoE_I/AAAAAAAA0xQ/nW21lLgRjVs/s500/jitensya_tenjiblock.png"
+          alt="homebicycle" style="height: 10rem;">
       </div>
       <nav class="area" style="height: 300px;width: 500px;">
         <div class="bg">
@@ -72,7 +69,7 @@
         </div>
         <!-- <img src="https://tse3.mm.bing.net/th?id=OIP.pOMEk61ug9XSsDMDtMmDAQHaFH&pid=Api&P=0&h=180" -->
         <!-- class="sco" style="height: 90px;"> -->
-        
+
       </nav>
     </nav>
 
@@ -80,8 +77,8 @@
 </template>
 
 <style lang="scss" scoped>
-img {
-  height: 350px;
+.carousel-item {
+  height: 480px;
 }
 
 .serviceicon {
@@ -101,7 +98,7 @@ img {
   display: flex;
   margin-left: 30%;
   align-items: center;
-    justify-content: center;
+  justify-content: center;
 }
 
 .logo {
@@ -133,6 +130,7 @@ img {
   height: 40px;
   // width: 15rem;
 }
+
 // .sco{
 //   margin-top: 5rem;
 //   margin-left: 10rem;

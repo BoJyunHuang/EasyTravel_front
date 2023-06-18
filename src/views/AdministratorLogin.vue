@@ -1,14 +1,12 @@
 
 <script>
 import { RouterLink } from "vue-router";
-import Manager from "./Administrator.vue"
-import { mapState, mapActions } from "pinia";
+import { mapActions } from "pinia";
 import indexStore from "../stores/counter";
 import MessageModal from '../components/messageModal.vue';
 
 export default {
      components: {
-          Manager,
           // 宣告跳出視窗元件
           MessageModal
      },
@@ -26,7 +24,7 @@ export default {
      },
      methods: {
           // [方法名稱]
-          ...mapActions(indexStore, ["managerPage"]),
+          ...mapActions(indexStore, ["managerPage", "refresh"]),
 
           // 開啟&關閉 插入的視窗方法
           change() {
@@ -45,9 +43,8 @@ export default {
                if (this.account == "M001" && this.pwd == "M0123456") {
                     // 設定跳出視窗顯示的訊息
                     this.message = "Successful!";
-                    // 做change:開啟或關閉視窗的方法
-                    this.change();
                     // 呼叫pinia方法:管理者登入狀態
+                    this.refresh()
                     this.managerPage();
                     // 監聽:登入後抓出管理者頁面 綁定的id
                     let managerLink = document.getElementById("managerLink")
@@ -86,18 +83,12 @@ export default {
                                    <h4 class="ms-5">アカウント :</h4>
                                    <input type="text" v-model="account" class="logInput ms-5" placeholder="アカウントを入力してください"
                                         style="width: 280px; height: 35px;">
-
                               </div>
                               <div class="pwd-login mt-5">
                                    <h4 class="ms-5">パスワード :</h4>
                                    <input type="text" v-model="pwd" class="logInput ms-5" placeholder="パスワードを入力してください"
                                         style="width: 280px; height: 35px;">
-
-
-
                               </div>
-
-
                               <div class="btnlogin">
                                    <button class="log-btn mt-5" type="button" id="testBut" @click="AminiLogin">ログイン</button>
                                    <!-- 要再看一次 -->
@@ -107,13 +98,9 @@ export default {
                                    </MessageModal>
                               </div>
                          </div>
-
                     </div>
-
                </div>
-
-               <h3 class="text-center">Welcome back！</h3>
-
+               <!-- <h3 class="text-center">Welcome back！</h3> -->
           </div>
      </nav>
 </template>
