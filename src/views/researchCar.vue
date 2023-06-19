@@ -23,7 +23,7 @@
           <th><label class="my-2">車両番号</label></th>
           <td>{{ item.licensePlate }}</td>
 
-        </tr>
+        </tr> 
         <tr>
           <th><label class="my-2">修理開始時刻</label></th>
           <td>{{ item.startTime.replace('T', ' ') }}</td>
