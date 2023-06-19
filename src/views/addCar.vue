@@ -28,7 +28,7 @@
           </tr>
         </table>
         <div class="cont">
-          <button type="button" class="btn btn-success btn-sm px-3" @click="finaladd">確認</button>
+          <button type="button" class="btn btn-success btn-sm px-3" @click="finaladd" >確認</button>
           <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
         </div>
       </div>
@@ -179,6 +179,7 @@ export default {
   data() {
     return {
       tableColumns: [
+        { key: `serialNumber`, column: "#" },
         { key: `licensePlate`, column: "車両番号" },
         { key: `startTime`, column: "修理開始時刻" },
         { key: `note`, column: "註記" }],
@@ -231,7 +232,8 @@ export default {
         body: JSON.stringify(body)
       }).then(res => res.json())
         .then(data => this.message = data.message)
-      this.isMessage = true
+      this.isMessage = true,
+      this.isShow = false
       // 關閉跳出式視窗
     },
     finalfinish() {
@@ -253,6 +255,7 @@ export default {
           console.log(data);
         })
       this.isMessage = true
+      this.isShow = false
       // 關閉跳出式視窗
     },
     closeModal() {
@@ -268,7 +271,7 @@ export default {
     }, finaldelete() {
       const body = {
         "licensePlate": this.item.licensePlate,
-        "startTime": this.item.startTime
+        "startTime": this.item.startTime,
       };
       console.log(body);
       fetch("http://localhost:8080/delete_abnormal", {
@@ -283,11 +286,26 @@ export default {
           this.message = data.message;
         });
       this.isMessage = true;
+      this.isShow = false
     }
     , Reload() {
       this.isShow = false
       this.isMessage = false
-      window.location.reload()
+      fetch("http://localhost:8080/find_latest_ten_unfinished_abnormal")
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          this.maintenanceData = data.maintenanceList.map(item => {
+
+            return {
+              ...item,
+              startTime: item.startTime.replace('T', ' '),
+              endTime: item.endTime
+            };
+          });
+        });
+      
+      // window.location.reload()
     },
     switchReasonCodeModal() {
       this.isReasonCodeModalShow = !this.isReasonCodeModalShow;

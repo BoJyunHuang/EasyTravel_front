@@ -60,6 +60,7 @@ export default {
   data() {
     return {
       tableColumns: [
+      {key: `serialNumber`, column: "#" },
       {key: `licensePlate`, column: "車両番号"}, 
       {key: `price`, column: "価格"}, 
       {key: `startTime`, column: "修理開始時刻"}, 
@@ -117,7 +118,7 @@ export default {
     finaldelete() {
       const body = {
         "licensePlate": this.item.licensePlate,
-        "startTime": this.item.startTime
+        "startTime": this.item.startTime,
       };
       console.log(body);
       fetch("http://localhost:8080/delete_abnormal", {
@@ -132,6 +133,7 @@ export default {
           this.message = data.message;
         });
       this.isMessage = true;
+      this.isShow = !this.isShow
     }
     , Reload() {
       this.isShow = false
