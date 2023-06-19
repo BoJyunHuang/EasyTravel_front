@@ -86,7 +86,7 @@ export default {
                     this.isShow = !this.isShow;
                     // 以下這行不能使用，因為會清除網頁紀錄全部重新整理
                     // window.location.href = "/member-search"
-                    this.$router.push("/member-search")
+                    this.$router.push("/member-info")
                     // 否則按下確認是關閉視窗
                } else {
                     this.isShow = !this.isShow;

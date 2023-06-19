@@ -6,14 +6,14 @@ import MemberSearch from "./MemberSearch.vue";
 export default {
      data() {
           return {
-               
+
           }
      },
      components: {
           Left,
           MemberSearch
      },
-     
+
 }
 </script>
 
@@ -26,9 +26,9 @@ export default {
           </div>
           <div class="main-page">
                <!-- this.$route.path:  vue裡面router找路徑的方法 -->
-               <MemberSearch v-if="this.$route.path == '/member-info'" />
-              
-               <RouterView v-else/>
+               <!-- <MemberSearch v-if="this.$route.path == '/member-info'" /> -->
+               <RouterView />
+               <!-- <RouterView v-else/> -->
           </div>
      </div>
 </template>

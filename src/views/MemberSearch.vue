@@ -1,8 +1,9 @@
 <script>
-import { RouterView } from "vue-router";
 import LeftView from '../../src/components/Left.vue'
+import { mapState, mapActions } from "pinia";
+import indexStore from "../stores/counter";
 export default {
-    components:{
+    components: {
         LeftView
     },
     data() {
@@ -15,11 +16,16 @@ export default {
             scooter: false,
             car: false
         }
+    }, computed: {
+        //  mapState =>pinia:state,getters
+        //       可以取到在pinia裡面的狀態資料
+        ...mapState(indexStore, ["getLoginInfo"]),
     },
     methods: {
         search() {
             // 取出"自定義的key值"
-            let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+            // let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+            let userInfo = this.getLoginInfo
             this.name = userInfo.name
             this.account = userInfo.account
             this.pwd = userInfo.password
@@ -55,8 +61,6 @@ export default {
 }
 </script>
 <template>
-
-
     <div class="wrap-search">
         <div class="title-search">
             <h4 class="">会員資訊</h4>
