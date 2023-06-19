@@ -81,7 +81,7 @@ export default {
     <div class="position-relative w-95%">
         <table class="table mb-5 table-striped table-fixed table-hover">
             <thead> <!-- 標題名稱 -->
-                <tr class="table-dark"> <!-- 使用迴圈印出"標題名稱" -->
+                <tr class="table-primary"> <!-- 使用迴圈印出"標題名稱" -->
                     <th v-for="column in columns" :key="key">{{ column.column }}</th>
                     <th v-if="showControl"> <!-- 新增 "操作" 欄位 -->
                         <div>

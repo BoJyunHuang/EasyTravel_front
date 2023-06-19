@@ -8,8 +8,8 @@
         <option value="timeDesc">時間: 近い順</option>
       </select>
       <div class="twobtn">
-        <button type="button" class="btn btn-success mb-2 px-3" @click="switchModal">フォーム追加</button>
-        <button type="button" class="btn btn-success mb-2 px-3" @click="switchReasonCodeModal">車両修理の原因コード</button>
+        <button type="button" class="btn btn-primary text-white mb-2 px-3" @click="switchModal">フォーム追加</button>
+        <button type="button" class="btn btn-primary text-white mb-2 px-3" @click="switchReasonCodeModal">車両修理の原因コード</button>
       </div>
     </div>
 
@@ -28,7 +28,7 @@
           </tr>
         </table>
         <div class="cont">
-          <button type="button" class="btn btn-success btn-sm px-3" @click="finaladd">確認</button>
+          <button type="button" class="btn btn-primary text-white btn-sm px-3" @click="finaladd">確認</button>
           <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
         </div>
       </div>
@@ -115,7 +115,7 @@
 
       </table>
       <div class="cont">
-        <button type="button" class="btn btn-success btn-sm px-3" @click="finaldelete">決定</button>
+        <button type="button" class="btn btn-primary text-white btn-sm px-3" @click="finaldelete">決定</button>
         <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
       </div>
     </Modal>
@@ -154,7 +154,7 @@
           </tr>
         </table>
         <div class="cont1">
-          <button type="button" class="btn btn-success btn-sm px-3" @click="finalfinish">確認</button>
+          <button type="button" class="btn btn-primary text-white btn-sm px-3" @click="finalfinish">確認</button>
           <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
         </div>
       </div>

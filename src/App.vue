@@ -37,7 +37,7 @@ export default {
   
   
   padding: 2rem;
-  background-color: #e3f3fc;
+  // background-color: #d7d7ff;
 
 }
 </style>

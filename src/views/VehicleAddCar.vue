@@ -71,6 +71,14 @@ export default {
         .then(res => res.json())
         .then(data => {
           console.log(data)
+        //   data.vehicleList.forEach (item => {
+        //   console.log(item)
+        //   if(item.available == `false`){
+        //       item.available = "可租借"
+        //     }else {
+        //       item.available = "出租中"
+        //     }
+        // })
           if (data.message == "Success!") {
             this.vehicleData = data.vehicleList
           } else {
@@ -98,7 +106,16 @@ export default {
         .then(data => {
           this.message = data.message
           this.isMessage = true
+        //   data.vehicleList.forEach (item => {
+        //   console.log(item)
+        //   if(item.available == `false`){
+        //       item.available = "可租借"
+        //     }else {
+        //       item.available = "出租中"
+        //     }
+        // })
         })
+        this.isAddCarShow = false
     },
     // update car
     // 顯示更改視窗
@@ -127,11 +144,25 @@ export default {
           console.log(data)
           this.message = data.message
           this.isMessage = true
+        //   data.vehicleList.forEach (item => {
+        //   console.log(item)
+        //   if(item.available == `false`){
+        //       item.available = "可租借"
+        //     }else {
+        //       item.available = "出租中"
+        //     }
+        // })
         })
+        this.isUpdateCarShow = false
     },
     // 報廢車
     scrapCar(item) {
       this.item = item
+
+
+      this.data = []
+
+
       let body = {
         "licensePlate": this.item.licensePlate
       }
@@ -148,13 +179,34 @@ export default {
           console.log(data)
           this.message = data.message
           this.isMessage = true
+        //   data.vehicleList.forEach (item => {
+        //   console.log(item)
+        //   if(item.available == `false`){
+        //       item.available = "可租借"
+        //     }else {
+        //       item.available = "出租中"
+        //     }
+        // })
         })
+        this.isScrapCarShow = false
     },
     Reload() {
-      this.isAddCarShow = false
-      this.isScrapCarShow = false
-      this.isUpdateCarShow = false
-      window.location.reload()
+      this.isMessage = false
+      fetch("http://localhost:8080/find_all_car")
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.vehicleList)
+        this.vehicleData = data.vehicleList
+        // data.vehicleList.forEach (item => {
+        //   console.log(item)
+        //   if(item.available == `false`){
+        //       item.available = "可租借"
+        //     }else {
+        //       item.available = "出租中"
+        //     }
+        // })
+      })
+      // window.location.reload()
     }
 
 
@@ -164,8 +216,18 @@ export default {
     fetch("http://localhost:8080/find_all_car")
       .then(res => res.json())
       .then(data => {
-        console.log(data.vehicleList)
+        console.log(data)
+        data.vehicleList.forEach (item => {
+          console.log(item)
+          if(item.available == `false`){
+              item.available = "可租借"
+            }else {
+              item.available = "出租中"
+            }
+        })
+        
         this.vehicleData = data.vehicleList
+        console.log(data.vehicleList)
       }),
       // 找報廢
       fetch("http://localhost:8080/find_car_near_scrap")
@@ -173,6 +235,16 @@ export default {
         .then(data => {
           console.log(data.vehicleList)
           this.deleteData = data.vehicleList
+          data.vehicleList.forEach (item => {
+          console.log(item)
+          if(item.available === "false"){
+              item.available = "出租中"
+              
+            }else if(item.available === "true") {
+              item.available = "可租借"
+            }
+            console.log(item.available)
+        })
         })
 
   }
@@ -197,12 +269,12 @@ export default {
           <option value="suv">suv</option>
         </select>
 
-        <button class="workBtn btn btn-success" @click="findCar">検索</button>
+        <button class="workBtn btn btn-primary text-white" @click="findCar">検索</button>
       </div>
 
       <!-- button -->
-      <button type="button" class="functionBtn btn btn-success w-25" @click="switchAddCar">新規登錄</button>
-      <button type="button" class="functionBtn btn btn-success w-25" @click="switchScrapCar">車の廃棄</button>
+      <button type="button" class="functionBtn btn btn-primary w-25 text-white" @click="switchAddCar">新規登錄</button>
+      <button type="button" class="functionBtn btn btn-primary w-25 text-white" @click="switchScrapCar">車の廃棄</button>
     </div>
 
     <!-- table -->

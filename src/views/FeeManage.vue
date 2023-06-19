@@ -10,7 +10,7 @@ export default {
     },
     data() {
         return {
-            tableColumns: [{ key: 'project', column: 'プラン' }, { key: 'cc', column: '排気量' }, { key: 'rate', column: '時間帯の料金' }, { key: 'threshold', column: '時間帯' }], // 表格標題
+            tableColumns: [{ key: 'serialNumber', column: '#' }, { key: 'project', column: 'プラン' }, { key: 'cc', column: '排気量' }, { key: 'rate', column: '時間帯の料金' }, { key: 'threshold', column: '時間帯' }], // 表格標題
             feesData: [], // 表格內容
             searchText: '', // 搜尋關鍵字
 
@@ -32,7 +32,8 @@ export default {
     mounted() { // 預設執行方法，後端-顯示所有費率資料
         fetch("http://localhost:8080/show_all_fees")
             .then(res => res.json())
-            .then(data => this.feesData = data.feeList)
+            .then(data =>{ this.feesData = data.feeList
+            console.log(data)})
     },
     methods: {
         // 更新顯示資料
@@ -141,7 +142,7 @@ export default {
                     <option value="suv">SUV</option>
                 </optgroup>
             </select>
-            <button type="button" class="btn btn-success mb-2 px-3" @click="switchModal('add')">新規料金プランの追加</button>
+            <button type="button" class="btn btn-primary text-white mb-2 px-3" @click="switchModal('add')">新規料金プランの追加</button>
         </div>
         <TableView :columns="tableColumns" :data="filteredData" :showDeleteButton="showDeleteButton"
             :showControl="showControl" @delete="deleteItem" />
@@ -166,8 +167,8 @@ export default {
                 </tr>
             </table>
             <div class="w-25 d-flex justify-content-between">
-                <button type="button" class="btn btn-success btn-sm px-3" @click="finaladd">決定</button>
-                <button type=" button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
+                <button type="button" class="btn btn-primary text-white btn-sm px-3" @click="finaladd">決定</button>
+                <button type=" button" class="btn btn-danger btn-sm px-2" @click="switchModal">キャンセル</button>
             </div>
         </Modal>
         <Modal v-if="isShow && modalType == 'delete'" @pushOutside="closeModal">
@@ -191,8 +192,8 @@ export default {
                 </tr>
             </table>
             <div class="w-25 d-flex justify-content-between">
-                <button type="button" class="btn btn-success btn-sm px-3" @click="finaldelete">決定</button>
-                <button type=" button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
+                <button type="button" class="btn btn-primary text-white btn-sm px-3" @click="finaldelete">決定</button>
+                <button type=" button" class="btn btn-danger btn-sm px-2" @click="switchModal">キャンセル</button>
             </div>
         </Modal>
         <MessageModal v-if="isMessage" @getReady="Reload">
