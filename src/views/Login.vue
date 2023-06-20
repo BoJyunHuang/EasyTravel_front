@@ -207,8 +207,6 @@ export default {
                     width: 100px;
                }
 
-               .pwd-login {}
-
 
           }
      }

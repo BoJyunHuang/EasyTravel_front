@@ -1,7 +1,8 @@
 <script>
 // import跳出視窗的元件
 import Modal from '../components/Modal.vue';
-
+import { mapState, mapActions } from "pinia";
+import indexStore from "../stores/counter";
 export default {
       // 宣告跳出視窗元件
       components: {
@@ -17,6 +18,10 @@ export default {
                isShow: false
                
           }
+     }, computed: {
+          //  mapState =>pinia:state,getters
+          //       可以取到在pinia裡面的狀態資料
+          ...mapState(indexStore, ["getLoginInfo"]),
      },
      methods: {
             // 開啟&關閉 插入的視窗方法
@@ -25,7 +30,9 @@ export default {
           },
           // 方法(參數)
           quiet() {
-               let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+               // let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+               let userInfo = this.getLoginInfo
+               
                // this.acc = 
                const body = {
                     account: userInfo.account,

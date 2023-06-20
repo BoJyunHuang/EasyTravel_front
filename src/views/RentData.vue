@@ -2,6 +2,8 @@
 import TableView from "../components/Table.vue";
 import Modal from "../components/Modal.vue";
 import MessageModal from "../components/messageModal.vue"
+import { mapState, mapActions } from "pinia";
+import indexStore from "../stores/counter";
 
 export default {
   components: {
@@ -17,10 +19,15 @@ export default {
         { key: `price`, column: "価格" }],
       vehicleData: [], 
     };
-  },
+  }, computed: {
+          //  mapState =>pinia:state,getters
+          //       可以取到在pinia裡面的狀態資料
+          ...mapState(indexStore, ["getLoginInfo"]),
+     },
   mounted() {
     console.log("1");
-    let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+    // let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+    let userInfo = this.getLoginInfo
 
     const body = {
       // "REQ名稱"
