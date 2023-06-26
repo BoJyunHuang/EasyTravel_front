@@ -1,6 +1,6 @@
 <template>
     <!-- 在chartData.labels有值时才显示图表 -->
-    <Bar :data="chartData" :options="chartOptions" v-if="chartData.labels.length > 0" />
+    <Bar :data="chartData" :options="chartOptions" />
 </template>
   
 <script>
@@ -13,31 +13,32 @@ export default {
     name: 'BarChart',
     components: { Bar },
     props: {
+        labels: [], // 图表的横坐标标签
         ri_label: "", // 图表的标签
-        ri_labels: [], // 图表的横坐标标签
         ri_data: {}, // 图表的数据
         vc_label: "",
-        vc_labels: [],
         vc_data: {},
     },
     computed: { // 使用計算屬性才能即時更新
         chartData() {
+            const datasets = [];
+            if (this.ri_data) {
+                datasets.push({
+                    label: this.ri_label,
+                    backgroundColor: '#4FC3F7',
+                    data: this.ri_data,
+                });
+            }
+            if (this.vc_data) {
+                datasets.push({
+                    label: this.vc_label,
+                    backgroundColor: '#F44336',
+                    data: this.vc_data,
+                });
+            }
             return {
-                labels: {
-                    ri: this.ri_labels,
-                    vc: this.vc_labels,
-                },
-                datasets: [
-                    {
-                        label: this.ri_label,
-                        backgroundColor: '#4FC3F7',
-                        data: this.ri_data,
-                    }, {
-                        label: this.vc_label,
-                        backgroundColor: '#F44336',
-                        data: this.vc_data,
-                    },
-                ],
+                labels: this.labels,
+                datasets: datasets,
             };
         },
     },
@@ -47,7 +48,7 @@ export default {
                 responsive: true,
                 scales: {
                     y: {
-                        beginAtZero: false,
+                        beginAtZero: true,
                         ticks: {
                             callback: (value) => `${value / 10000} 万円`,
                         },
@@ -59,26 +60,33 @@ export default {
                             label: (context) => `${context.parsed.y / 10000} 万円`,
                         },
                     },
+                    datalabels: {
+                        display: (context) => context.dataset.data[context.dataIndex] !== 0,
+                        formatter: (value, context) => (context.dataset.data[context.dataIndex] !== 0 ? value : ''),
+                    },
                 },
             }
         }
     },
     watch: { // 監視數據的變化
-        // 监听第一个数据集labels的变化并更新chartData中的labels
-        ri_labels(newLabels) {
-            this.chartData.labels = newLabels;
-        },
-        // 监听第一个数据集data的变化并更新chartData中的数据
+        // 监视数据的变化并更新chartData中的数据
         ri_data(newData) {
-            this.chartData.datasets[0].data = newData;
+            if (this.chartData.datasets.length > 0) {
+                this.chartData.datasets[0].data = newData;
+            } else {
+                this.chartData.datasets.push({
+                    label: this.ri_label,
+                    backgroundColor: '#4FC3F7',
+                    data: newData,
+                });
+            }
         },
-        // 监听第二个数据集labels的变化并更新chartData中的labels
-        vc_labels(newLabels) {
-            this.chartData.labels = newLabels;
-        },
-        // 监听第二个数据集data的变化并更新chartData中的数据
         vc_data(newData) {
-            this.chartData.datasets[1].data = newData;
+            if (this.chartData.datasets.length > 1) {
+                this.chartData.datasets[1].data = newData;
+            } else {
+                this.chartData.datasets[0].data = newData;
+            }
         },
     },
 }

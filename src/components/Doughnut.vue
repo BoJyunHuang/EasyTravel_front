@@ -26,7 +26,7 @@ export default {
                 labels: this.labels,
                 datasets: [
                     {
-                        backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16', '#FFA500', '#800080', '#008000'],
+                        backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16', '#FFA500', '#800080', '#008000', '#FFC0CB', '#FFD700', '#00FF00', '#800000'],
                         data: this.data,
                     }
                 ]
@@ -52,13 +52,14 @@ export default {
                             size: '14',
                             weight: 'bold'
                         },
+                        display: (context) => context.dataset.data[context.dataIndex] !== 0,
                         formatter: (value, context) => {
                             const dataset = context.chart.data.datasets[context.datasetIndex];
                             const total = dataset.data.reduce((a, b) => a + b, 0);
                             const percentage = ((value / total) * 100).toFixed(2);
 
                             return percentage + '%';
-                        }
+                        },
                     },
                     legend: {
                         position: 'right',
@@ -69,11 +70,9 @@ export default {
                                 const dataset = context.dataset;
                                 const index = context.dataIndex;
                                 const value = dataset.data[index];
-
                                 // 计算百分比
                                 const total = dataset.data.reduce((a, b) => a + b, 0);
                                 const percentage = ((value / total) * 100).toFixed(2);
-
                                 return `${dataset.label}: ${percentage}%`;
                             }
                         }

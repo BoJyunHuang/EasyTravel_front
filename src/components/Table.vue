@@ -55,11 +55,21 @@ export default {
             const range = 2; // 顯示的頁碼範圍，根據需求進行調整
             const startPage = Math.max(1, this.currentPage - range);
             const endPage = Math.min(this.totalPages, this.currentPage + range);
-
             this.displayedPages = [];
-            for (let i = startPage; i <= endPage; i++) {
-                this.displayedPages.push(i);
+            if (endPage > startPage) {
+                for (let i = startPage; i <= endPage; i++) {
+                    this.displayedPages.push(i);
+                }
+            } else if (this.totalPages > 4) {
+                this.displayedPages.push(1);
+                this.displayedPages.push(2);
+                this.displayedPages.push(3);
+            } else {
+                for (let i = 1; i <= this.totalPages; i++) {
+                    this.displayedPages.push(i);
+                }
             }
+            console.log(this.displayedPages)
         }, editItem(item) {
             this.$emit('edit', item); // 触发edit事件并将索引作为参数传递给父组件
         }, deleteItem(item) {
@@ -71,8 +81,10 @@ export default {
             this.$emit('choose', list); // 触发choose事件并将索引作为参数传递给父组件
         }
     },
-    mounted() {
-        this.updateDisplayedPages();
+    watch: {
+        data(newData) {
+            this.updateDisplayedPages();
+        }
     }
 };
 </script>
@@ -82,7 +94,7 @@ export default {
         <table class="table mb-5 table-striped table-fixed table-hover">
             <thead> <!-- 標題名稱 -->
                 <tr class="table-dark"> <!-- 使用迴圈印出"標題名稱" -->
-                    <th v-for="column in columns" :key="key">{{ column.column }}</th>
+                    <th v-for="column in columns">{{ column.column }}</th>
                     <th v-if="showControl"> <!-- 新增 "操作" 欄位 -->
                         <div>
                             <input type="checkbox" id='control' value="false" v-model="control">
@@ -96,7 +108,7 @@ export default {
             </thead>
             <tbody> <!-- 表個內容 -->
                 <tr v-for="(item, index) in paginatedData" :key="item.id"> <!-- 印出該分頁筆數(列) -->
-                    <td v-for="column in columns" :key="key">{{ item[column.key] }}</td> <!-- 印出該分頁對應標題的內容(欄) -->
+                    <td v-for="column in columns">{{ item[column.key] }}</td> <!-- 印出該分頁對應標題的內容(欄) -->
                     <td v-if="showControl"> <!-- 進行編輯修改操作的按鈕 -->
                         <button class="btn btn-primary py-0" v-if="control && showEditButton"
                             @click="editItem(item)">変更</button>
