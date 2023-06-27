@@ -69,7 +69,6 @@ export default {
                     this.displayedPages.push(i);
                 }
             }
-            console.log(this.displayedPages)
         }, editItem(item) {
             this.$emit('edit', item); // 触发edit事件并将索引作为参数传递给父组件
         }, deleteItem(item) {
@@ -110,7 +109,7 @@ export default {
                 <tr v-for="(item, index) in paginatedData" :key="item.id"> <!-- 印出該分頁筆數(列) -->
                     <td v-for="column in columns">{{ item[column.key] }}</td> <!-- 印出該分頁對應標題的內容(欄) -->
                     <td v-if="showControl"> <!-- 進行編輯修改操作的按鈕 -->
-                        <button class="btn btn-primary py-0" v-if="control && showEditButton"
+                        <button class="btn btn-primary text-white py-0" v-if="control && showEditButton"
                             @click="editItem(item)">変更</button>
                         <button class="btn btn-danger py-0" v-if="control && showDeleteButton"
                             @click="deleteItem(item)">削除</button>

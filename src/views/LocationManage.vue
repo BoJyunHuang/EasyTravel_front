@@ -25,18 +25,20 @@ export default {
 
             city: '',
             location: '',
-            bikeAmount: '',
-            motorcycleAmount: '',
-            carAmount: ''
-
+            bikeAmount: 0,
+            motorcycleAmount: 0,
+            carAmount: 0
         };
     },
     mounted() { // 預設執行方法，進入頁面後隨即執行，後端-顯示所有站點資料
-        fetch("http://localhost:8080/show_all_stops")
-            .then(res => res.json())
-            .then(data => this.locationsData = data.stopList)
+        this.findAllStops()
     },
     methods: { // 各種方法
+        findAllStops() {
+            fetch("http://localhost:8080/show_all_stops")
+                .then(res => res.json())
+                .then(data => this.locationsData = data.stopList)
+        },
         updateFilteredData() { // 更新數據內容的方法
             if (!this.searchText) { // 對應到"搜尋內容"，若無則不改變內容
                 return this.locationsData;
@@ -45,16 +47,19 @@ export default {
             return this.locationsData.filter(item => // 將資料進行過濾，回傳含關鍵字資料
                 item.city.includes(keyword)
             )
-        }, switchModal(type) { // 跳出式視窗顯示與否
+        }, openModal(type) { // 跳出式視窗顯示與否
             this.isShow = true
             this.modalType = type
+        }, closeModal() {
+            this.isShow = false
+            this.item = null
         }, finaladd() {
             const body = {
                 "city": this.city,
                 "location": this.location,
-                "bikeAmount": this.bikeAmount,
-                "motorcycleAmount": this.motorcycleAmount,
-                "motorcycleAmount": this.carAmount
+                "bike_amount": this.bikeAmount,
+                "motorcycle_amount": this.motorcycleAmount,
+                "car_amount": this.carAmount
             }
             fetch("http://localhost:8080/add_stop", {
                 method: "POST",
@@ -64,10 +69,8 @@ export default {
                 body: JSON.stringify(body)
             }).then(res => res.json())
                 .then(data => this.message = data.message)
+            this.closeModal()
             this.isMessage = true
-        }, closeModal() {
-            this.isShow = false
-            item = null
         }, editItem(item) {
             this.isShow = true
             this.modalType = 'edit'
@@ -88,11 +91,11 @@ export default {
                 body: JSON.stringify(body)
             }).then(res => res.json())
                 .then(data => this.message = data.message)
+            this.closeModal()
             this.isMessage = true
         }, Reload() {
-            this.isShow = false
             this.isMessage = false
-            window.location.reload()
+            this.findAllStops()
         }
     },
     watch: { // 事件監聽
@@ -129,10 +132,10 @@ export default {
                 <option value="千葉縣">千葉縣</option>
                 <option value="神奈川縣">神奈川縣</option>
             </select>
-            <button type="button" class="btn btn-success mb-2 px-3" @click="switchModal">サイト追加</button>
+            <button type="button" class="btn btn-primary text-white mb-2 px-3" @click="openModal('add')">サイト追加</button>
         </div>
         <TableView :columns="tableColumns" :data="filteredData" :showEditButton="showEditButton" :showControl="showControl"
-            @edit="editItem" @delete="" />
+            @edit="editItem" />
         <Modal v-if="isShow && modalType == 'add'" @pushOutside="closeModal">
             <H2 class="m-2">サイト追加</H2>
             <table class="m-3 ">
@@ -159,7 +162,7 @@ export default {
             </table>
             <div class="w-25 d-flex justify-content-between">
                 <button type="button" class="btn btn-success btn-sm px-3" @click="finaladd">決定</button>
-                <button type=" button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
+                <button type=" button" class="btn btn-danger btn-sm px-3" @click="closeModal">キャンセル</button>
             </div>
         </Modal>
         <Modal v-if="isShow && modalType == 'edit'" @pushOutside="closeModal">
@@ -188,7 +191,7 @@ export default {
             </table>
             <div class="w-25 d-flex justify-content-between">
                 <button type="button" class="btn btn-success btn-sm px-3" @click="finaledit">決定</button>
-                <button type=" button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
+                <button type=" button" class="btn btn-danger btn-sm px-3" @click="openModal">キャンセル</button>
             </div>
         </Modal>
         <MessageModal v-if="isMessage" @getReady="Reload">
