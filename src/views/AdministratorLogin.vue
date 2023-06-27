@@ -26,7 +26,7 @@ export default {
      },
      methods: {
           // [方法名稱]
-          ...mapActions(indexStore, ["managerPage", "refresh"]),
+          ...mapActions(indexStore, ["managerPage"]),
 
           // 開啟&關閉 插入的視窗方法
           change() {
@@ -46,7 +46,6 @@ export default {
                     // 設定跳出視窗顯示的訊息
                     this.message = "Successful!";
                     // 呼叫pinia方法:管理者登入狀態
-                    this.refresh()
                     this.managerPage();
                     // 監聽:登入後抓出管理者頁面 綁定的id
                     let managerLink = document.getElementById("managerLink")
