@@ -1,6 +1,8 @@
 <script>
 // import跳出視窗的元件
 import Modal from '../components/Modal.vue';
+import { mapState, mapActions } from "pinia";
+import indexStore from "../stores/counter";
 export default {
      // 宣告跳出視窗元件
      components: {
@@ -17,47 +19,53 @@ export default {
                // 宣告跳出視窗頁面的v-if布林值
                isShow: false
           }
+     }, computed: {
+          //  mapState =>pinia:state,getters
+          //       可以取到在pinia裡面的狀態資料
+          ...mapState(indexStore, ["getLoginInfo"]),
      },
-     methods: {
-          // 開啟&關閉 插入的視窗方法
-          change() {
-               this.isShow = !this.isShow;
-          },
-          upgrade() {
-               let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
-               const body = {
-                    // "REQ名稱"
-                    account: userInfo.account,
+          methods: {
+               // 開啟&關閉 插入的視窗方法
+               change() {
+                    this.isShow = !this.isShow;
+               },
+               upgrade() {
+                    // let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+                    let userInfo = this.getLoginInfo
+
+                    const body = {
+                         // "REQ名稱"
+                         account: userInfo.account,
+                    }
+                    console.log(body)
+                    fetch("http://localhost:8080/user_info_upgrade_vip", {
+
+                         method: "POST",//預設是get
+                         headers: {
+                              'Content-Type':
+                                   'application/json',
+                         },
+                         body: JSON.stringify(body),
+
+
+
+                    })
+                         .then(function (response) {
+                              return response.json()
+                         })
+                         .then((data) => {
+                              console.log(data)
+                              // 從後端找到跳出視窗要顯示的訊息後,回傳前端
+                              this.message = data.message
+                              // 做change:開啟或關閉的方法
+                              this.change();
+                         })
+
+
                }
-               console.log(body)
-               fetch("http://localhost:8080/user_info_upgrade_vip", {
-
-                    method: "POST",//預設是get
-                    headers: {
-                         'Content-Type':
-                              'application/json',
-                    },
-                    body: JSON.stringify(body),
-
-
-
-               })
-                    .then(function (response) {
-                         return response.json()
-                    })
-                    .then((data) => {
-                         console.log(data)
-                         // 從後端找到跳出視窗要顯示的訊息後,回傳前端
-                         this.message = data.message
-                         // 做change:開啟或關閉的方法
-                         this.change();
-                    })
-
-
           }
-     }
 
-}
+     }
 </script>
 <template>
      <div class="wrap-upgrade">
@@ -91,6 +99,7 @@ export default {
 <style lang="scss" scoped>
 .wrap-upgrade {
      height: 450px;
+
      .title-upgrade {
           // background-color: #b30e0e;
 
@@ -125,7 +134,8 @@ export default {
           }
      }
 }
+
 h2 {
-          margin: auto auto;
-     }
+     margin: auto auto;
+}
 </style>

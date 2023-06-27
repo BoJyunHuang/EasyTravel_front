@@ -25,16 +25,16 @@ export default {
           <div class="bg">
 
                <div class="upper">
-                    <img src="../../public/logo2.png" alt="" class="icon">
+                    <img src="../../public/Frame_8_big.png" alt="" class="icon">
                </div>
                <div class="info" style="width: 600px;">
-                    <RouterLink class="link text-white" to="/">|企業情報</RouterLink>
+                    <RouterLink class="link" to="/">|企業情報</RouterLink>
                </div>
                <!-- <div style="width: 700px;"> -->
                <!-- <RouterLink class="link text-white" to="/">| サイトポリシー </RouterLink> -->
                <!-- </div> -->
                <div style="width: 700px;">
-                    <RouterLink v-if="!manager" class="link text-white" to="/administrator-login">|管理者ログイン</RouterLink>
+                    <RouterLink v-if="!manager" class="link" to="/administrator-login">|管理者ログイン</RouterLink>
                     <button class="sign-out" v-if="manager" @click="out">|ログアウト</button>
                </div>
           </div>
@@ -47,13 +47,13 @@ export default {
 
 <style lang="scss" scoped>
 footer {
-     width: 100%;
+     width: 100vw;
 
      .bg {
           height: 120px;
           padding: 2rem;
-          background: rgb(23, 15, 147);
-          background: linear-gradient(90deg, rgba(23, 15, 147, 0.9164915966386554) 0%, rgba(23, 92, 151, 1) 35%, rgba(15, 164, 211, 1) 100%);
+    background-color: gray;
+        
           font-size: 1.5rem;
           display: flex;
           // flex-direction: column;

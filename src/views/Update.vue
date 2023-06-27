@@ -1,6 +1,8 @@
 <script>
 // import跳出視窗的元件
 import Modal from '../components/Modal.vue';
+import { mapState, mapActions } from "pinia";
+import indexStore from "../stores/counter";
 export default {
      // 宣告跳出視窗元件
      components: {
@@ -19,136 +21,143 @@ export default {
                message: "",
                // 宣告跳出視窗頁面的v-if布林值
                isShow: false,
-               error:""
+               error: ""
           }
+     }, computed: {
+          //  mapState =>pinia:state,getters
+          //       可以取到在pinia裡面的狀態資料
+          ...mapState(indexStore, ["getLoginInfo"]),
      },
-     methods: {
-          // 開啟&關閉 插入的視窗方法
-          change() {
-               this.isShow = !this.isShow;
-          }
-          // 要分開方法:秀出舊資料&連結API
-          // 1.該會員資訊
-          , medata() {
-               // 從session取出key值(暫存的會員資料)
-               let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
-               console.log(userInfo);
-               this.name = userInfo.name
-               this.account = userInfo.account
-               this.pwd = userInfo.password
-               this.birthday = userInfo.birthday
-               this.scooter = userInfo.motorcycleLicense
-               this.car = userInfo.drivingLicense
-               // 抓節點(機車/汽車駕照)
-               let testBut = document.getElementById("ip1");
-               let testBut2 = document.getElementById("ip2");
-               let testBut3 = document.getElementById("ip3");
-               let testBut4 = document.getElementById("ip4");
+          methods: {
+               // 開啟&關閉 插入的視窗方法
+               change() {
+                    this.isShow = !this.isShow;
+               }
+               // 要分開方法:秀出舊資料&連結API
+               // 1.該會員資訊
+               , medata() {
+                    // 從session取出key值(暫存的會員資料)
+                    // let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+                    let userInfo = this.getLoginInfo
 
-               console.log(this.scooter);
-               // 判斷資料庫的值為true/false
-               if (this.scooter == true) {
-                    // .checked:若為true則打勾
-                    testBut.checked = true
-               } else {
-                    testBut2.checked = true
+                    console.log(userInfo);
+
+                    this.name = userInfo.name
+                    this.account = userInfo.account
+                    this.pwd = userInfo.password
+                    this.birthday = userInfo.birthday
+                    this.scooter = userInfo.motorcycleLicense
+                    this.car = userInfo.drivingLicense
+                    // 抓節點(機車/汽車駕照)
+                    let testBut = document.getElementById("ip1");
+                    let testBut2 = document.getElementById("ip2");
+                    let testBut3 = document.getElementById("ip3");
+                    let testBut4 = document.getElementById("ip4");
+
+                    console.log(this.scooter);
+                    // 判斷資料庫的值為true/false
+                    if (this.scooter == true) {
+                         // .checked:若為true則打勾
+                         testBut.checked = true
+                    } else {
+                         testBut2.checked = true
+                    }
+                    if (this.car == true) {
+                         testBut3.checked = true
+                    } else {
+                         testBut4.checked = true
+                    }
+
+
+
+               },
+               // 2.連結API,修改資訊
+               meUpdate() {
+                    // (1)修改預設的汽機車駕照true/false
+                    // 抓節點
+                    let scoYes = document.getElementById("ip1");
+                    let motoYes = document.getElementById("ip3");
+                    // 宣告汽機車預設值為false(下方body有設對應REQ)
+                    let scoSet = false;
+                    let motoSet = false;
+
+                    if (scoYes.checked == true) {
+                         scoSet = true
+                    } else {
+                         scoSet = false
+                    }
+                    if (motoYes.checked == true) {
+                         motoSet = true
+                    } else {
+                         motoSet = false
+                    }
+
+
+                    // 抓登入時暫存的資訊session,利用key值
+                    let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
+
+                    const body = {
+                         // "後端REQ名稱":key值.指定的帳密值
+                         account: userInfo.account,
+                         password: userInfo.password,
+                         //  "後端REQ名稱":前端修改傳回的生日
+                         birthday: this.birthday,
+                         // "後端REQ名稱":前端自定義的布林值
+                         motorcycleLicense: scoSet,
+                         drivingLicense: motoSet
+
+                    }
+                    console.log(body)
+
+                    // 現在日期
+                    const currentDate = new Date();
+                    // 使用者輸入的生日
+                    const selectedDate = new Date(this.birthday);
+                    // 檢查生日是否在未来&小於0歲!
+                    if (selectedDate > currentDate
+                         || selectedDate.getFullYear() < 1870) {
+                         // console.log('date error');
+                         this.message = '生年月日の日付が有効期間外です。';
+                         // 插入元件的洞口變true
+                         this.isShow = !this.isShow;
+                         return;
+
+                    }
+                    // 連接後端API方法
+                    fetch("http://localhost:8080/user_info_update", {
+
+                         method: "POST",//預設是get
+                         headers: {
+                              'Content-Type':
+                                   'application/json',
+                         },
+                         body: JSON.stringify(body)
+
+                    })
+                         .then(function (response) {
+                              return response.json()
+                         })
+                         // .then(function (data) {
+                         //      console.log(data)
+                         // })
+                         .then((data) => {
+                              console.log(data)
+                              // 從後端找到跳出視窗要顯示的訊息後,回傳前端
+                              this.message = data.message
+                              // 做change:開啟或關閉的方法
+                              this.change();
+                         })
+
                }
-               if (this.car == true) {
-                    testBut3.checked = true
-               } else {
-                    testBut4.checked = true
-               }
-              
-               
 
           },
-          // 2.連結API,修改資訊
-          meUpdate() {
-               // (1)修改預設的汽機車駕照true/false
-               // 抓節點
-               let scoYes = document.getElementById("ip1");
-               let motoYes = document.getElementById("ip3");
-               // 宣告汽機車預設值為false(下方body有設對應REQ)
-               let scoSet = false;
-               let motoSet = false;
-
-               if (scoYes.checked == true) {
-                    scoSet = true
-               } else {
-                    scoSet = false
-               }
-               if (motoYes.checked == true) {
-                    motoSet = true
-               } else {
-                    motoSet = false
-               }
-
-
-               // 抓登入時暫存的資訊session,利用key值
-               let userInfo = JSON.parse(sessionStorage.getItem("userInfo"))
-
-               const body = {
-                    // "後端REQ名稱":key值.指定的帳密值
-                    account: userInfo.account,
-                    password: userInfo.password,
-                    //  "後端REQ名稱":前端修改傳回的生日
-                    birthday: this.birthday,
-                    // "後端REQ名稱":前端自定義的布林值
-                    motorcycleLicense: scoSet,
-                    drivingLicense: motoSet
-
-               }
-               console.log(body)
-
-               // 現在日期
-               const currentDate = new Date();
-               // 使用者輸入的生日
-               const selectedDate = new Date(this.birthday);
-               // 檢查生日是否在未来&小於0歲!
-               if (selectedDate > currentDate 
-                   || selectedDate.getFullYear() < 1870 ) {
-                    // console.log('date error');
-                    this.message = '生年月日の日付が有効期間外です。';
-                    // 插入元件的洞口變true
-                    this.isShow = !this.isShow;
-                    return;
-                    
-               }
-               // 連接後端API方法
-               fetch("http://localhost:8080/user_info_update", {
-
-                    method: "POST",//預設是get
-                    headers: {
-                         'Content-Type':
-                              'application/json',
-                    },
-                    body: JSON.stringify(body)
-
-               })
-                    .then(function (response) {
-                         return response.json()
-                    })
-                    // .then(function (data) {
-                    //      console.log(data)
-                    // })
-                    .then((data) => {
-                         console.log(data)
-                         // 從後端找到跳出視窗要顯示的訊息後,回傳前端
-                         this.message = data.message
-                         // 做change:開啟或關閉的方法
-                         this.change();
-                    })
-
+          //  mounted:刷新頁面做的事情
+          // mounted有箭頭抓不到this
+          mounted() {
+               // 刷新頁面(進入頁面)時做一次此方法
+               this.medata()
           }
-
-     },
-     //  mounted:刷新頁面做的事情
-     // mounted有箭頭抓不到this
-     mounted() {
-          // 刷新頁面(進入頁面)時做一次此方法
-          this.medata()
      }
-}
 </script>
 <template>
      <div class="wrap-update">
