@@ -32,8 +32,8 @@ export default {
     align-items: center;
 
     .modal {
-        width: 50vw;
-        height: 50vh;
+        width: 65vw;
+        height: 65vh;
         background-color: white;
         border-radius: 0.5rem;
         position: relative;

@@ -56,7 +56,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
-                    this.unit = "分"
+                    this.unit = "分以内"
                 })
         },
         fetchScooterData() {
@@ -75,7 +75,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
-                    this.unit = "日"
+                    this.unit = "日以上"
                 })
         },
         fetchMotorData() {
@@ -94,7 +94,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
-                    this.unit = "日"
+                    this.unit = "日以上"
                 })
         },
         fetchHeavyMotorData() {
@@ -113,7 +113,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
-                    this.unit = "日"
+                    this.unit = "日以上"
                 })
         },
         fetchSedanData() {
@@ -132,7 +132,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
-                    this.unit = "日"
+                    this.unit = "日以上"
                 })
         },
         fetchVenData() {
@@ -151,7 +151,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
-                    this.unit = "日"
+                    this.unit = "日以上"
                 })
         },
         fetchSuvData() {
@@ -170,7 +170,7 @@ export default {
                 .then(data => {
                     this.feesData = data.feeList
                     this.title = body.project
-                    this.unit = "日"
+                    this.unit = "日以上"
                 })
         }
     },
@@ -191,7 +191,7 @@ export default {
             .then(data => {
                 // console.log(data.feesData)
                 this.feesData = data.feeList
-                this.unit = "分"
+                this.unit = "分以内"
                 // this.columns = columns
                 console.log(this.columns1)
                 this.title = body.project
