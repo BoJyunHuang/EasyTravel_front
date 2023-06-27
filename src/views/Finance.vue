@@ -63,7 +63,15 @@ export default {
                     item.title.toLowerCase().includes(keyword)
                 );
             });
-        }
+        },
+        formattedData() {
+            return this.filteredData.map(item => {
+                return {
+                    ...item,
+                    buildTime: item.buildTime.replace('T', ' ')
+                };
+            });
+        },
     }
 }
 </script>
@@ -81,7 +89,7 @@ export default {
                 <option value="maintenance_cost">メンテナンス費支出</option>
             </select>
         </div>
-        <TableView :columns="financeColumns" :data="filteredData" />
+        <TableView :columns="financeColumns" :data="formattedData" />
     </div>
 </template>
 

@@ -82,9 +82,11 @@ export default {
             <div class="w-50">
                 <BarChart :labels="mColumns" :vc_label="'修理・保守・保養費用'" :vc_data="mValues" />
             </div>
-            <Doughnut :label="'修理・保守・保養費用'" :labels="mColumn" :data="mGroups" />
+            <div>
+                <Doughnut :label="'修理・保守・保養費用'" :labels="mColumn" :data="mGroups" />
+                <p class="text-center">※A-修理、B-保守、C-保養 </p>
+            </div>
         </div>
-        <p class="text-end pe-5 me-5">※A-修理、B-保守、C-保養 </p>
     </div>
 </template>
 

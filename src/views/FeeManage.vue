@@ -31,13 +31,15 @@ export default {
         };
     },
     mounted() { // 預設執行方法，後端-顯示所有費率資料
-        fetch("http://localhost:8080/show_all_fees")
-            .then(res => res.json())
-            .then(data =>{ this.feesData = data.feeList
-            console.log(data)})
+        this.findAllData()
     },
     methods: {
-        // 更新父層data顯示資料
+        findAllData() {
+            fetch("http://localhost:8080/show_all_fees")
+                .then(res => res.json())
+                .then(data => this.feesData = data.feeList)
+        },
+        // 更新顯示資料
         updateFilteredData() {
             let keyword = ''
             const vip = 'vip'
@@ -45,20 +47,21 @@ export default {
             if (this.searchText) {
                 keyword = this.searchText.toLowerCase();
                 newData = newData.filter(item =>
-                item.project.toLowerCase().includes(keyword)
-            )
+                    item.project.toLowerCase().includes(keyword))
             }
-            if(this.vipCheck) {
+            if (this.vipCheck) {
                 newData = newData.filter(item =>
-                item.project.toLowerCase().includes(vip)
-                )
+                    item.project.toLowerCase().includes(vip))
             }
             return newData
-        }        
+        }
         // 開啟跳出式視窗
-        , switchModal(type) {
+        , openModal(type) {
             this.isShow = true
             this.modalType = type
+        }, closeModal() {
+            this.isShow = false
+            this.item = null
         }, finaladd() {
             const body = {
                 "project": this.project,
@@ -74,11 +77,9 @@ export default {
                 body: JSON.stringify(body)
             }).then(res => res.json())
                 .then(data => this.message = data.message)
-            this.isMessage = true
             // 關閉跳出式視窗
-        }, closeModal() {
-            this.isShow = false
-            item = null
+            this.closeModal()
+            this.isMessage = true
             // 執行刪除操作
             // 可以將 item 傳遞到後端方法進行處理
         }, deleteItem(item) {
@@ -99,11 +100,12 @@ export default {
                 body: JSON.stringify(body)
             }).then(res => res.json())
                 .then(data => this.message = data.message)
+            this.closeModal()
             this.isMessage = true
         }, Reload() {
-            this.isShow = false
             this.isMessage = false
-            window.location.reload()
+            // 重新刷新表格
+            this.findAllData()
         }
     },
     watch: {
@@ -128,18 +130,17 @@ export default {
                 keyword = this.searchText.toLowerCase();
                 // newData變更執行關鍵字篩選
                 newData = newData.filter(item =>
-                item.project.toLowerCase().includes(keyword)
-            )
+                    item.project.toLowerCase().includes(keyword))
             }
             // 若vipCheck為true，newData變更執行vip篩選
-            if(this.vipCheck) {
+            if (this.vipCheck) {
                 newData = newData.filter(item =>
-                item.project.toLowerCase().includes(vip)
+                    item.project.toLowerCase().includes(vip)
                 )
             }
             // 回傳newData(變更前or變更後)
             return newData
-            
+
         }
     }
 }
@@ -170,7 +171,7 @@ export default {
                 <input type="checkbox" name="vipSearch" id="vipSearch" value="true" v-model="vipCheck">
                 <label for="vipSearch" class="d-flex align-items-center">vip</label>
             </div>
-            <button type="button" class="btn btn-primary text-white mb-2 px-3" @click="switchModal('add')">新規料金プランの追加</button>
+            <button type="button" class="btn btn-primary text-white mb-2 px-3" @click="openModal('add')">新規料金プランの追加</button>
         </div>
         <TableView :columns="tableColumns" :data="filteredData" :showDeleteButton="showDeleteButton"
             :showControl="showControl" @delete="deleteItem" />
@@ -196,7 +197,7 @@ export default {
             </table>
             <div class="w-25 d-flex justify-content-between">
                 <button type="button" class="btn btn-primary text-white btn-sm px-3" @click="finaladd">決定</button>
-                <button type=" button" class="btn btn-danger btn-sm px-2" @click="switchModal">キャンセル</button>
+                <button type=" button" class="btn btn-danger btn-sm px-2" @click="openModal">キャンセル</button>
             </div>
         </Modal>
         <Modal v-if="isShow && modalType == 'delete'" @pushOutside="closeModal">
@@ -221,7 +222,7 @@ export default {
             </table>
             <div class="w-25 d-flex justify-content-between">
                 <button type="button" class="btn btn-primary text-white btn-sm px-3" @click="finaldelete">決定</button>
-                <button type=" button" class="btn btn-danger btn-sm px-2" @click="switchModal">キャンセル</button>
+                <button type="button" class="btn btn-danger btn-sm px-2" @click="openModal">キャンセル</button>
             </div>
         </Modal>
         <MessageModal v-if="isMessage" @getReady="Reload">

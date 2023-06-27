@@ -2,17 +2,15 @@
 import { RouterLink } from "vue-router";
 import { mapState, mapActions } from "pinia";
 import indexStore from "../stores/counter";
-// import Modal from "../components/Modal.vue"
-// import MessageModal from "../components/messageModal.vue"
+import Modal from "../components/Modal.vue"
+import MessageModal from "../components/messageModal.vue"
 export default {
-    // components: {
-    //     Modal,
-    //     MessageModal
-    // },
+    components: {
+        Modal,
+        MessageModal
+    },
     data() {
         return {
-            // login :false,
-            // ...mapState(indexStore,["login"]),
             isShow: false, // 顯示跳出式視窗
             isMessage: false, // 顯示回覆式視窗
             message: '', // 執行後端方法的回覆
@@ -25,31 +23,33 @@ export default {
     computed: {
         //  mapState =>pinia:state,getters
         //       可以取到在pinia裡面的狀態資料
-        ...mapState(indexStore, ["login", "manager", "isRent", "getUser"]),
+        ...mapState(indexStore, ["login", "manager", "isRent", "getUser", "getLoginInfo", "getVehicleInfo"]),
     },
     methods: {
         // 帶入pinia的方法
-        ...mapActions(indexStore, ["signOut", "updateLoginInfo", "manaSignOut", "getback", "refresh"]),
+        ...mapActions(indexStore, ["signOut", "getback"]),
         out() {
             //    呼叫pinia的登出方法
             this.signOut();
-            this.refresh();
+        }, closeModal() {
+            this.isShow = false
         },
         dropOff() {
-            // this.userInfo = sessionStorage.getItem("userInfo")
             this.userInfo = this.getLoginInfo
             if (!this.userInfo || !this.userInfo.account) {
                 this.$router.push('/login');
             }
+            // 車牌待處理
             this.isShow = true
-        }, closeModal() {
-            this.isShow = false
         }, finalDropOff() {
             const body = {
                 "account": this.userInfo.account,
-                "licensePlate": item.licensePlate,
+                "licensePlate": this.getVehicleInfo.licensePlate,
+                "city": this.city,
+                "location": this.location,
+                "odo": this.odo
             }
-            fetch("http://localhost:8080/rent", {
+            fetch("http://localhost:8080/drop_off", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -57,18 +57,13 @@ export default {
                 body: JSON.stringify(body)
             }).then(res => res.json())
                 .then(data => this.message = data.message)
+            this.closeModal()
             this.isMessage = true
         }, Reload() {
-            this.isShow = false
             this.isMessage = false
             this.getback()
-            window.location.reload()
         }
 
-    },
-    mounted() {
-        // 刷新頁面(進入頁面)時做一次此方法
-        // console.log(this.manager);
     }
 }
 </script>
@@ -77,37 +72,25 @@ export default {
     <header class="">
         <div class="upper">
             <RouterLink class="home-link ms-3" to="/"> <img src="../../public/Frame_8_big.png" class="icon"></RouterLink>
-
-
             <div class="button-area">
                 <div class="login-area">
-
-                <!-- <RouterLink class="link" to="/login" v-if="!login && !manager">ログイン</RouterLink> -->
-                <!-- ------- -->
-
-                <RouterLink class="link" to="/login" v-if="!login && !manager">
-                    <i class="fa-solid fa-user"></i>
-                    <!-- <button class="login-button">ログイン</button> -->
-                    ログイン
-                </RouterLink>
-                <!-- ------- -->
-
-
-                <!-- @click="方法名稱" -->
-                <p v-if="login">{{ getUser }}</p>
-                <!-- <img src=".." alt=""> -->
-                <button class="sign-out" v-if="login" @click="out">ログアウト</button>
-                <RouterLink class="link" to="/register" v-if="!login && !manager">新規登録</RouterLink>
-                <RouterLink class="link" v-if="manager" to="/administrator">管理者</RouterLink>
-                <div class="d-flex justify-center item-center" v-if="isRent">
-                    <h5 class="rentText">レンタカー利用中</h5>
-                    <button class="sign-out" @click="dropOff">返す</button>
+                    <RouterLink class="link" to="/login" v-if="!login && !manager">
+                        <i class="fa-solid fa-user"></i>
+                        ログイン
+                    </RouterLink>
+                    <!-- @click="方法名稱" -->
+                    <p class="my-0 " v-if="login">{{ getUser }}</p>
+                    <button class="sign-out" v-if="login" @click="out">ログアウト</button>
+                    <RouterLink class="link" to="/register" v-if="!login && !manager">新規登録</RouterLink>
+                    <RouterLink class="link" v-if="manager" to="/administrator">管理者</RouterLink>
+                    <div class="d-flex justify-center item-center" v-if="isRent">
+                        <h5 class="">レンタカー利用中</h5>
+                        <button class=" sign-out" @click="dropOff">返す</button>
+                    </div>
                 </div>
-            </div>
                 <div class="link-area">
                     <!-- 各大項連結 -->
 
-                    <!-- <RouterLink class="link" to="/">イージートラベル</RouterLink> -->
                     <RouterLink class="link" to="/search-map">
                         <i class="fa-solid fa-circle-info"></i>
                         サイト情報
@@ -127,51 +110,40 @@ export default {
             </div>
         </div>
 
-      <div class="bgs">
-        <img src="../../public/bikeshareservice.png" alt="" class="bg">
-      </div>
-        <!-- <Modal v-if="isShow" @pushOutside="closeModal">
-                                                                <H2 class="m-2">返却場所登録</H2>
-                                                                <table class="m-3 ">
-                                                                    <tr>
-                                                                        <th><label for="city" class="my-2">都道府県</label></th>
-                                                                        <td><input type="text" placeholder="ex:東京都" id="city" v-model="city"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th><label for="location" class="my-2">サイト</label></th>
-                                                                        <td><input type="text" min="0" title="会社の拠点" id="location" v-model="location"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th><label for="odo" class="my-2">走行マイル数</label></th>
-                                                                        <td><input type="number" min="0" title="0以上" id="odo" v-model="odo"></td>
-                                                                    </tr>
-                                                                </table>
-                                                                <div class="w-25 d-flex justify-content-between">
-                                                                    <button type="button" class="btn btn-success btn-sm px-3" @click="finalDropOff">決定</button>
-                                                                    <button type=" button" class="btn btn-danger btn-sm px-3" @click="closeModal">キャンセル</button>
-                                                                </div>
-                                                            </Modal>
-                                                            <MessageModal v-if="isMessage" @getReady="Reload">
-                                                                <p>{{ message }}</p>
-                                                            </MessageModal> -->
+        <div class="bgs">
+            <img src="../../public/bikeshareservice.png" alt="" class="bg">
+        </div>
+        <Modal v-if="isShow" @pushOutside="closeModal">
+            <H2 class="m-2">返却場所登録</H2>
+            <table class="m-3 ">
+                <tr>
+                    <th><label for="city" class="my-2">都道府県</label></th>
+                    <td><input type="text" placeholder="ex:東京都" id="city" v-model="city"></td>
+                </tr>
+                <tr>
+                    <th><label for="location" class="my-2">サイト</label></th>
+                    <td><input type="text" min="0" title="会社の拠点" id="location" v-model="location"></td>
+                </tr>
+                <tr>
+                    <th><label for="odo" class="my-2">走行マイル数</label></th>
+                    <td><input type="number" min="0" title="0以上" id="odo" v-model="odo"></td>
+                </tr>
+            </table>
+            <div class="w-25 d-flex justify-content-between">
+                <button type="button" class="btn btn-success btn-sm px-3" @click="finalDropOff">決定</button>
+                <button type=" button" class="btn btn-danger btn-sm px-3" @click="closeModal">キャンセル</button>
+            </div>
+        </Modal>
+        <MessageModal v-if="isMessage" @getReady="Reload">
+            <p>{{ message }}</p>
+        </MessageModal>
     </header>
 </template>
 
 <style lang="scss" scoped>
 header {
     width: 100vw;
-    // height: 900px;
-    // padding-left: 1rem;
     background-color: #E3F3FC;
-
-    // background-image: url("../../public/bikeshareservice.png");
-    // background-repeat: no-repeat;
-    // background-size: cover;
-    // background: #FFFFB9;
-
-    // background: linear-gradient(90deg, rgba(30, 26, 98, 0.9164915966386554) 0%, rgba(9, 70, 121, 1) 35%, rgba(18, 162, 231, 1) 100%);
-    // background: rgb(68, 163, 221);
-    // background: linear-gradient(90deg, rgba(68, 163, 221, 0.8354978354978355) 0%, rgba(74, 136, 234, 1) 16%, rgba(143, 153, 235, 1) 83%);
 
     font-size: 1.5rem;
     display: flex;
@@ -179,9 +151,7 @@ header {
 
     .upper {
         width: 100%;
-        // height: 400px;
         display: flex;
-        // justify-content: space-between;
         align-items: center;
 
         .home-link {
@@ -189,12 +159,8 @@ header {
 
             .icon {
                 width: 100%;
-
             }
-
         }
-
-
 
         .button-area {
             height: 6rem;
@@ -207,20 +173,6 @@ header {
                 display: flex;
                 justify-content: end;
 
-                .rentText {
-                    color: white;
-                }
-
-                // ------------------------
-                // .login-button{
-                //     // border-radius: 2px;
-                //     // background-color: #C1395E;
-                //     border: 1px solid none;
-                //     background-color: none;
-                //     height: 35px;
-                //     margin-left: auto;
-                // }
-                // -----------------------
             }
 
 
@@ -239,7 +191,6 @@ header {
                 cursor: pointer;
                 transition: 0.3s;
                 margin: 0 1rem;
-                color: white;
 
                 &:hover {
                     color: #79dfb1;
@@ -252,7 +203,6 @@ header {
                 cursor: pointer;
                 transition: 0.3s;
                 margin: 0 1rem;
-                // color: white;
 
                 &:hover {
                     color: #79dfb1;
@@ -261,13 +211,11 @@ header {
         }
     }
 
-    .bgs{
-        .bg{
-            // height: 200px;
-            width:100%;
+    .bgs {
+        .bg {
+            width: 100%;
         }
-    
-
     }
 
-}</style>
+}
+</style>

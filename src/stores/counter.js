@@ -15,6 +15,7 @@ export default defineStore("indexStore", {
           login: false,
           loginInfo: null,
           name: "",
+          vehicleInfo: null,
           manager: false,
           isRent: false
      }),
@@ -24,7 +25,9 @@ export default defineStore("indexStore", {
           // 箭頭函式 帶入上方的state 跟vue寫法不同地方
           //  getLocation: (state) => `現在的位置是:...${state.location}`
           // 取得帳號資訊
-          getLoginInfo: (state) => { return state.loginInfo },
+          getLoginInfo: (state) => state.loginInfo,
+          getVehicleInfo: (state) => state.vehicleInfo,
+          isLogin: (state) => state.login,
           getUser: (state) => `Hi, ${state.name}`
      },
 
@@ -35,7 +38,6 @@ export default defineStore("indexStore", {
           // 使用者登入
           loginPage() {
                this.login = true;
-               console.log(this.login);
           },
           // 儲存登入者資訊
           updateLoginInfo(info) {
@@ -48,7 +50,6 @@ export default defineStore("indexStore", {
           // 使用者登出
           signOut() {
                this.login = false;
-               console.log(this.login);
           },
           // 管理者登入
           managerPage() {
@@ -57,19 +58,16 @@ export default defineStore("indexStore", {
           // 管理者登出
           manaSignOut() {
                this.manager = false;
-               console.log(this.manager);
           },
+          // 租車
           rent() {
                this.isRent = true
           },
-          getback() {
-               this.isRent = false
+          updateVehicleInfo(info) {
+               this.vehicleInfo = info
           },
-          refresh() {
-               this.login = false
-               this.loginInfo = null
-               this.name = ""
-               this.manager = false
+          // 還車
+          getback() {
                this.isRent = false
           }
      }

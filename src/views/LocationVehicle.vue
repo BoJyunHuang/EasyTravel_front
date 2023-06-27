@@ -51,10 +51,7 @@ export default {
                 },
                 body: JSON.stringify(body)
             }).then(res => res.json())
-                .then(data => {
-                    console.log(data)
-                    this.vehicleData = data.vehicleList
-                })
+                .then(data => this.vehicleData = data.vehicleList)
         }, chooseVehicles() {
             this.showChooseButton = true
         }, dispatch(list) {
@@ -78,11 +75,11 @@ export default {
                 body: JSON.stringify(body)
             }).then(res => res.json())
                 .then(data => this.message = data.message)
+            this.closeModal()
             this.isMessage = true
         }, Reload() {
-            this.isShow = false
             this.isMessage = false
-            window.location.reload()
+            this.findvehicles()
         }
     }
 }
@@ -105,8 +102,8 @@ export default {
                     items.location
                 }}</option>
             </select>
-            <button type="button" class="btn btn-success mb-2 px-3" @click="findvehicles">探す</button>
-            <button type="button" class="btn btn-success mb-2 px-3" @click="chooseVehicles">車両調度</button>
+            <button type="button" class="btn btn-primary text-white mb-2 px-3" @click="findvehicles">探す</button>
+            <button type="button" class="btn btn-primary text-white mb-2 px-3" @click="chooseVehicles">車両調度</button>
         </div>
         <TableView :columns="tableColumns" :data="vehicleData" :showChooseButton="showChooseButton" @choose="dispatch" />
         <Modal v-if="isShow" @pushOutside="closeModal">
