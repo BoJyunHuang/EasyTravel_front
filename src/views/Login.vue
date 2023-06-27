@@ -128,10 +128,10 @@ export default {
 
                               <input :type="show ? 'text' : 'password'" v-model="pwd" class="logInput ms-5"
                                    placeholder="パスワードを入力してください">
-                              <div class="pwd ms-4 d-flex">
+                              <div class="pwd ms-5 d-flex">
                                    <!-- @change事件 -->
                                    <input type="checkbox" @change="passwordChange">
-                                   <p class="pw">パスワードを表示する</p>
+                                   <p class="pw mt-3">パスワードを表示する</p>
                               </div>
                          </div>
 

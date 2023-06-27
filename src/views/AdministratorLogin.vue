@@ -19,7 +19,9 @@ export default {
                // 宣告跳出視窗的內容
                message: "",
                // 宣告跳出視窗頁面的v-if布林值
-               isShow: false
+               isShow: false,
+               // 秀出密碼與否
+               show: false
           }
      },
      methods: {
@@ -59,6 +61,11 @@ export default {
                }
 
 
+          },
+          passwordChange() {
+               console.log(this.show)
+               this.show = !this.show
+
           }
      }
 }
@@ -86,8 +93,13 @@ export default {
                               </div>
                               <div class="pwd-login mt-5">
                                    <h4 class="ms-5">パスワード :</h4>
-                                   <input type="text" v-model="pwd" class="logInput ms-5" placeholder="パスワードを入力してください"
-                                        style="width: 280px; height: 35px;">
+                                   <input :type="show ? 'text' : 'password'" v-model="pwd" class="logInput ms-5"
+                                        placeholder="パスワードを入力してください" style="width: 280px; height: 35px;">
+                                   <div class="pwd ms-5 d-flex">
+                                        <!-- @change事件 -->
+                                        <input type="checkbox" @change="passwordChange">
+                                        <p class="pw mt-3">パスワードを表示する</p>
+                                   </div>
                               </div>
                               <div class="btnlogin">
                                    <button class="log-btn mt-5" type="button" id="testBut" @click="AminiLogin">ログイン</button>
