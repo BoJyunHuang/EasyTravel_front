@@ -9,13 +9,16 @@
   },
   "dependencies": {
     "@canvasjs/vue-charts": "^1.0.1",
+    "@types/chart.js": "^2.9.37",
     "bootstrap": "^5.3.0",
     "chart.js": "^4.3.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "pinia": "^2.0.36",
     "sass": "^1.62.1",
-    "sweetalert2": "^11.7.12",
+    "sweetalert2": "^11.4.8",
     "swiper": "^9.4.1",
     "vue": "^3.3.2",
+    "vue-chartjs": "^5.2.0",
     "vue-router": "^4.2.0",
     "vue2-google-maps": "^0.10.7"
   },

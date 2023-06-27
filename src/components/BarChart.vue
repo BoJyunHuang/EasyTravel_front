@@ -1,76 +1,93 @@
+<template>
+    <!-- 在chartData.labels有值时才显示图表 -->
+    <Bar :data="chartData" :options="chartOptions" />
+</template>
+  
 <script>
-export default {
-    props: [
-        "data", // 全部資料
-        "title",
-    ],
-    data() {
-        return {
-            chart: null,
-            timeout: null,
-            options: {
-                title: {
-                    text: "財務"
-                },
-                axisY: {
-                    title: "金額　（百万）",
-                    suffix: "￥",
-                    minimum: 0,
-                    stripLines: [{ // 設定基準線
-                        value: '', // 線名稱
-                        labelAlign: "near",
-                        label: "", // 顯示標籤
-                        showOnTop: true,
-                        color: "#335E28",
-                        labelFontColor: "#335E28"
-                    }]
-                },
-                data: [{
-                    type: "column",
-                    yValueFormatString: "#,##0",
-                    indexLabel: "{y}",
-                    dataPoints: [
-                        { label: "Furnace 1", y: 1390 },
-                        { label: "Furnace 2", y: 1300 },
-                        { label: "Furnace 3", y: 1560 },
-                        { label: "Furnace 4", y: 1206 },
-                        { label: "Furnace 5", y: 1400 },
-                        { label: "Furnace 6", y: 1050 }
-                    ]
-                }]
-            },
-            styleOptions: {
-                width: "100%",
-                height: "360px"
-            }
-        }
-    },
-    methods: {
-        updateData() {
-            let boilerColor, deltaY, yVal;
-            let dps = this.chart.options.data[0].dataPoints;
-            for (let i = 0; i < dps.length; i++) {  // 更新資料部分
-                deltaY = Math.round(20 + Math.random() * (-20 - 20));
-                yVal = Math.max(deltaY + dps[i].y, 700);
-                boilerColor = yVal > 1500 ? "#FF7043" : yVal >= 1100 ? "#81C784" : "#42A5F5";
-                dps[i] = { label: "Furnace " + (i + 1), y: yVal, color: boilerColor };
-            }
-            this.options.data[0].dataPoints = dps;
-            this.chart.render(); // 重新生成圖表
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+// 注册所需的Chart.js组件
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
-            this.timeout = setTimeout(this.updateData, 1000); // 設定更新時間
+export default {
+    name: 'BarChart',
+    components: { Bar },
+    props: {
+        labels: [], // 图表的横坐标标签
+        ri_label: "", // 图表的标签
+        ri_data: {}, // 图表的数据
+        vc_label: "",
+        vc_data: {},
+    },
+    computed: { // 使用計算屬性才能即時更新
+        chartData() {
+            const datasets = [];
+            if (this.ri_data) {
+                datasets.push({
+                    label: this.ri_label,
+                    backgroundColor: '#4FC3F7',
+                    data: this.ri_data,
+                });
+            }
+            if (this.vc_data) {
+                datasets.push({
+                    label: this.vc_label,
+                    backgroundColor: '#F44336',
+                    data: this.vc_data,
+                });
+            }
+            return {
+                labels: this.labels,
+                datasets: datasets,
+            };
         },
-        chartInstance(chart) {
-            this.chart = chart;
-            this.updateData();
+    },
+    data() { // 不變的設定區域可丟到data這邊來
+        return {
+            chartOptions: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: (value) => `${value / 10000} 万円`,
+                        },
+                    },
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => `${context.parsed.y / 10000} 万円`,
+                        },
+                    },
+                    datalabels: {
+                        display: (context) => context.dataset.data[context.dataIndex] !== 0,
+                        formatter: (value, context) => (context.dataset.data[context.dataIndex] !== 0 ? value : ''),
+                    },
+                },
+            }
         }
     },
-    unmounted() {
-        clearTimeout(this.timeout); // 清除時間
-    }
+    watch: { // 監視數據的變化
+        // 监视数据的变化并更新chartData中的数据
+        ri_data(newData) {
+            if (this.chartData.datasets.length > 0) {
+                this.chartData.datasets[0].data = newData;
+            } else {
+                this.chartData.datasets.push({
+                    label: this.ri_label,
+                    backgroundColor: '#4FC3F7',
+                    data: newData,
+                });
+            }
+        },
+        vc_data(newData) {
+            if (this.chartData.datasets.length > 1) {
+                this.chartData.datasets[1].data = newData;
+            } else {
+                this.chartData.datasets[0].data = newData;
+            }
+        },
+    },
 }
 </script>
-  
-<template>
-    <CanvasJSChart :options="options" :style="styleOptions" @chart-ref="chartInstance" />
-</template>    

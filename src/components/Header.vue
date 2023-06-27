@@ -68,7 +68,7 @@ export default {
     },
     mounted() {
         // 刷新頁面(進入頁面)時做一次此方法
-        console.log(this.manager);
+        // console.log(this.manager);
     }
 }
 </script>

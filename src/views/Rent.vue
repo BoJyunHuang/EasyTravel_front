@@ -33,6 +33,33 @@ export default {
 
         };
     },
+    mounted() {
+        const body = {
+            "city": '東京都',
+            "location": '日本橋'
+        }
+        fetch("http://localhost:8080/find_city_stops", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        }).then(res => res.json())
+            .then(data => {
+                data.stopList = data.stopList.map(item => {
+                    return { ...item, isActive: false };
+                }) // 添加isActive屬性並初始化為false
+                this.subLocations = data.stopList
+            })
+        fetch("http://localhost:8080/find_stops_vehicles", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        }).then(res => res.json())
+            .then(data => this.sort(data.vehicleList))
+    },
     methods: {
         handleButtonClick(button) {
             // 執行後端方法或操作
@@ -89,6 +116,7 @@ export default {
                 .then(data => this.sort(data.vehicleList))
         },
         sort(data) {
+            console.log(data)
             data.forEach(item => {
                 switch (item.category) {
                     case 'bike':
@@ -112,11 +140,11 @@ export default {
             this.isShow = false
         },
         doRent(item) {
-            this.userInfo = sessionStorage.getItem("userInfo")
-            console.log(this.userInfo)
             if (sessionStorage.getItem("userInfo") == null || !this.userInfo.account) {
                 this.$router.push('/login')
             }
+            this.userInfo = sessionStorage.getItem("userInfo")
+            console.log(this.userInfo)
             this.isShow = true
         },
         finalRent() {
@@ -161,20 +189,20 @@ export default {
         </button>
     </div>
     <div class="d-flex">
-        <div class="box m-5 p-3" v-if="subLocation && subLocation.bikeAmount > 0">
+        <div class="box m-5 p-3">
             <h1 class="text-center">自転車</h1>
             <h1 class="text-center">{{ subLocation.bikeAmount }}</h1>
             <RentTable :columns="carInfoColumn" :data="bikesData" @rent="doRent" />
         </div>
-        <div class="box m-5 p-3" v-if="subLocation && subLocation.motorcycleAmount > 0">
+        <div class="box m-5 p-3">
             <h1 class="text-center">二輪車</h1>
             <h1 class="text-center">{{ subLocation.motorcycleAmount }}</h1>
             <RentTable :columns="carInfoColumn" :data="motorsData" @rent="doRent" />
         </div>
-        <div class="box m-5 p-3" v-if="subLocation && subLocation.carAmount > 0">
+        <div class="box m-5 p-3">
             <h1 class="text-center">四輪車</h1>
             <h1 class="text-center">{{ subLocation.carAmount }}</h1>
-            <RentTable :columns="carInfoColumn" :data="carsData" @rent="doDent" />
+            <RentTable :columns="carInfoColumn" :data="carsData" @rent="doRent" />
         </div>
     </div>
     <Modal v-if="isShow" @pushOutside="closeModal">
