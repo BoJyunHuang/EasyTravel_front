@@ -166,4 +166,7 @@ export default {
 .pagination .page-link:hover {
     cursor: pointer;
 }
+.btn{
+    color: white;
+}
 </style>

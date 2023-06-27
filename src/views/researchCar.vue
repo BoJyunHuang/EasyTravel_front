@@ -9,8 +9,9 @@
         <option value="priceAsc">価格: 高い順</option>
         <option value="priceDesc">価格: 安い順</option>
       </select>
-
+      
     </div>
+    <input type="text" class="oo" v-model="SearchKeyword"  placeholder="ナンバープレート検索">
     <!-- <p>{{ item }}</p>
     <p>aa</p> -->
 
@@ -67,6 +68,7 @@ export default {
       {key: `endTime`, column: "修理終了時刻"},
       {key: `note`, column: "註記"}],
       maintenanceData: [],
+      filteredLicenceplates: [],
       searchText: '',
       // item:"",
       showEditButton: false,
@@ -76,6 +78,7 @@ export default {
       message: '',
       modalType: '',
       showControl: true,
+      SearchKeyword: '',
       sortOption: 'timeDesc' // 預設以時間降序排序
     };
   },
@@ -168,14 +171,26 @@ export default {
   },
   computed: {
     filteredData() {
-      if (!this.searchText) {
-        return this.maintenanceData;
-      }
-      const keyword = this.searchText.toLowerCase();
-      return this.maintenanceData.filter(item =>
-        item.city.includes(keyword)
-      );
-    },
+  if (!this.searchText && !this.SearchKeyword) {
+    return this.maintenanceData;
+  }
+
+  const keyword = this.searchText || this.SearchKeyword;
+  const filteredByLicensePlate = this.maintenanceData.filter(item => item.licensePlate.includes(keyword));
+
+  if (this.sortOption === 'timeAsc') {
+    filteredByLicensePlate.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
+  } else if (this.sortOption === 'timeDesc') {
+    filteredByLicensePlate.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+  } else if (this.sortOption === 'priceAsc') {
+    filteredByLicensePlate.sort((a, b) => a.price - b.price);
+  } else if (this.sortOption === 'priceDesc') {
+    filteredByLicensePlate.sort((a, b) => b.price - a.price);
+  }
+
+  return filteredByLicensePlate;
+},
+
     formattedData() {
       return this.filteredData.map(item => {
         return {
@@ -207,5 +222,8 @@ td {
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+.oo{
+  width: 200px;
 }
 </style>

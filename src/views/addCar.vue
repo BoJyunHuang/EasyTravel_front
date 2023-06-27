@@ -8,13 +8,13 @@
         <option value="timeDesc">時間: 近い順</option>
       </select>
       <div class="twobtn">
-        <button type="button" class="btn btn-primary text-white mb-2 px-3" @click="switchModal">フォーム追加</button>
-        <button type="button" class="btn btn-primary text-white mb-2 px-3" @click="switchReasonCodeModal">車両修理の原因コード</button>
+        <button type="button" class="btn btn-primary mb-2 px-3" @click="switchModal">フォーム追加</button>
+        <button type="button" class="btn btn-primary mb-2 px-3" @click="switchReasonCodeModal">車両修理の原因コード</button>
       </div>
     </div>
     <div class="ii"> 
-    <input type="text" class="oo" v-model="searchKeyword" placeholder="ナンバープレート検索">
-    <button type="button" class="ooo" >確認</button>
+    <input type="text" class="oo" v-model="SearchKeyword"   placeholder="ナンバープレート検索">
+    
   </div>
     <TableView :columns="tableColumns" :data="formattedData" :showEditButton="showEditButton" :showControl="showControl"
       :showDeleteButton="showDeleteButton" @delete="deleteItem" :showCompleteButton="showCompleteButton"
@@ -31,7 +31,7 @@
           </tr>
         </table>
         <div class="cont">
-          <button type="button" class="btn btn-primary text-white btn-sm px-3" @click="finaladd">確認</button>
+          <button type="button" class="btn btn-success btn-sm px-3" @click="finaladd">確認</button>
           <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
         </div>
       </div>
@@ -118,7 +118,7 @@
 
       </table>
       <div class="cont">
-        <button type="button" class="btn btn-primary text-white btn-sm px-3" @click="finaldelete">決定</button>
+        <button type="button" class="btn btn-success btn-sm px-3" @click="finaldelete">決定</button>
         <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
       </div>
     </Modal>
@@ -157,7 +157,7 @@
           </tr>
         </table>
         <div class="cont1">
-          <button type="button" class="btn btn-primary text-white btn-sm px-3" @click="finalfinish">確認</button>
+          <button type="button" class="btn btn-success btn-sm px-3" @click="finalfinish">確認</button>
           <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
         </div>
 
@@ -204,8 +204,9 @@ export default {
       isMessage: false,
       item: {},
       modalType: '',
-      searchKeyword: '',
-      filteredItems: []
+      SearchKeyword: '',
+      filteredItems: [],
+      filteredLicenceplates: []
     };
   },
   mounted() {
@@ -328,6 +329,7 @@ export default {
       const keyword = this.searchText.toLowerCase();
       return this.maintenanceData.filter(item => item.city.includes(keyword));
     },
+
     sortData() {
       if (this.sortOption === 'timeAsc') {
         this.filteredData.sort((a, b) => new Date(b.startTime) - new Date(a.startTime)); // 按開始時間降序排序
@@ -340,21 +342,49 @@ export default {
       this.isShow = !this.isShow
       this.modalType = 'finish'
       this.item = item
-    }
-  },
+    },
+    confirmSearch() {
+      if (!this.SearchKeyword) {
+        return this.maintenanceData;
+      }
+      
+      return this.maintenanceData.filter(item => item.licensePlate.includes(this.SearchKeyword)); 
+    
+
+}
+},
   watch: {
     searchText() {
       this.updateFilteredData();
-    }
+    },
+   
   },
   computed: {
     filteredData() {
-      if (!this.searchText) {
-        return this.maintenanceData;
+  if (!this.searchText && !this.SearchKeyword) {
+    return this.maintenanceData;
+  }
+
+  const keyword = this.searchText || this.SearchKeyword;
+  const filteredByLicensePlate = this.maintenanceData.filter(item => item.licensePlate.includes(keyword));
+
+  if (this.sortOption === 'timeAsc') {
+    filteredByLicensePlate.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
+  } else if (this.sortOption === 'timeDesc') {
+    filteredByLicensePlate.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+  }
+
+  return filteredByLicensePlate;
+},
+
+sortData() {
+      if (this.sortOption === 'timeAsc') {
+        this.filteredData.sort((a, b) => new Date(b.startTime) - new Date(a.startTime)); // 按開始時間降序排序
+      } else if (this.sortOption === 'timeDesc') {
+        this.filteredData.sort((a, b) => new Date(a.startTime) - new Date(b.startTime)); // 按開始時間升序排序
       }
-      const keyword = this.searchText.toLowerCase();
-      return this.maintenanceData.filter(item => item.city.includes(keyword));
     },
+
     formattedData() {
       return this.filteredData.map(item => {
         return {
@@ -364,6 +394,15 @@ export default {
         };
       });
     },
+    confirmSearch() {
+      if (!this.SearchKeyword) {
+        return this.maintenanceData;
+      }
+      
+      return this.maintenanceData.filter(item => item.licensePlate.includes(this.SearchKeyword)); 
+    
+
+},
   }
 }
 
@@ -428,9 +467,10 @@ tr:nth-child(even) {
 }
 .ii{
   display: flex;
-  .ooo{
-    width: 50px;
-    text-decoration:none
-  }
+  
 }
+.btn{
+  color: whie;
+}
+
 </style>
