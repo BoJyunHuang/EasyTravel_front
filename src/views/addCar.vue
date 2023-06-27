@@ -12,7 +12,10 @@
         <button type="button" class="btn btn-primary text-white mb-2 px-3" @click="switchReasonCodeModal">車両修理の原因コード</button>
       </div>
     </div>
-
+    <div class="ii"> 
+    <input type="text" class="oo" v-model="searchKeyword" placeholder="ナンバープレート検索">
+    <button type="button" class="ooo" >確認</button>
+  </div>
     <TableView :columns="tableColumns" :data="formattedData" :showEditButton="showEditButton" :showControl="showControl"
       :showDeleteButton="showDeleteButton" @delete="deleteItem" :showCompleteButton="showCompleteButton"
       @complete="finishItem" />
@@ -157,8 +160,10 @@
           <button type="button" class="btn btn-primary text-white btn-sm px-3" @click="finalfinish">確認</button>
           <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
         </div>
+
       </div>
     </Modal>
+
     <MessageModal v-if="isMessage" @getReady="Reload">
       <p>{{ message }}</p>
     </MessageModal>
@@ -179,6 +184,7 @@ export default {
   data() {
     return {
       tableColumns: [
+        { key: `serialNumber`, column: "#" },
         { key: `licensePlate`, column: "車両番号" },
         { key: `startTime`, column: "修理開始時刻" },
         { key: `note`, column: "註記" }],
@@ -198,6 +204,8 @@ export default {
       isMessage: false,
       item: {},
       modalType: '',
+      searchKeyword: '',
+      filteredItems: []
     };
   },
   mounted() {
@@ -231,7 +239,8 @@ export default {
         body: JSON.stringify(body)
       }).then(res => res.json())
         .then(data => this.message = data.message)
-      this.isMessage = true
+      this.isMessage = true,
+        this.isShow = false
       // 關閉跳出式視窗
     },
     finalfinish() {
@@ -253,6 +262,7 @@ export default {
           console.log(data);
         })
       this.isMessage = true
+      this.isShow = false
       // 關閉跳出式視窗
     },
     closeModal() {
@@ -268,7 +278,7 @@ export default {
     }, finaldelete() {
       const body = {
         "licensePlate": this.item.licensePlate,
-        "startTime": this.item.startTime
+        "startTime": this.item.startTime,
       };
       console.log(body);
       fetch("http://localhost:8080/delete_abnormal", {
@@ -283,11 +293,26 @@ export default {
           this.message = data.message;
         });
       this.isMessage = true;
+      this.isShow = false
     }
     , Reload() {
       this.isShow = false
       this.isMessage = false
-      window.location.reload()
+      fetch("http://localhost:8080/find_latest_ten_unfinished_abnormal")
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          this.maintenanceData = data.maintenanceList.map(item => {
+
+            return {
+              ...item,
+              startTime: item.startTime.replace('T', ' '),
+              endTime: item.endTime
+            };
+          });
+        });
+
+      // window.location.reload()
     },
     switchReasonCodeModal() {
       this.isReasonCodeModalShow = !this.isReasonCodeModalShow;
@@ -338,7 +363,7 @@ export default {
           endTime: item.endTime
         };
       });
-    }
+    },
   }
 }
 
@@ -396,5 +421,16 @@ td {
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+
+.oo {
+  width: 200px;
+}
+.ii{
+  display: flex;
+  .ooo{
+    width: 50px;
+    text-decoration:none
+  }
 }
 </style>
