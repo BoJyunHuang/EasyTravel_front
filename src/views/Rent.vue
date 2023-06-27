@@ -52,6 +52,7 @@ export default {
                 }) // 添加isActive屬性並初始化為false
                 this.subLocations = data.stopList
                 this.subLocations[0].isActive = true
+                this.subLocation = this.subLocations[0]
             })
         fetch("http://localhost:8080/find_stops_vehicles", {
             method: "POST",
@@ -67,7 +68,7 @@ export default {
         ...mapState(indexStore, ["isLogin", "getLoginInfo"]),
     },
     methods: {
-        ...mapActions(indexStore, ["rent"]),
+        ...mapActions(indexStore, ["rent", "updateVehicleInfo"]),
         handleButtonClick(button) {
             // 執行後端方法或操作
             this.findLocations(button.label);
@@ -151,6 +152,7 @@ export default {
             }
             this.userInfo = this.getLoginInfo
             this.vehicleInfo = item
+            this.updateVehicleInfo(item)
             this.isShow = true
         },
         finalRent() {

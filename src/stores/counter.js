@@ -15,6 +15,7 @@ export default defineStore("indexStore", {
           login: false,
           loginInfo: null,
           name: "",
+          vehicleInfo: null,
           manager: false,
           isRent: false
      }),
@@ -25,6 +26,7 @@ export default defineStore("indexStore", {
           //  getLocation: (state) => `現在的位置是:...${state.location}`
           // 取得帳號資訊
           getLoginInfo: (state) => state.loginInfo,
+          getVehicleInfo: (state) => state.vehicleInfo,
           isLogin: (state) => state.login,
           getUser: (state) => `Hi, ${state.name}`
      },
@@ -57,17 +59,15 @@ export default defineStore("indexStore", {
           manaSignOut() {
                this.manager = false;
           },
+          // 租車
           rent() {
                this.isRent = true
           },
-          getback() {
-               this.isRent = false
+          updateVehicleInfo(info) {
+               this.vehicleInfo = info
           },
-          refresh() {
-               this.login = false
-               this.loginInfo = null
-               this.name = ""
-               this.manager = false
+          // 還車
+          getback() {
                this.isRent = false
           }
      }
