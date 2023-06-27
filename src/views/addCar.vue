@@ -12,7 +12,10 @@
         <button type="button" class="btn btn-success mb-2 px-3" @click="switchReasonCodeModal">車両修理の原因コード</button>
       </div>
     </div>
-
+    <div class="ii"> 
+    <input type="text" class="oo" v-model="searchKeyword" placeholder="ナンバープレート検索">
+    <button type="button" class="ooo" >確認</button>
+  </div>
     <TableView :columns="tableColumns" :data="formattedData" :showEditButton="showEditButton" :showControl="showControl"
       :showDeleteButton="showDeleteButton" @delete="deleteItem" :showCompleteButton="showCompleteButton"
       @complete="finishItem" />
@@ -28,7 +31,7 @@
           </tr>
         </table>
         <div class="cont">
-          <button type="button" class="btn btn-success btn-sm px-3" @click="finaladd" >確認</button>
+          <button type="button" class="btn btn-success btn-sm px-3" @click="finaladd">確認</button>
           <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
         </div>
       </div>
@@ -157,8 +160,10 @@
           <button type="button" class="btn btn-success btn-sm px-3" @click="finalfinish">確認</button>
           <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
         </div>
+
       </div>
     </Modal>
+
     <MessageModal v-if="isMessage" @getReady="Reload">
       <p>{{ message }}</p>
     </MessageModal>
@@ -199,6 +204,8 @@ export default {
       isMessage: false,
       item: {},
       modalType: '',
+      searchKeyword: '',
+      filteredItems: []
     };
   },
   mounted() {
@@ -233,7 +240,7 @@ export default {
       }).then(res => res.json())
         .then(data => this.message = data.message)
       this.isMessage = true,
-      this.isShow = false
+        this.isShow = false
       // 關閉跳出式視窗
     },
     finalfinish() {
@@ -304,7 +311,7 @@ export default {
             };
           });
         });
-      
+
       // window.location.reload()
     },
     switchReasonCodeModal() {
@@ -356,7 +363,7 @@ export default {
           endTime: item.endTime
         };
       });
-    }
+    },
   }
 }
 
@@ -414,5 +421,16 @@ td {
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+
+.oo {
+  width: 200px;
+}
+.ii{
+  display: flex;
+  .ooo{
+    width: 50px;
+    text-decoration:none
+  }
 }
 </style>
