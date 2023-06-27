@@ -11,13 +11,13 @@ export default {
             <h2 class="accordion-header" id="flush-headingOne">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                    交通工具管理
+                    車の管理
                 </button>
             </h2>
             <div id="flush-collapseOne" class="accordion-collapse collapse  " aria-labelledby="flush-headingOne"
                 data-bs-parent="#accordionFlushExample">
                 <div class="d-flex flex-column my-3 ">
-                    <RouterLink class="link" to="/vehicle-add-car">新增車輛</RouterLink>
+                    <RouterLink class="link" to="/vehicle-add-car">一覧</RouterLink>
                     <!-- <RouterLink class="link" to="/vehicle-find-car-and-update">修改車輛</RouterLink>
                     <RouterLink class="link" to="/vehicle-scrap-car">報廢車輛</RouterLink> -->
                 </div>

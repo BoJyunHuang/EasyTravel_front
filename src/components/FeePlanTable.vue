@@ -22,7 +22,7 @@ export default {
 
     <div class="plan">
       <strong class="fs-4">{{ data['threshold'] }}</strong>
-      <span class="fs-4">{{ unitText }}以內</span>
+      <span class="fs-4">{{ unitText }}</span>
     </div>
     <div class="plan">
       <strong class="fs-4">{{ data['rate'] }}</strong>

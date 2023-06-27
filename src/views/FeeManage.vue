@@ -37,25 +37,24 @@ export default {
             console.log(data)})
     },
     methods: {
-        // 更新顯示資料
+        // 更新父層data顯示資料
         updateFilteredData() {
-            if (!this.searchText) {
-                return this.feesData;
-            }
-            const keyword = this.searchText.toLowerCase();
-            return this.feesData.filter(item =>
+            let keyword = ''
+            const vip = 'vip'
+            let newData = this.feesData;
+            if (this.searchText) {
+                keyword = this.searchText.toLowerCase();
+                newData = newData.filter(item =>
                 item.project.toLowerCase().includes(keyword)
             )
-        },
-        filterVip() {
-            if(!this.vipCheck) {
-                const vip = `vip`
-                return this.feesData.filter(item =>
+            }
+            if(this.vipCheck) {
+                newData = newData.filter(item =>
                 item.project.toLowerCase().includes(vip)
                 )
             }
-        }
-        
+            return newData
+        }        
         // 開啟跳出式視窗
         , switchModal(type) {
             this.isShow = true
@@ -113,32 +112,34 @@ export default {
             // 在 searchText 變化時執行相應的操作
             this.updateFilteredData();
         },
-        vipCheck: function(vipCheck) {
-            this.filterVip();
+        vipCheck: function (newVal, oldVal) {
+            this.updateFilteredData();
         }
     },
     computed: {
-        // 變更顯示資料
+        // 計算之後再次丟給子元件
         filteredData() {
-            if (!this.searchText) {
-                return this.feesData;
+            let keyword = ''
+            const vip = 'vip'
+            // 用newData接住this.feesData
+            let newData = this.feesData;
+            // 若關鍵字存在，若不存在直接判斷vipCheck
+            if (this.searchText) {
+                keyword = this.searchText.toLowerCase();
+                // newData變更執行關鍵字篩選
+                newData = newData.filter(item =>
+                item.project.toLowerCase().includes(keyword)
+            )
             }
-            const keyword = this.searchText.toLowerCase();
-            return this.feesData.filter(item => {
-                // 根據需要調整下面的條件
-                return (
-                    item.project.toLowerCase().includes(keyword)
-                );
-            });
-            
-        },
-        filterVipDate() {
-            if(!this.vipCheck) {
-                const vip = `vip`
-                return this.feesData.filter(item =>
+            // 若vipCheck為true，newData變更執行vip篩選
+            if(this.vipCheck) {
+                newData = newData.filter(item =>
                 item.project.toLowerCase().includes(vip)
                 )
             }
+            // 回傳newData(變更前or變更後)
+            return newData
+            
         }
     }
 }
