@@ -35,8 +35,8 @@
 
       </table>
       <div class="w-25 d-flex justify-content-between">
-        <button type="button" class="btn btn-success btn-sm px-3" @click="finaldelete">決定</button>
-        <button type="button" class="btn btn-danger btn-sm px-3" @click="switchModal">キャンセル</button>
+        <button type="button" class="btn btn-primary text-white btn-sm px-3" @click="finaldelete">決定</button>
+        <button type="button" class="btn btn-danger btn-sm px-2" @click="switchModal">キャンセル</button>
       </div>
     </Modal>
     <MessageModal v-if="isMessage" @getReady="Reload">

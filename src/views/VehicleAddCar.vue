@@ -13,17 +13,35 @@ export default {
       vehicleColumn: [
         { key: `licensePlate`, column: "車両番号" }, { key: `category`, column: "車種" },
         { key: `cc`, column: "排気量" }, { key: `startServingDate`, column: "追加日" },
-        { key: `latestCheckDate`, column: "最新検査日" }, { key: `available`, column: "ステータス" },
+        { key: `latestCheckDate`, column: "最新検査日" }, { key: `status`, column: "ステータス" },
         { key: `city`, column: "エリア" }, { key: `location`, column: "ポート" },
         { key: `odo`, column: "走行距離" }, { key: `price`, column: "値段" }],
       vehicleData: [],
       deleteData: [],    // 刪除車資料
+      areaColumn: [
+        { key: `東京都`, value: "東京都" }, { key: `千葉県`, value: "千葉県" }, { key: `神奈川県`, value: "神奈川県" }
+      ],
+      tokyoColumn: [
+        { key: `日本橋`, value: "日本橋" }, { key: `上野`, value: "上野" }, 
+        { key: `西日暮里`, value: "西日暮里" }, { key: `池袋`, value: "池袋" }, 
+        { key: `新宿`, value: "新宿" }, { key: `目黒`, value: "目黒" }, 
+      ],
+      chibaColumn: [
+        { key: `船橋車站`, value: "船橋駅" }, { key: `新千葉`, value: "新千葉" }, 
+        { key: `京成成田`, value: "京成成田" }
+      ],
+      kanagawaColumn: [
+        { key: `京急川崎`, value: "京急川崎" }, { key: `横浜中華街`, value: "横浜中華街" }, 
+        { key: `橫須賀市`, value: "橫須賀市" }, { key: `小田原市`, value: "小田原市" }, 
+      ],
+
       // table button 編輯按鈕
       showEditButton: true,   // 顯示變更按鈕
       showDeleteButton: true, // 顯示刪除按鈕
       showCompleteButton: false,
       showControl: true,      // 顯示操作行
       item: {},               // 直接編輯資料
+
       // modal
       isAddCarShow: false,    // 顯示新增視窗
       isScrapCarShow: false,  // 顯示報廢視窗
@@ -32,13 +50,16 @@ export default {
       message: ``,            // 後端回傳訊息
 
       ccRange: "bike : 0\nscooter : 1~250\nmotorcycle : 251~550\nheavy motorcycle : >550\nsedan/ven/suv : 自定義(1200~6600)",
+      
       // fetch / find by category
       categoryInput: document.getElementById("categoryInput"),
+      
       // fetch / add car
       plateNumInput: '',
       categoryInput: '',
       tankInput: '',
       priceInput: '',
+
       // fetch / update car
       available: true,
       reqOdo: 0
@@ -71,6 +92,14 @@ export default {
         .then(res => res.json())
         .then(data => {
           console.log(data)
+          data.vehicleList.forEach (item => {
+          console.log(item)
+          if(item.available == `false`){
+              item.available = "可租借"
+            }else {
+              item.available = "出租中"
+            }
+        })
           if (data.message == "Success!") {
             this.vehicleData = data.vehicleList
           } else {
@@ -98,7 +127,16 @@ export default {
         .then(data => {
           this.message = data.message
           this.isMessage = true
+          data.vehicleList.forEach (item => {
+          console.log(item)
+          if(item.available == `false`){
+              item.available = "可租借"
+            }else {
+              item.available = "出租中"
+            }
         })
+        })
+        this.isAddCarShow = false
     },
     // update car
     // 顯示更改視窗
@@ -127,7 +165,16 @@ export default {
           console.log(data)
           this.message = data.message
           this.isMessage = true
+          data.vehicleList.forEach (item => {
+          console.log(item)
+          if(item.available == `false`){
+              item.available = "可租借"
+            }else {
+              item.available = "出租中"
+            }
         })
+        })
+        this.isUpdateCarShow = false
     },
     // 報廢車
     scrapCar(item) {
@@ -148,13 +195,48 @@ export default {
           console.log(data)
           this.message = data.message
           this.isMessage = true
+        //   data.vehicleList.forEach (item => {
+        //   console.log(item)
+        //   if(item.available == `false`){
+        //       item.available = "可租借"
+        //     }else {
+        //       item.available = "出租中"
+        //     }
+        // })
         })
+        this.isScrapCarShow = false
     },
     Reload() {
-      this.isAddCarShow = false
-      this.isScrapCarShow = false
-      this.isUpdateCarShow = false
-      window.location.reload()
+      this.isMessage = false
+      fetch("http://localhost:8080/find_all_car")
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.vehicleList)
+        this.vehicleData = data.vehicleList
+        data.vehicleList.forEach (item => {
+          console.log(item)
+          if(item.available == `false`){
+              item.available = "可租借"
+            }else {
+              item.available = "出租中"
+            }
+        })
+      }),fetch("http://localhost:8080/find_car_near_scrap")
+        .then(res => res.json())
+        .then(data => {
+          console.log(data.vehicleList)
+          this.deleteData = data.vehicleList
+          data.vehicleList.forEach (item => {
+          console.log(item)
+          if(item.available == `false`){
+              item.available = "可租借"
+            }else {
+              item.available = "出租中"
+            }
+        })
+        })
+        
+      // window.location.reload()
     }
 
 
@@ -164,8 +246,18 @@ export default {
     fetch("http://localhost:8080/find_all_car")
       .then(res => res.json())
       .then(data => {
-        console.log(data.vehicleList)
+        console.log(data)
+        data.vehicleList.forEach (item => {
+          console.log(item)
+          if(item.available == `false`){
+              item.available = "可租借"
+            }else {
+              item.available = "出租中"
+            }
+        })
+        
         this.vehicleData = data.vehicleList
+        console.log(data.vehicleList)
       }),
       // 找報廢
       fetch("http://localhost:8080/find_car_near_scrap")
@@ -173,6 +265,14 @@ export default {
         .then(data => {
           console.log(data.vehicleList)
           this.deleteData = data.vehicleList
+          data.vehicleList.forEach (item => {
+          console.log(item)
+          if(item.available == `false`){
+              item.available = "可租借"
+            }else {
+              item.available = "出租中"
+            }
+        })
         })
 
   }
@@ -197,13 +297,58 @@ export default {
           <option value="suv">suv</option>
         </select>
 
-        <button class="workBtn btn btn-success" @click="findCar">検索</button>
+        <button class="workBtn btn btn-primary text-white" @click="findCar">検索</button>
       </div>
 
       <!-- button -->
-      <button type="button" class="functionBtn btn btn-success w-25" @click="switchAddCar">新規登錄</button>
-      <button type="button" class="functionBtn btn btn-success w-25" @click="switchScrapCar">車の廃棄</button>
+      <button type="button" class="functionBtn btn btn-primary w-25 text-white" @click="switchAddCar">新規登錄</button>
+      <button type="button" class="functionBtn btn btn-primary w-25 text-white" @click="switchScrapCar">車の廃棄</button>
     </div>
+
+
+
+
+
+
+
+
+
+
+    <!-- find table -->
+    <div class="select-area">
+      <!-- status -->
+      <select name="statusSelect" id="statusSelect">
+        <option value="" disabled selected>ステータスで検索</option>
+        <option value="未啟用">未啟用</option>
+        <option value="可租借">可租借</option>
+        <option value="出租中">出租中</option>
+        <option value="維護中">維護中</option>
+        <option value="已報廢">已報廢</option>
+      </select>
+      <!-- area -->
+      <select name="areaSelect" id="areaSelect" v-model="areaSelect">
+        <option value="" disabled selected>エリアで検索</option>
+        <option v-for="area in areaColumn" :value="area.key">{{ area.value }}</option>
+      </select>
+      <!-- port -->
+      <select name="portSelect" id="portSelect">
+        <option value="" disabled selected>ポートで検索</option>
+        <option v-if="areaSelect == '東京都'" v-for="port in tokyoColumn" :value="port.key">{{ port.value }}</option>
+        <option v-else-if="areaSelect == '千葉県'" v-for="port in chibaColumn" :value="port.key">{{ port.value }}</option>
+        <option v-else-if="areaSelect == '神奈川県'" v-for="port in kanagawaColumn" :value="port.key">{{ port.value }}</option>
+      </select>
+
+    </div>
+          
+
+
+
+
+
+
+
+
+
 
     <!-- table -->
     <TableView :columns="vehicleColumn" :data="vehicleData" :showControl="showControl" :showEditButton="showEditButton"
@@ -333,44 +478,42 @@ export default {
 
   }
 
-  Modal {
-    padding-top: 2rem;
-    // color: #0782ee;
+  table {
+    
+    thead {
 
-    h2 {
-      color: #8cfbd6;
-      color: #5fcaa7;
-    }
-
-    tr {
-      height: 2.5rem;
-
-      th {
+      tr {
+        height: 2.5rem;
+    
+        th {
+          width: 9%;
+        }
+    
+        td {
+    
+          input {
+            border-radius: 5px;
+            padding-left: 3px;
+          }
+    
+          .carType {
+            border-radius: 5px;
+          }
+    
+        }
+      
+    
+      .workBtn {
         width: 7rem;
+        height: 2.5rem;
+        margin-top: 0.5rem;
+        margin-left: 3rem;
       }
-
-      td {
-
-        input {
-          border-radius: 5px;
-          padding-left: 3px;
-        }
-
-        .carType {
-          border-radius: 5px;
-        }
-
-      }
+    
     }
-
-    .workBtn {
-      width: 7rem;
-      height: 2.5rem;
-      margin-top: 0.5rem;
-      margin-left: 3rem;
     }
-
   }
+
 
 
 }

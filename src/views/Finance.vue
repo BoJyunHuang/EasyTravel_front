@@ -10,7 +10,7 @@ export default {
     },
     data() {
         return {
-            financeColumns: [{ key: 'title', column: "主要項目" }, { key: 'detail', column: "次要項目" }, { key: 'price', column: "金額" }, { key: 'buildTime', column: "作成日" }], // 表格標題
+            financeColumns: [{ key: 'serialNumber', column: '#' }, { key: 'title', column: "主要項目" }, { key: 'detail', column: "次要項目" }, { key: 'price', column: "金額" }, { key: 'buildTime', column: "作成日" }], // 表格標題
             financeData: [], // 表格內容
             searchText: '', // 搜尋關鍵字
 
