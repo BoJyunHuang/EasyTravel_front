@@ -6,8 +6,12 @@ import MemberSearch from "./MemberSearch.vue";
 export default {
      data() {
           return {
-
+               showContent: true
           }
+     },
+     beforeRouteUpdate(to, from, next) {
+          this.showContent = to.path == "/member-info"; // 根據路由判断是否隐藏内容
+          next();
      },
      components: {
           Left,
@@ -26,6 +30,7 @@ export default {
           </div>
           <div class="main-page">
                <RouterView />
+               <p v-if="showContent">
                <h4 class="text-center">当サイトでの個人情報の取扱いについて</h4>
                <p class="ms-5">EasyTravel会社（以下、「弊社」といいます）は、個人情報保護法その他関連法令に従い、お客様の個人情報を適正に取り扱うことが企業の重要な社会的責務であると認識し、弊社の運営する
                     「レンタカーシステムーWebサイト」(以下、「当ウェブサイト」といいます)
@@ -46,6 +51,7 @@ export default {
                </p>
                <p class="ms-5">
                     弊社は、当ウェブサイトもしくは当アプリの運用にかかる業務、またはお客様の個人情報の利用・管理等にかかる業務を社外に委託する場合は、当該委託先による個人情報の取扱いについて厳正に監督・管理いたします。</p>
+               </p>
           </div>
      </div>
 </template>
