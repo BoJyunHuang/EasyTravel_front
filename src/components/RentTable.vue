@@ -21,16 +21,16 @@ export default {
         <table class="table mb-5 table-striped table-fixed table-hover">
             <thead> <!-- 標題名稱 -->
                 <tr class="table-dark"> <!-- 使用迴圈印出"標題名稱" -->
-                    <th v-for="item in columns" :key="key">{{ item.column }}</th>
+                    <th v-for="item in columns">{{ item.column }}</th>
                     <th><label></label></th>
                 </tr>
             </thead>
             <tbody> <!-- 內容 -->
                 <tr v-for="vehicles in data" :key="vehicles.id">
-                    <td v-for="item in columns" :key="key">{{ vehicles[item.key] }}</td>
+                    <td v-for="item in columns">{{ vehicles[item.key] }}</td>
                     <!-- 印出該分頁對應標題的內容(欄) -->
                     <td>
-                        <button class="btn btn-primary py-0" @click="rentInit(item)">レンタル</button>
+                        <button class="btn btn-primary py-0" @click="rentInit(vehicles)">レンタル</button>
                     </td>
                 </tr>
             </tbody>

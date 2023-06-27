@@ -24,7 +24,8 @@ export default defineStore("indexStore", {
           // 箭頭函式 帶入上方的state 跟vue寫法不同地方
           //  getLocation: (state) => `現在的位置是:...${state.location}`
           // 取得帳號資訊
-          getLoginInfo: (state) => { return state.loginInfo },
+          getLoginInfo: (state) => state.loginInfo,
+          isLogin: (state) => state.login,
           getUser: (state) => `Hi, ${state.name}`
      },
 
@@ -35,7 +36,6 @@ export default defineStore("indexStore", {
           // 使用者登入
           loginPage() {
                this.login = true;
-               console.log(this.login);
           },
           // 儲存登入者資訊
           updateLoginInfo(info) {
@@ -48,7 +48,6 @@ export default defineStore("indexStore", {
           // 使用者登出
           signOut() {
                this.login = false;
-               console.log(this.login);
           },
           // 管理者登入
           managerPage() {
@@ -57,7 +56,6 @@ export default defineStore("indexStore", {
           // 管理者登出
           manaSignOut() {
                this.manager = false;
-               console.log(this.manager);
           },
           rent() {
                this.isRent = true
