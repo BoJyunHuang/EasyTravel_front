@@ -13,6 +13,7 @@ export default {
             tableColumns: [{ key: 'serialNumber', column: '#' }, { key: 'project', column: 'プラン' }, { key: 'cc', column: '排気量' }, { key: 'rate', column: '時間帯の料金' }, { key: 'threshold', column: '時間帯' }], // 表格標題
             feesData: [], // 表格內容
             searchText: '', // 搜尋關鍵字
+            vipCheck: false, //vip篩選
 
             isShow: false, // 顯示跳出式視窗
             isMessage: false, // 顯示回覆式視窗
@@ -45,8 +46,18 @@ export default {
             return this.feesData.filter(item =>
                 item.project.toLowerCase().includes(keyword)
             )
-            // 開啟跳出式視窗
-        }, switchModal(type) {
+        },
+        filterVip() {
+            if(!this.vipCheck) {
+                const vip = `vip`
+                return this.feesData.filter(item =>
+                item.project.toLowerCase().includes(vip)
+                )
+            }
+        }
+        
+        // 開啟跳出式視窗
+        , switchModal(type) {
             this.isShow = true
             this.modalType = type
         }, finaladd() {
@@ -101,6 +112,9 @@ export default {
         searchText: function (newText, oldText) {
             // 在 searchText 變化時執行相應的操作
             this.updateFilteredData();
+        },
+        vipCheck: function(vipCheck) {
+            this.filterVip();
         }
     },
     computed: {
@@ -116,6 +130,15 @@ export default {
                     item.project.toLowerCase().includes(keyword)
                 );
             });
+            
+        },
+        filterVipDate() {
+            if(!this.vipCheck) {
+                const vip = `vip`
+                return this.feesData.filter(item =>
+                item.project.toLowerCase().includes(vip)
+                )
+            }
         }
     }
 }
@@ -142,6 +165,10 @@ export default {
                     <option value="suv">SUV</option>
                 </optgroup>
             </select>
+            <div class="vipCheck d-flex justify-content-center">
+                <input type="checkbox" name="vipSearch" id="vipSearch" value="true" v-model="vipCheck">
+                <label for="vipSearch" class="d-flex align-items-center">vip</label>
+            </div>
             <button type="button" class="btn btn-primary text-white mb-2 px-3" @click="switchModal('add')">新規料金プランの追加</button>
         </div>
         <TableView :columns="tableColumns" :data="filteredData" :showDeleteButton="showDeleteButton"
