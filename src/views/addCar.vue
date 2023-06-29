@@ -8,14 +8,15 @@
         <option value="timeDesc">時間: 近い順</option>
       </select>
       <div class="twobtn">
-        <button type="button" class="btn btn-primary mb-2 px-3" @click="switchModal">フォーム追加</button>
-        <button type="button" class="btn btn-primary mb-2 px-3" @click="switchReasonCodeModal">車両修理の原因コード</button>
+        <button type="button" class="btn btn-primary mb-2 px-3 text-white" @click="switchModal">フォーム追加</button>
+        <button type="button" class="btn btn-primary mb-2 px-3 text-white"
+          @click="switchReasonCodeModal">車両修理の原因コード</button>
       </div>
     </div>
-    <div class="ii"> 
-    <input type="text" class="oo" v-model="SearchKeyword"   placeholder="ナンバープレート検索">
-    
-  </div>
+    <div class="ii">
+      <input type="text" class="oo" v-model="SearchKeyword" placeholder="ナンバープレート検索">
+
+    </div>
     <TableView :columns="tableColumns" :data="formattedData" :showEditButton="showEditButton" :showControl="showControl"
       :showDeleteButton="showDeleteButton" @delete="deleteItem" :showCompleteButton="showCompleteButton"
       @complete="finishItem" />
@@ -347,37 +348,37 @@ export default {
       if (!this.SearchKeyword) {
         return this.maintenanceData;
       }
-      
-      return this.maintenanceData.filter(item => item.licensePlate.includes(this.SearchKeyword)); 
-    
 
-}
-},
+      return this.maintenanceData.filter(item => item.licensePlate.includes(this.SearchKeyword));
+
+
+    }
+  },
   watch: {
     searchText() {
       this.updateFilteredData();
     },
-   
+
   },
   computed: {
     filteredData() {
-  if (!this.searchText && !this.SearchKeyword) {
-    return this.maintenanceData;
-  }
+      if (!this.searchText && !this.SearchKeyword) {
+        return this.maintenanceData;
+      }
 
-  const keyword = this.searchText || this.SearchKeyword;
-  const filteredByLicensePlate = this.maintenanceData.filter(item => item.licensePlate.includes(keyword));
+      const keyword = this.searchText || this.SearchKeyword;
+      const filteredByLicensePlate = this.maintenanceData.filter(item => item.licensePlate.includes(keyword));
 
-  if (this.sortOption === 'timeAsc') {
-    filteredByLicensePlate.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
-  } else if (this.sortOption === 'timeDesc') {
-    filteredByLicensePlate.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
-  }
+      if (this.sortOption === 'timeAsc') {
+        filteredByLicensePlate.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
+      } else if (this.sortOption === 'timeDesc') {
+        filteredByLicensePlate.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+      }
 
-  return filteredByLicensePlate;
-},
+      return filteredByLicensePlate;
+    },
 
-sortData() {
+    sortData() {
       if (this.sortOption === 'timeAsc') {
         this.filteredData.sort((a, b) => new Date(b.startTime) - new Date(a.startTime)); // 按開始時間降序排序
       } else if (this.sortOption === 'timeDesc') {
@@ -398,11 +399,11 @@ sortData() {
       if (!this.SearchKeyword) {
         return this.maintenanceData;
       }
-      
-      return this.maintenanceData.filter(item => item.licensePlate.includes(this.SearchKeyword)); 
-    
 
-},
+      return this.maintenanceData.filter(item => item.licensePlate.includes(this.SearchKeyword));
+
+
+    },
   }
 }
 
@@ -465,12 +466,13 @@ tr:nth-child(even) {
 .oo {
   width: 200px;
 }
-.ii{
+
+.ii {
   display: flex;
-  
-}
-.btn{
-  color: whie;
+
 }
 
+.btn {
+  color: whie;
+}
 </style>

@@ -93,8 +93,8 @@ export default {
                 @change="findLocations">
                 <option value="" disabled selected>都道府県を選ぶ</option>
                 <option value="東京都">東京都</option>
-                <option value="千葉縣">千葉縣</option>
-                <option value="神奈川縣">神奈川縣</option>
+                <option value="千葉縣">千葉県</option>
+                <option value="神奈川縣">神奈川県</option>
             </select>
             <select class="form-select w-25 mb-2" aria-label="Default select example" v-model="searchLocation">
                 <option value="" disabled selected>サイト</option>
@@ -113,8 +113,8 @@ export default {
             <select class="form-select w-25 mb-2" aria-label="Default select example" v-model="searchCity">
                 <option value="" disabled selected>都道府県を選ぶ</option>
                 <option value="東京都">東京都</option>
-                <option value="千葉縣">千葉縣</option>
-                <option value="神奈川縣">神奈川縣</option>
+                <option value="千葉県">千葉県</option>
+                <option value="神奈川県">神奈川県</option>
             </select>
             <select class="form-select w-25 mb-2" aria-label="Default select example" v-model="searchLocation">
                 <option value="" disabled selected>サイト</option>

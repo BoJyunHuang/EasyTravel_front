@@ -176,8 +176,8 @@ export default {
         <TableView :columns="tableColumns" :data="filteredData" :showDeleteButton="showDeleteButton"
             :showControl="showControl" @delete="deleteItem" />
         <Modal v-if="isShow && modalType == 'add'" @pushOutside="closeModal">
-            <H2 class="m-2">新規料金プランの追加</H2>
-            <table class="m-3 ">
+            <H2 class="m-2 py-5">新規料金プランの追加</H2>
+            <table class="m-3">
                 <tr>
                     <th><label for="project" class="my-2">プラン</label></th>
                     <td><input type="text" placeholder="ex:bike" id="project" v-model="project"></td>
@@ -195,7 +195,7 @@ export default {
                     <td><input type="number" min="1" title="1分以上または1日以上" id="threshold" v-model="threshold"></td>
                 </tr>
             </table>
-            <div class="w-25 d-flex justify-content-between">
+            <div class="w-25 pt-5 d-flex justify-content-between">
                 <button type="button" class="btn btn-primary text-white btn-sm px-3" @click="finaladd">決定</button>
                 <button type=" button" class="btn btn-danger btn-sm px-2" @click="openModal">キャンセル</button>
             </div>

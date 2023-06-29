@@ -129,8 +129,8 @@ export default {
                 <option value="" disabled selected>都道府県を選ぶ</option>
                 <option value="">全ての都道府県から選ぶ</option>
                 <option value="東京都">東京都</option>
-                <option value="千葉縣">千葉縣</option>
-                <option value="神奈川縣">神奈川縣</option>
+                <option value="千葉縣">千葉県</option>
+                <option value="神奈川縣">神奈川県</option>
             </select>
             <button type="button" class="btn btn-primary text-white mb-2 px-3" @click="openModal('add')">サイト追加</button>
         </div>

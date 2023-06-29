@@ -3,8 +3,22 @@ import GoogleMap from '../components/GoogleMap.vue';
 export default {
     components: {
         GoogleMap
+    },
+    data() {
+        return {
+            locationsData: [], // 表格內容
+        }
+    },
+    mounted() { // 預設執行方法，進入頁面後隨即執行，後端-顯示所有站點資料
+        this.findAllStops()
+    },
+    methods: { // 各種方法
+        findAllStops() {
+            fetch("http://localhost:8080/show_all_stops")
+                .then(res => res.json())
+                .then(data => this.locationsData = data.stopList)
+        },
     }
-
 }
 </script>
 
@@ -26,7 +40,7 @@ export default {
         </div>
         <div class="map">
             <p>※ 地図上で利用可能な車両のレンタルを検索してください</p>
-            <!-- <GoogleMap :address="station" /> -->
+            <GoogleMap :location="locationsData" />
         </div>
     </div>
 </template>

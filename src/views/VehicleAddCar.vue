@@ -17,10 +17,10 @@ export default {
         { key: `city`, column: "エリア" }, { key: `location`, column: "ポート" },
         { key: `odo`, column: "走行距離" }, { key: `price`, column: "値段" }],
       scrapColumn: [
-      { key: `licensePlate`, column: "車両番号" }, { key: `category`, column: "車種" },
-      { key: `startServingDate`, column: "追加日" },{ key: `status`, column: "ステータス" },
-      { key: `city`, column: "エリア" }, { key: `location`, column: "ポート" },
-      { key: `odo`, column: "走行距離" }
+        { key: `licensePlate`, column: "車両番号" }, { key: `category`, column: "車種" },
+        { key: `startServingDate`, column: "追加日" }, { key: `status`, column: "ステータス" },
+        { key: `city`, column: "エリア" }, { key: `location`, column: "ポート" },
+        { key: `odo`, column: "走行距離" }
       ],
       vehicleData: [],
       deleteData: [],    // 刪除車資料
@@ -68,17 +68,17 @@ export default {
   },
   // 監看
   watch: {
-    categoryKeyword: function(newCate, oldCate) {
+    categoryKeyword: function (newCate, oldCate) {
       this.updatefilteredData();
     },
-    statusKeyword: function(newStat, oldStat) {
+    statusKeyword: function (newStat, oldStat) {
       this.updatefilteredData();
     },
-    areaKeyword: function(newArea, oldArea) {
+    areaKeyword: function (newArea, oldArea) {
       this.findStop(newArea)
       this.updatefilteredData();
     },
-    portKeyword: function(newPort, oldPort) {
+    portKeyword: function (newPort, oldPort) {
       this.updatefilteredData();
     }
   },
@@ -99,31 +99,32 @@ export default {
       let areaKeyword = ''
       let portKeyword = ''
       let newData = this.vehicleData
-      if(this.categoryKeyword) {
+      if (this.categoryKeyword) {
         categoryKeyword = this.categoryKeyword
-        newData = newData.filter(item => 
-        item.category.toLowerCase().includes(categoryKeyword),
-        )}
-      if(this.statusKeyword) {
-        statusKeyword = this.statusKeyword
-        newData = newData.filter(item => 
-        item.status.toLowerCase().includes(statusKeyword),
+        newData = newData.filter(item =>
+          item.category.toLowerCase().includes(categoryKeyword),
         )
       }
-      if(this.areaKeyword) {
+      if (this.statusKeyword) {
+        statusKeyword = this.statusKeyword
+        newData = newData.filter(item =>
+          item.status.toLowerCase().includes(statusKeyword),
+        )
+      }
+      if (this.areaKeyword) {
         areaKeyword = this.areaKeyword
         newData = newData.filter(item =>
-        item.city.toLowerCase().includes(areaKeyword),
+          item.city.toLowerCase().includes(areaKeyword),
         )
       }
-      if(this.portKeyword) {
+      if (this.portKeyword) {
         portKeyword = this.portKeyword
-        newData = newData.filter(item => 
-        item.location.toLowerCase().includes(portKeyword)
+        newData = newData.filter(item =>
+          item.location.toLowerCase().includes(portKeyword)
         )
       }
       return newData
-      }
+    }
 
     ,
     // 找城市站點
@@ -346,31 +347,31 @@ export default {
       let areaKeyword = ''
       let portKeyword = ''
       let newData = this.vehicleData
-      if(this.categoryKeyword) {
+      if (this.categoryKeyword) {
         categoryKeyword = this.categoryKeyword
-        newData = newData.filter(item => 
-        item.category.toLowerCase().includes(categoryKeyword))
+        newData = newData.filter(item =>
+          item.category.toLowerCase().includes(categoryKeyword))
       }
-      if(this.statusKeyword) {
+      if (this.statusKeyword) {
         statusKeyword = this.statusKeyword
-        newData = newData.filter(item => 
-        item.status.toLowerCase().includes(statusKeyword),
+        newData = newData.filter(item =>
+          item.status.toLowerCase().includes(statusKeyword),
         )
       }
-      if(this.areaKeyword) {
+      if (this.areaKeyword) {
         areaKeyword = this.areaKeyword
         newData = newData.filter(item =>
-        item.city.toLowerCase().includes(areaKeyword),
+          item.city.toLowerCase().includes(areaKeyword),
         )
       }
-      if(this.portKeyword) {
+      if (this.portKeyword) {
         portKeyword = this.portKeyword
-        newData = newData.filter(item => 
-        item.location.toLowerCase().includes(portKeyword)
+        newData = newData.filter(item =>
+          item.location.toLowerCase().includes(portKeyword)
         )
       }
       return newData
-      }
+    }
   }
 }
 </script>
@@ -471,16 +472,14 @@ export default {
           <td><input type="number" v-model="priceInput"></td>
         </tr>
       </table>
-
       <button type="button" class="workBtn btn btn-success mt-2" @click="addCar">追加</button>
-
     </Modal>
 
     <!-- Scrap Car -->
     <Modal v-if="isScrapCarShow" @pushOutside="switchScrapCar">
       <h2 class="mt-4 text-vehicle fw-bold">車の廃棄</h2>
-      <TableView :columns="scrapColumn" :data="deleteData" :showControl="showControl"
-        :showDeleteButton="showDeleteButton" @delete="scrapCar">
+      <TableView :columns="scrapColumn" :data="deleteData" :showControl="showControl" :showDeleteButton="showDeleteButton"
+        @delete="scrapCar">
 
       </TableView>
     </Modal>

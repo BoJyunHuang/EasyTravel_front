@@ -19,14 +19,15 @@ export default {
             unit: "",
             showControl: false,
 
+            vColumns: { 'bike': '自転車', 'scooter': 'スクーター', 'motorcycle': 'オートバイ', 'heavy motorcycle': '大型バイク', 'sedan': 'セダン', 'ven': 'ヴェン', 'suv': 'SUV' },
             // PlanButton propTitle
-            bike: `Bike`,
-            scooter: `Scooter`,
-            motorcycle: `Motorcycle`,
-            heavyMotorcycle: `Heavy Motorcycle`,
-            sedan: `Sedan`,
-            ven: `Ven`,
-            suv: `Suv`,
+            bike: `自転車`,
+            scooter: `スクーター`,
+            motorcycle: `オートバイ`,
+            heavyMotorcycle: `大型バイク`,
+            sedan: `セダン`,
+            ven: `ヴェン`,
+            suv: `SUV`,
 
             // PlanButton propImg
             bikeImg: '../../public/bike.png',
@@ -203,16 +204,6 @@ export default {
 <template>
     <div class="background">
         <h2>車種・料金</h2>
-        <!-- <p>プラン (ぷらん) - 方案、計劃
-                    タリフ (たりふ) - 費率、價格表
-                    オプション (おぷしょん) - 附加選項、額外費用
-                    キャンペーン (きゃんぺーん) - 優惠活動、促銷活動
-                    ディスカウント (でぃすかうんと) - 折扣、優惠
-                    シーズン料金 (しーずんりょうきん) - 季節價格、旺季價格
-                    特別料金 (とくべつりょうきん) - 特別價格、優惠價格
-                    固定料金 (こていりょうきん) - 固定價格、包車價格
-                    時間帯料金 (じかんたいりょうきん) - 時段價格、時段費用
-                    レンタルプラン (れんたるぷらん) - 租車方案、租車計劃</p> -->
         <div class="plan">
             <div class="planBtn" @click="fetchBicycleData">
                 <PlanBtnView :propImg="bikeImg" :propTitle="bike" />
@@ -239,7 +230,7 @@ export default {
 
         <!-- <TableView :columns="columns" :data="feesData" :showControl="showControl" /> -->
 
-        <h2>{{ title }} の利用料金</h2>
+        <h2>{{ vColumns[title] }} の利用料金</h2>
 
         <!-- <PlanTableView :columns="this.columns" :data="feesData" /> -->
         <div class="plan-info-card">

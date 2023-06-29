@@ -10,7 +10,7 @@ export default {
     },
     data() {
         return {
-            financeColumns: [{ key: 'serialNumber', column: '#' }, { key: 'title', column: "主要項目" }, { key: 'detail', column: "次要項目" }, { key: 'price', column: "金額" }, { key: 'buildTime', column: "作成日" }], // 表格標題
+            financeColumns: [{ key: 'serialNumber', column: '#' }, { key: 'title', column: "メインアイテム" }, { key: 'detail', column: "サブアイテム" }, { key: 'price', column: "金額" }, { key: 'buildTime', column: "作成日" }], // 表格標題
             financeData: [], // 表格內容
             searchText: '', // 搜尋關鍵字
 
@@ -81,7 +81,7 @@ export default {
         <h2>財務</h2>
         <div class="d-flex">
             <select class="form-select w-50 mb-2" aria-label="Default select example" v-model="searchText">
-                <option value="" disabled selected>主要項目</option>
+                <option value="" disabled selected>メインアイテム</option>
                 <option value="">全ての選ぶ</option>
                 <option value="vip_income">有料会員収益</option>
                 <option value="rent_income">レンタカー収入</option>
