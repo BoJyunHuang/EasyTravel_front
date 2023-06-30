@@ -18,6 +18,7 @@ export default {
             city: '',
             location: '',
             odo: 0,
+            licensePlate: ''
         }
     },
     computed: {
@@ -42,9 +43,12 @@ export default {
             // 車牌待處理
             this.isShow = true
         }, finalDropOff() {
+            if (this.getVehicleInfo.licensePlate) {
+                this.licensePlate = this.getVehicleInfo.licensePlate
+            }
             const body = {
                 "account": this.userInfo.account,
-                "licensePlate": this.getVehicleInfo.licensePlate,
+                "licensePlate": this.licensePlate,
                 "city": this.city,
                 "location": this.location,
                 "odo": this.odo
@@ -116,6 +120,11 @@ export default {
         <Modal v-if="isShow" @pushOutside="closeModal">
             <H2 class="m-2">返却場所登録</H2>
             <table class="m-3 ">
+                <tr>
+                    <th><label for="city" class="my-2">車両番号</label></th>
+                    <td><input type="text" id="licensePlate" v-model="licensePlate">{{ this.getVehicleInfo.licensePlate }}
+                    </td>
+                </tr>
                 <tr>
                     <th><label for="city" class="my-2">都道府県</label></th>
                     <td><input type="text" placeholder="ex:東京都" id="city" v-model="city"></td>

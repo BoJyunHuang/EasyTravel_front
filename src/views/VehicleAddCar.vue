@@ -192,7 +192,6 @@ export default {
         "licensePlate": this.item.licensePlate,
         "odo": this.reqOdo,
         "available": this.available
-
       }
       console.log("click")
       fetch("http://localhost:8080/update_car_info", {
@@ -479,7 +478,7 @@ export default {
     <Modal v-if="isScrapCarShow" @pushOutside="switchScrapCar">
       <h2 class="mt-4 text-vehicle fw-bold">車の廃棄</h2>
       <TableView :columns="scrapColumn" :data="deleteData" :showControl="showControl" :showDeleteButton="showDeleteButton"
-        @delete="scrapCar">
+        @edit="scrapCar">
 
       </TableView>
     </Modal>

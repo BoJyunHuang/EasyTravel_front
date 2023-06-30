@@ -14,8 +14,8 @@ export default {
         return {
             buttons: [
                 { id: 1, label: '東京都', isActive: true },
-                { id: 2, label: '千葉縣', isActive: false },
-                { id: 3, label: '神奈川縣', isActive: false },
+                { id: 2, label: '千葉県', isActive: false },
+                { id: 3, label: '神奈川県', isActive: false },
             ],
             city: '東京都',
             subLocations: [],
@@ -65,7 +65,7 @@ export default {
     },
     computed: {
         // 帶入pinia的方法
-        ...mapState(indexStore, ["isLogin", "getLoginInfo"]),
+        ...mapState(indexStore, ["login", "getLoginInfo"]),
     },
     methods: {
         ...mapActions(indexStore, ["rent", "updateVehicleInfo"]),
@@ -147,12 +147,12 @@ export default {
             this.isShow = false
         },
         doRent(item) {
-            if (!this.isLogin) {
+            if (!this.login) {
                 this.$router.push('/login')
             }
-            this.userInfo = this.getLoginInfo
             this.vehicleInfo = item
             this.updateVehicleInfo(item)
+            this.userInfo = this.getLoginInfo
             this.isShow = true
         },
         finalRent() {
